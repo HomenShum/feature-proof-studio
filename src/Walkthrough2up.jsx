@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, Img, staticFile, useCurrentFrame, interpolate, Easing } from "remotion";
+import { AbsoluteFill, Img, staticFile, useCurrentFrame, interpolate, spring, Easing } from "remotion";
 
 // MULTI-PANE (N-up) collaboration composition. Parallel to Walkthrough.jsx (single-pane).
 // Renders N panes SIDE-BY-SIDE — one browser-chrome window per client ("Client A" / "B" / "C"),
@@ -113,7 +113,9 @@ export const Walkthrough2up = ({ wt }) => {
     if (paneStep && paneStep.cursor) {
       const c = { x: paneStep.cursor.x * SCALE, y: paneStep.cursor.y * SCALE };
       const from = prevPane && prevPane.cursor ? { x: prevPane.cursor.x * SCALE, y: prevPane.cursor.y * SCALE } : c;
-      const t = interpolate(lf, [0, 18], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
+      // Spring (stiffness 400 / damping 45 / clamped) = the "confident cursor" ported from the
+      // single-pane tool's battle-tested hardening, so both tools feel identical.
+      const t = spring({ frame: lf, fps: WT2_FPS, durationInFrames: 18, config: { stiffness: 400, damping: 45, mass: 1 }, overshootClamping: true });
       cursor = { x: from.x + (c.x - from.x) * t, y: from.y + (c.y - from.y) * t };
       cursorOp = interpolate(lf, [0, 8], [prevPane && prevPane.cursor ? 1 : 0, 1], { extrapolateRight: "clamp" });
     }

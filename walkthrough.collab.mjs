@@ -102,6 +102,12 @@ const run = async () => {
   const out = [];
   for (const spec of COLLAB_SPECS) {
     const dir = join(PUB, spec.id);
+    // Per-spec retries (opt-in via `retries: N`) — each attempt wipes the frame dir and runs in
+    // FRESH contexts, so a retried capture never inherits a half-driven, poisoned UI on any pane.
+    const maxAttempts = 1 + (spec.retries || 0);
+    let steps = [];
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    rmSync(dir, { recursive: true, force: true });
     mkdirSync(dir, { recursive: true });
 
     // ONE context per pane => fully independent clients (separate cookies/storage/socket).
@@ -118,8 +124,9 @@ const run = async () => {
     await Promise.all(pages.map((page, k) => page.goto(spec.panes[k].url, { waitUntil: "domcontentloaded" }).catch(() => {})));
     await Promise.all(pages.map((page) => sleep(page, 1200)));
 
-    const steps = [];
+    steps = [];
     let lastCursorPane = 0;       // which pane the most recent `act` touched (the ACTING pane)
+    let ok = false;
     try {
       let n = 0;
       for (const op of spec.steps) {
@@ -174,9 +181,23 @@ const run = async () => {
           await doAct(pages[pi], op);
         }
       }
-    } catch (e) { console.log(spec.id, "err", e.message); }
+      ok = true;
+    } catch (e) {
+      // FAILURE FORENSICS: freeze EVERY pane's exact state + a body-text snippet before retry —
+      // "which client was in which state" ends debugging guesswork. zz-fail-* sorts last and is
+      // never referenced by walkthrough.collab.data.js.
+      await Promise.all(pages.map((page, pi) => page.screenshot({ path: join(dir, `zz-fail-p${pi}.png`) }).catch(() => {})));
+      for (let pi = 0; pi < pages.length; pi++) {
+        const bt = await pages[pi].evaluate(() => document.body.innerText.replace(/\s+/g, " ").slice(0, 160)).catch(() => "(unreadable)");
+        console.log(`  ${spec.id} fail-state pane ${pi}: ${bt}`);
+      }
+      console.log(`${spec.id} attempt ${attempt}/${maxAttempts} err: ${e.message.split("\n")[0]}`);
+    }
 
-    for (const ctx of contexts) await ctx.close();
+    for (const ctx of contexts) await ctx.close().catch(() => {});
+    if (ok) break;
+    if (attempt < maxAttempts) console.log(`  retrying ${spec.id} in fresh contexts`);
+    }
     out.push({
       id: spec.id,
       title: spec.title,
