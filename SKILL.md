@@ -129,6 +129,17 @@ Selector shorthand (resolved against the **active tab panel** — see lesson #1)
    GIF; this composition's pre-move-delay → glide → hold pattern is the right shape,
    keep it that way through refactors.
 
+## Stage 5 (recommended): self-judge the render
+The final cut should not be the one stage only human eyes check. `npm run judge out/example.mp4`
+sends the RENDERED video to Gemini video understanding (`judge-video.mjs`; key via
+`GEMINI_API_KEY`/`GOOGLE_GENERATIVE_AI_API_KEY`) and scores 8 dimensions against the
+anti-hero-shot bar — state coverage (empty → cursor → loading → result, per flow), cursor truth,
+caption sync, pacing, legibility, proof-feel, safety, loop etiquette — returning timestamped
+P0/P1/P2 defects + a publish verdict. Judge the MP4 (pre-palette render), not the GIF — GIF is
+not a supported Gemini video MIME. Severity policy: **P0 blocks publishing · P1 fix before
+posting · P2 log and ship** — never enter a re-render polish loop for P2s on a passed render.
+(First production run on a 54.8s NodeRoom episode: verdict publish, 15/16, one P2.)
+
 ## Stage 0 (optional, for audience-targeted walkthroughs): audience-world research
 A walkthrough proves the product works; for high-trust audiences (founders, family offices,
 advisors, M&A teams) that is necessary but not sufficient — they trust people who understand the

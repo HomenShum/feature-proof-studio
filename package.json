@@ -11,7 +11,8 @@
     "capture": "node walkthrough.mjs",
     "studio": "remotion studio src/index.js",
     "render": "remotion render src/index.js",
-    "render:example": "remotion render src/index.js WT-ListIntel out/example.mp4 --concurrency=2"
+    "render:example": "remotion render src/index.js WT-ListIntel out/example.mp4 --concurrency=2",
+    "judge": "node judge-video.mjs"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.474",
