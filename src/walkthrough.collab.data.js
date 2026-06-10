@@ -207,5 +207,277 @@ export const COLLAB_WALKTHROUGHS = [
         ]
       }
     ]
+  },
+  {
+    "id": "LiveSync3",
+    "title": "Live Collaboration · 3 clients",
+    "accent": "#34d399",
+    "paneLabels": [
+      "Client A",
+      "Client B",
+      "Client C"
+    ],
+    "steps": [
+      {
+        "caption": "Three clients, one shared board",
+        "hold": 66,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/LiveSync3/p0_00.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/LiveSync3/p1_00.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/LiveSync3/p2_00.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Client A composes a card",
+        "hold": 54,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/LiveSync3/p0_01.png",
+            "cursor": {
+              "x": 537,
+              "y": 99
+            },
+            "click": false
+          },
+          {
+            "img": "wt-collab/LiveSync3/p1_01.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/LiveSync3/p2_01.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Client A clicks Add",
+        "hold": 52,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/LiveSync3/p0_02.png",
+            "cursor": {
+              "x": 834,
+              "y": 99
+            },
+            "click": true
+          },
+          {
+            "img": "wt-collab/LiveSync3/p1_02.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/LiveSync3/p2_02.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "One add → B and C both update live",
+        "hold": 86,
+        "burst": true,
+        "panes": [
+          {
+            "imgs": [
+              "wt-collab/LiveSync3/p0_03_00.png",
+              "wt-collab/LiveSync3/p0_03_01.png",
+              "wt-collab/LiveSync3/p0_03_02.png",
+              "wt-collab/LiveSync3/p0_03_03.png",
+              "wt-collab/LiveSync3/p0_03_04.png",
+              "wt-collab/LiveSync3/p0_03_05.png",
+              "wt-collab/LiveSync3/p0_03_06.png",
+              "wt-collab/LiveSync3/p0_03_07.png",
+              "wt-collab/LiveSync3/p0_03_08.png",
+              "wt-collab/LiveSync3/p0_03_09.png"
+            ],
+            "cursor": {
+              "x": 834,
+              "y": 99
+            },
+            "click": false
+          },
+          {
+            "imgs": [
+              "wt-collab/LiveSync3/p1_03_00.png",
+              "wt-collab/LiveSync3/p1_03_01.png",
+              "wt-collab/LiveSync3/p1_03_02.png",
+              "wt-collab/LiveSync3/p1_03_03.png",
+              "wt-collab/LiveSync3/p1_03_04.png",
+              "wt-collab/LiveSync3/p1_03_05.png",
+              "wt-collab/LiveSync3/p1_03_06.png",
+              "wt-collab/LiveSync3/p1_03_07.png",
+              "wt-collab/LiveSync3/p1_03_08.png",
+              "wt-collab/LiveSync3/p1_03_09.png"
+            ],
+            "cursor": null,
+            "click": false
+          },
+          {
+            "imgs": [
+              "wt-collab/LiveSync3/p2_03_00.png",
+              "wt-collab/LiveSync3/p2_03_01.png",
+              "wt-collab/LiveSync3/p2_03_02.png",
+              "wt-collab/LiveSync3/p2_03_03.png",
+              "wt-collab/LiveSync3/p2_03_04.png",
+              "wt-collab/LiveSync3/p2_03_05.png",
+              "wt-collab/LiveSync3/p2_03_06.png",
+              "wt-collab/LiveSync3/p2_03_07.png",
+              "wt-collab/LiveSync3/p2_03_08.png",
+              "wt-collab/LiveSync3/p2_03_09.png"
+            ],
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "All three converge — no refresh",
+        "hold": 74,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/LiveSync3/p0_04.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/LiveSync3/p1_04.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/LiveSync3/p2_04.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Client A runs the agent",
+        "hold": 54,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/LiveSync3/p0_05.png",
+            "cursor": {
+              "x": 937,
+              "y": 99
+            },
+            "click": true
+          },
+          {
+            "img": "wt-collab/LiveSync3/p1_05.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/LiveSync3/p2_05.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Server-led agent streams to all three",
+        "hold": 92,
+        "burst": true,
+        "panes": [
+          {
+            "imgs": [
+              "wt-collab/LiveSync3/p0_06_00.png",
+              "wt-collab/LiveSync3/p0_06_01.png",
+              "wt-collab/LiveSync3/p0_06_02.png",
+              "wt-collab/LiveSync3/p0_06_03.png",
+              "wt-collab/LiveSync3/p0_06_04.png",
+              "wt-collab/LiveSync3/p0_06_05.png",
+              "wt-collab/LiveSync3/p0_06_06.png",
+              "wt-collab/LiveSync3/p0_06_07.png",
+              "wt-collab/LiveSync3/p0_06_08.png",
+              "wt-collab/LiveSync3/p0_06_09.png",
+              "wt-collab/LiveSync3/p0_06_10.png"
+            ],
+            "cursor": {
+              "x": 937,
+              "y": 99
+            },
+            "click": false
+          },
+          {
+            "imgs": [
+              "wt-collab/LiveSync3/p1_06_00.png",
+              "wt-collab/LiveSync3/p1_06_01.png",
+              "wt-collab/LiveSync3/p1_06_02.png",
+              "wt-collab/LiveSync3/p1_06_03.png",
+              "wt-collab/LiveSync3/p1_06_04.png",
+              "wt-collab/LiveSync3/p1_06_05.png",
+              "wt-collab/LiveSync3/p1_06_06.png",
+              "wt-collab/LiveSync3/p1_06_07.png",
+              "wt-collab/LiveSync3/p1_06_08.png",
+              "wt-collab/LiveSync3/p1_06_09.png",
+              "wt-collab/LiveSync3/p1_06_10.png"
+            ],
+            "cursor": null,
+            "click": false
+          },
+          {
+            "imgs": [
+              "wt-collab/LiveSync3/p2_06_00.png",
+              "wt-collab/LiveSync3/p2_06_01.png",
+              "wt-collab/LiveSync3/p2_06_02.png",
+              "wt-collab/LiveSync3/p2_06_03.png",
+              "wt-collab/LiveSync3/p2_06_04.png",
+              "wt-collab/LiveSync3/p2_06_05.png",
+              "wt-collab/LiveSync3/p2_06_06.png",
+              "wt-collab/LiveSync3/p2_06_07.png",
+              "wt-collab/LiveSync3/p2_06_08.png",
+              "wt-collab/LiveSync3/p2_06_09.png",
+              "wt-collab/LiveSync3/p2_06_10.png"
+            ],
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Every client sees the same final state",
+        "hold": 92,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/LiveSync3/p0_07.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/LiveSync3/p1_07.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/LiveSync3/p2_07.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      }
+    ]
   }
 ];

@@ -127,6 +127,14 @@ change propagates.
 
 <img src="assets/feature-collab.gif" alt="Two clients side by side: Client A adds a card and runs an agent; Client B sees both appear live via the server broadcast — real cross-client sync" width="900">
 
+The composition scales to **N panes** — same spec model, one window per client:
+
+<details><summary><b>3-client variant</b> (<code>WTC-LiveSync3</code> — one add, two collaborators react)</summary>
+
+<img src="assets/feature-collab-3up.gif" alt="Three clients side by side: Client A adds a card and runs the agent; Clients B and C both update live" width="940">
+
+</details>
+
 Ships with a **worked example** (the live-collab counterpart to the single-pane one):
 - **[`examples/collab-demo/`](examples/collab-demo/)** — a runnable, **zero-dependency**
   local app (Node SSE server + vanilla JS) that faithfully reproduces the Convex

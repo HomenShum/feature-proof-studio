@@ -56,4 +56,39 @@ export const COLLAB_SPECS = [
       { cap: "Every client converges on the same state", hold: 96 },
     ],
   },
+
+  // 3-up variant — same story with THREE collaborators (A acts; B AND C both react).
+  {
+    id: "LiveSync3",
+    title: "Live Collaboration · 3 clients",
+    accent: "#34d399",
+    panes: [
+      { label: "Client A", url: "http://127.0.0.1:8930/?user=A" },
+      { label: "Client B", url: "http://127.0.0.1:8930/?user=B" },
+      { label: "Client C", url: "http://127.0.0.1:8930/?user=C" },
+    ],
+    steps: [
+      { act: "sleep", pane: 0, ms: 600 },
+      { cap: "Three clients, one shared board", hold: 66 },
+
+      { act: "fill", pane: 0, sel: "testid:add-input", value: "Plan the launch" },
+      { cap: "Client A composes a card", cursor: "testid:add-input", cursorPane: 0, hold: 54 },
+      { cap: "Client A clicks Add", cursor: "testid:add-btn", cursorPane: 0, click: true, hold: 52 },
+      { act: "click", pane: 0, sel: "testid:add-btn" },
+
+      { act: "sleep", pane: 1, ms: 120 },
+      { cap: "One add → B and C both update live", burst: { ms: 2800, every: 280 }, cursor: "testid:add-btn", cursorPane: 0, hold: 86 },
+
+      { act: "waitText", pane: 2, value: "Plan the launch" },
+      { cap: "All three converge — no refresh", hold: 74 },
+
+      { cap: "Client A runs the agent", cursor: "testid:agent-btn", cursorPane: 0, click: true, hold: 54 },
+      { act: "click", pane: 0, sel: "testid:agent-btn" },
+      { act: "sleep", pane: 0, ms: 300 },
+      { cap: "Server-led agent streams to all three", burst: { ms: 3200, every: 300 }, cursor: "testid:agent-btn", cursorPane: 0, hold: 92 },
+
+      { act: "sleep", pane: 0, ms: 400 },
+      { cap: "Every client sees the same final state", hold: 92 },
+    ],
+  },
 ];

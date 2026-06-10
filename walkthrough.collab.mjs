@@ -28,7 +28,7 @@ import { COLLAB_SPECS } from "./walkthrough.collab.specs.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PUB = join(__dirname, "public", "wt-collab");
-const VW = 1280, VH = 800, DEFAULT_HOLD = 60;
+const VW = 1280, VH = 600, DEFAULT_HOLD = 60;   // short viewport = content-tight frames (no empty space)
 
 const sleep = (p, ms) => p.waitForTimeout(ms);
 const waitText = (p, s, t = 60000) =>
