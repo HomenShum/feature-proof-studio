@@ -129,6 +129,16 @@ Selector shorthand (resolved against the **active tab panel** — see lesson #1)
    GIF; this composition's pre-move-delay → glide → hold pattern is the right shape,
    keep it that way through refactors.
 
+## Stage 0 (optional, for audience-targeted walkthroughs): audience-world research
+A walkthrough proves the product works; for high-trust audiences (founders, family offices,
+advisors, M&A teams) that is necessary but not sufficient — they trust people who understand the
+room they sit in. Before writing the spec, load the audience's world and let the SCENARIO come
+from it (their meetings, documents, anxieties), with the feature appearing inside it — never the
+reverse. Doctrine + fluency grid + lexicon discipline + the publish-blocking eval:
+[`references/cultural-fluency.md`](references/cultural-fluency.md) · capture the audience as data:
+[`references/audience_context.example.yaml`](references/audience_context.example.yaml).
+Rule of thumb: **recognition before persuasion; quiet competence, not loud wealth.**
+
 ## Reuse in a new project
 1. Copy `scripts/walkthrough.mjs` + `scripts/Walkthrough.jsx` into the Remotion project
    (`Walkthrough.jsx` → `src/`), and register it in `src/Root.jsx`:
