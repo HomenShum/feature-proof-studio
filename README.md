@@ -117,6 +117,16 @@ full list with sources:
 - **Pace from the caption** (no narration), write outcome statements ("Filter to overdue invoices", not "Click Filter").
 - **3–10 s, one feature, seamless loop**, ~640–800 px wide. Ship MP4 + GIF; GitHub auto‑embeds a bare MP4 URL.
 
+## Designing for specific stacks
+
+What's worth *showing* in a walkthrough differs by architecture — a single-cursor
+capture flatters a single-user **Streamlit** data app but misses what makes a
+live-collaborative **Convex + React** app special (a change in one client appearing
+*live* in another). See **[`STACK_GUIDELINES.md`](STACK_GUIDELINES.md)** for per-stack
+guidance — which SDK primitives produce capturable motion, single-pane vs multi-pane
+capture, and what to `burst` — for Streamlit, Convex+React, and Next.js+SQL on Vercel,
+grounded in the latest Streamlit & Convex docs.
+
 ## Use as a Claude Code skill
 
 This repo *is* a [Claude Code](https://docs.claude.com/en/docs/claude-code) skill —
