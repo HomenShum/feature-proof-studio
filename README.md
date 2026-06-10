@@ -117,6 +117,38 @@ full list with sources:
 - **Pace from the caption** (no narration), write outcome statements ("Filter to overdue invoices", not "Click Filter").
 - **3–10 s, one feature, seamless loop**, ~640–800 px wide. Ship MP4 + GIF; GitHub auto‑embeds a bare MP4 URL.
 
+## Live collaboration (multi-pane)
+
+Single-cursor capture can't show what makes a *collaborative* app special — a change
+in one client appearing **live** in another. So the tool also has a **multi-pane
+mode**: it drives N browser contexts (separate "users") and renders them
+**side-by-side**, cursor on the acting client, with a `burst` over the moment the
+change propagates.
+
+<img src="assets/feature-collab.gif" alt="Two clients side by side: Client A adds a card and runs an agent; Client B sees both appear live via the server broadcast — real cross-client sync" width="900">
+
+Ships with a **worked example** (the live-collab counterpart to the single-pane one):
+- **[`examples/collab-demo/`](examples/collab-demo/)** — a runnable, **zero-dependency**
+  local app (Node SSE server + vanilla JS) that faithfully reproduces the Convex
+  reactive pattern: optimistic paint → server commit → broadcast to *all* clients →
+  atomic temp→real swap; presence; a server-led agent that **streams to every client**.
+  Runs with no cloud login, so the GIF reproduces anywhere.
+- **[`examples/convex-reference/`](examples/convex-reference/)** — the **real Convex +
+  React** implementation of the same app (`useQuery` reactive subscriptions,
+  `useMutation().withOptimisticUpdate`, `ctx.scheduler` + `internalMutation` for the
+  streamed agent) — the production reference, mapped 1:1 to the local demo.
+
+Reproduce it:
+```bash
+node examples/collab-demo/server.mjs        # local demo on :8930 (no install, no login)
+node walkthrough.collab.mjs                 # multi-pane capture: Client A + Client B
+npx remotion render src/index.js WTC-LiveSync out/collab.mp4
+# then the same two-pass ffmpeg palette → assets/feature-collab.gif
+```
+Panes + steps live in `walkthrough.collab.specs.mjs`; the 2-up renderer is
+`src/Walkthrough2up.jsx`. See **[`STACK_GUIDELINES.md`](STACK_GUIDELINES.md)** for why
+Convex + React demos need this and Streamlit doesn't.
+
 ## Designing for specific stacks
 
 What's worth *showing* in a walkthrough differs by architecture — a single-cursor

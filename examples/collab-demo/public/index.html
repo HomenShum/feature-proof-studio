@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Collab Demo · Convex reactive pattern (local stand-in)</title>
+<style>
+  /* House style: dark UI, green accent (#10b981 / #34d399), Inter. Self-contained,
+     no external CDN — the system font stack falls back gracefully if Inter is absent. */
+  :root {
+    --bg: #0a0f0d;
+    --panel: #0f1714;
+    --panel-2: #13201b;
+    --border: #1e2f28;
+    --text: #e6f0ec;
+    --muted: #7f9a90;
+    --accent: #10b981;
+    --accent-2: #34d399;
+    --shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: radial-gradient(1200px 600px at 80% -10%, #10241c 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 22px 20px 40px; }
+
+  /* ---- header / presence ---- */
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; margin-bottom: 18px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 12px var(--accent-2);
+    flex: 0 0 auto;
+  }
+  .brand h1 { font-size: 15px; font-weight: 650; margin: 0; letter-spacing: .2px; }
+  .brand .sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+  #presence { display: flex; align-items: center; gap: -6px; }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 12px; font-weight: 700; color: #07120d;
+    border: 2px solid var(--bg);
+    margin-left: -8px;
+    box-shadow: var(--shadow);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .avatar:first-child { margin-left: 0; }
+  .avatar.me {
+    outline: 2px solid var(--accent-2);
+    outline-offset: 1px;
+    transform: translateY(-1px) scale(1.06);
+  }
+
+  /* ---- controls ---- */
+  .controls { display: flex; gap: 10px; margin-bottom: 18px; }
+  input[type="text"] {
+    flex: 1; min-width: 0;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 11px 13px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  input[type="text"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
+  }
+  button {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 11px 16px;
+    font-size: 14px; font-weight: 650;
+    cursor: pointer;
+    transition: transform .08s ease, background .15s ease, opacity .15s ease;
+    white-space: nowrap;
+  }
+  button:active { transform: translateY(1px); }
+  .btn-primary { background: var(--accent); color: #04130d; }
+  .btn-primary:hover { background: var(--accent-2); }
+  .btn-ghost {
+    background: var(--panel);
+    border-color: var(--border);
+    color: var(--text);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent-2); }
+  .btn-ghost:disabled { opacity: .5; cursor: default; }
+
+  /* ---- board ---- */
+  #board { display: flex; flex-direction: column; gap: 10px; }
+  .empty {
+    color: var(--muted); font-size: 13px; text-align: center;
+    padding: 28px; border: 1px dashed var(--border); border-radius: 12px;
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 15px;
+    box-shadow: var(--shadow);
+    position: relative;
+    animation: pop .18s ease;
+  }
+  @keyframes pop { from { opacity: 0; transform: translateY(6px) scale(.99); } to { opacity: 1; transform: none; } }
+
+  .card .text { font-size: 14px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+  .card .meta {
+    margin-top: 8px; font-size: 11px; color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card .author-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-weight: 600; color: var(--text);
+  }
+  .author-pip { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* OPTIMISTIC "saving" style — subtle, no flicker on reconcile */
+  .card.saving {
+    border-color: rgba(52, 211, 153, 0.35);
+    background: linear-gradient(0deg, rgba(16,185,129,.06), rgba(16,185,129,.06)), var(--panel);
+  }
+  .card.saving .text { opacity: .72; }
+  .saving-badge {
+    margin-left: auto;
+    font-size: 10px; font-weight: 700; letter-spacing: .4px;
+    color: var(--accent-2);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .saving-badge::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+    border: 1.5px solid var(--accent-2); border-top-color: transparent;
+    display: inline-block; animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* lock badge (agent / coordination) */
+  .lock-badge {
+    margin-left: auto;
+    font-size: 10px; font-weight: 700; letter-spacing: .3px;
+    color: #04130d; background: var(--accent-2);
+    padding: 3px 8px; border-radius: 999px;
+  }
+  .card.locked { border-color: var(--accent-2); }
+  .card.streaming .text::after {
+    content: "▌"; color: var(--accent-2);
+    animation: caret 1s steps(1) infinite; margin-left: 1px;
+  }
+  @keyframes caret { 50% { opacity: 0; } }
+
+  footer { margin-top: 22px; font-size: 11px; color: var(--muted); text-align: center; line-height: 1.6; }
+  code { color: var(--accent-2); background: var(--panel); padding: 1px 5px; border-radius: 5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <span class="dot"></span>
+      <div>
+        <h1>Collab Board</h1>
+        <div class="sub">Convex reactive pattern · local stand-in · <span id="who">…</span></div>
+      </div>
+    </div>
+    <div id="presence" data-testid="presence" aria-label="Present collaborators"></div>
+  </header>
+
+  <div class="controls">
+    <input id="add-input" data-testid="add-input" type="text"
+           placeholder="Add a card…" autocomplete="off" />
+    <button id="add-btn" data-testid="add-btn" class="btn-primary">Add</button>
+    <button id="agent-btn" data-testid="agent-btn" class="btn-ghost">🤖 Run agent</button>
+  </div>
+
+  <div id="board"></div>
+
+  <footer>
+    Server-led state · optimistic add → atomic temp→real swap · live SSE broadcast to every pane.<br />
+    Open <code>?user=A</code> and <code>?user=B</code> side by side to watch them sync.
+  </footer>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  // ---- identity from ?user=A|B ------------------------------------------
+  const USERS = {
+    A: { name: "Ana",  color: "#34d399" }, // green
+    B: { name: "Ben",  color: "#60a5fa" }, // blue
+    C: { name: "Cleo", color: "#f472b6" }, // pink (extra panes welcome)
+  };
+  const params = new URLSearchParams(location.search);
+  const key = (params.get("user") || "A").toUpperCase();
+  const me = USERS[key] || { name: "User " + key, color: "#34d399" };
+  // Stable-ish per-pane id (one identity per browser context/pane).
+  const CLIENT_ID = (me.name + "-" + (crypto.randomUUID().slice(0, 8)));
+
+  document.getElementById("who").textContent = "you are " + me.name;
+  document.title = `Collab · ${me.name}`;
+
+  // ---- local state -------------------------------------------------------
+  // serverCards: the authoritative base layer (last SSE broadcast).
+  // optimistic:  temp rows this pane painted at 0ms, keyed by tempId, each with
+  //              the real id once the POST /mutate response comes back. They are
+  //              rendered until the broadcast carries the real card — then the
+  //              temp row is dropped in the SAME render pass (no flicker).
+  let serverCards = [];
+  let presence = {};
+  /** @type {Map<string,{tempId:string, realId:string|null, card:any}>} */
+  const optimistic = new Map();
+
+  const $ = (id) => document.getElementById(id);
+  const board = $("board");
+  const presenceEl = $("presence");
+  const input = $("add-input");
+
+  // ---- render (merge authoritative base + optimistic overlay) -----------
+  function render() {
+    // presence avatars
+    const people = Object.entries(presence);
+    presenceEl.innerHTML = "";
+    if (people.length === 0) {
+      const a = document.createElement("div");
+      a.className = "avatar me";
+      a.style.background = me.color;
+      a.textContent = me.name[0];
+      a.title = me.name + " (you)";
+      presenceEl.appendChild(a);
+    }
+    for (const [cid, p] of people) {
+      const a = document.createElement("div");
+      a.className = "avatar" + (cid === CLIENT_ID ? " me" : "");
+      a.style.background = p.color;
+      a.textContent = (p.name || "?")[0];
+      a.title = p.name + (cid === CLIENT_ID ? " (you)" : "");
+      presenceEl.appendChild(a);
+    }
+
+    // Build the merged list: authoritative cards first, then any optimistic
+    // temp rows whose real id has NOT yet shown up in serverCards.
+    const realIds = new Set(serverCards.map((c) => c.id));
+    const merged = serverCards.map((c) => ({ ...c, _temp: false }));
+    for (const o of optimistic.values()) {
+      // If the real card has landed in the broadcast, the temp row is reconciled
+      // away here — same render pass, so the row simply "becomes real": no flicker.
+      if (o.realId && realIds.has(o.realId)) {
+        optimistic.delete(o.tempId);
+        continue;
+      }
+      merged.push({ ...o.card, _temp: true });
+    }
+
+    board.innerHTML = "";
+    if (merged.length === 0) {
+      const e = document.createElement("div");
+      e.className = "empty";
+      e.textContent = "No cards yet. Add one — it appears instantly here and live in the other pane.";
+      board.appendChild(e);
+      return;
+    }
+
+    for (const c of merged) {
+      board.appendChild(renderCard(c));
+    }
+  }
+
+  function renderCard(c) {
+    const el = document.createElement("div");
+    el.className = "card";
+    el.setAttribute("data-testid", "card");
+    el.setAttribute("data-card-id", c.id);
+    if (c._temp) el.classList.add("saving");
+    if (c.lockedBy) el.classList.add("locked");
+    if (c.streaming) el.classList.add("streaming");
+
+    const text = document.createElement("div");
+    text.className = "text";
+    text.textContent = c.text || "";
+    el.appendChild(text);
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+
+    const chip = document.createElement("span");
+    chip.className = "author-chip";
+    const pip = document.createElement("span");
+    pip.className = "author-pip";
+    pip.style.background = authorColor(c.author);
+    chip.appendChild(pip);
+    chip.appendChild(document.createTextNode(c.author || "Someone"));
+    meta.appendChild(chip);
+
+    if (c._temp) {
+      const b = document.createElement("span");
+      b.className = "saving-badge";
+      b.textContent = "saving";
+      meta.appendChild(b);
+    } else if (c.lockedBy) {
+      const b = document.createElement("span");
+      b.className = "lock-badge";
+      b.textContent = "🔒 " + c.lockedBy;
+      meta.appendChild(b);
+    }
+
+    el.appendChild(meta);
+    return el;
+  }
+
+  function authorColor(name) {
+    for (const u of Object.values(USERS)) if (u.name === name) return u.color;
+    if (name === "Agent") return "#34d399";
+    return "#7f9a90";
+  }
+
+  // ---- SSE subscription (≈ Convex useQuery live subscription) -----------
+  function connect() {
+    const es = new EventSource("/events?user=" + encodeURIComponent(key));
+    es.onmessage = (ev) => {
+      let msg;
+      try { msg = JSON.parse(ev.data); } catch { return; }
+      if (msg.type === "state") {
+        serverCards = msg.cards || [];
+        presence = msg.presence || {};
+        render(); // every broadcast re-renders → the OTHER pane updates live
+      }
+    };
+    es.onerror = () => { /* EventSource auto-reconnects (retry: 1000) */ };
+  }
+
+  // ---- presence join + heartbeat ----------------------------------------
+  async function postPresence() {
+    try {
+      await fetch("/presence", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clientId: CLIENT_ID, name: me.name, color: me.color }),
+      });
+    } catch { /* offline; SSE will catch us up on reconnect */ }
+  }
+
+  // ---- OPTIMISTIC add: paint instantly, then POST, then reconcile -------
+  async function addCard() {
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = "";
+
+    // (a) OPTIMISTIC: paint the card NOW with a temp crypto.randomUUID() id and
+    //     a subtle "saving" style — zero perceived latency, before any network.
+    const tempId = crypto.randomUUID();
+    optimistic.set(tempId, {
+      tempId,
+      realId: null,
+      card: { id: tempId, text, author: me.name, lockedBy: null, streaming: false },
+    });
+    render();
+
+    // (b) commit to the server; it assigns the REAL id and broadcasts to ALL.
+    try {
+      const r = await fetch("/mutate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ op: "add", clientId: CLIENT_ID, text }),
+      });
+      const data = await r.json();
+      if (data && data.ok && data.card) {
+        // Record the real id. The broadcast may have ALREADY arrived (the SSE
+        // and this fetch race) — render() drops the temp row as soon as the real
+        // card is present in serverCards, so the swap is atomic either way.
+        const o = optimistic.get(tempId);
+        if (o) o.realId = data.card.id;
+        render();
+      } else {
+        optimistic.delete(tempId); // server rejected → roll back the optimistic row
+        render();
+      }
+    } catch {
+      optimistic.delete(tempId); // network failed → roll back (no fake success)
+      render();
+    }
+  }
+
+  // ---- server-led agent --------------------------------------------------
+  async function runAgent() {
+    const btn = $("agent-btn");
+    btn.disabled = true;
+    try {
+      await fetch("/agent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clientId: CLIENT_ID }),
+      });
+    } catch { /* ignore; broadcasts will reflect agent state */ }
+    // Re-enable shortly; the actual streaming/lock state is driven by broadcasts.
+    setTimeout(() => { btn.disabled = false; }, 4500);
+  }
+
+  // ---- wire up -----------------------------------------------------------
+  $("add-btn").addEventListener("click", addCard);
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") addCard(); });
+  $("agent-btn").addEventListener("click", runAgent);
+
+  // boot: presence → SSE → render. Heartbeat keeps the avatar fresh.
+  render();
+  postPresence().then(connect);
+  setInterval(postPresence, 20_000);
+})();
+</script>
+</body>
+</html>
