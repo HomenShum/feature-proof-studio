@@ -117,6 +117,10 @@ const run = async () => {
   const ONLY = process.env.COLLAB_ONLY ? process.env.COLLAB_ONLY.split(",").map((s) => s.trim()) : null;
   const specs = ONLY ? COLLAB_SPECS.filter((s) => ONLY.includes(s.id)) : COLLAB_SPECS;
   if (!ONLY) rmSync(PUB, { recursive: true, force: true });
+  // A per-RUN code substituted for `__RUNID__` in pane URLs — so a "create a fresh room" spec
+  // gets a brand-new (empty) room each run instead of re-joining a stale, already-filled one.
+  const RUNID = "S" + Date.now().toString(36).slice(-7).toUpperCase();
+  console.log("RUNID (fresh-room code) =", RUNID);
   const browser = await chromium.launch({ headless: true });
 
   const out = [];
@@ -141,7 +145,12 @@ const run = async () => {
       pages.push(page);
     }
     // Navigate every pane to its own URL.
-    await Promise.all(pages.map((page, k) => page.goto(spec.panes[k].url, { waitUntil: "domcontentloaded" }).catch(() => {})));
+    const attemptRunId = RUNID + (attempt > 1 ? "X" + attempt : "");   // fresh room on EACH attempt
+    await Promise.all(pages.map(async (page, k) => {
+      const pane = spec.panes[k];
+      if (pane.navDelay) await page.waitForTimeout(pane.navDelay);   // stagger (e.g. create-then-join)
+      await page.goto(pane.url.replace(/__RUNID__/g, attemptRunId), { waitUntil: "domcontentloaded" }).catch(() => {});
+    }));
     await Promise.all(pages.map((page) => sleep(page, 1200)));
 
     steps = [];

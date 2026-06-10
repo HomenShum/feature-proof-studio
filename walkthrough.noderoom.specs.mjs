@@ -63,4 +63,37 @@ export const NODEROOM_SPECS = [
       { cap: "One server-led agent, broadcast to every client", zoom: "testid:artifact-panel", zoomScale: 1.6, hold: 90 },
     ],
   },
+
+  // FRESH SEEDED ROOM — Client A creates a brand-new room (?create seeds a Q3 sheet with an EMPTY
+  // variance column); Client B joins it. /ask reconcile then FILLS the empty variance live on both
+  // — the dramatic empty->filled reveal the crowded shared room can't show. `__RUNID__` => a unique
+  // room code per run/attempt (always a fresh, empty room); navDelay staggers create-then-join.
+  {
+    id: "NRfresh",
+    title: "NodeRoom · a fresh room, reconciled by the agent",
+    accent: "#f59e0b",
+    vw: 1280, vh: 800,
+    retries: 1,
+    panes: [
+      { label: "Client A (host)", url: "https://noderoom.live/?create=__RUNID__&name=Client+A" },
+      { label: "Client B", url: "https://noderoom.live/?room=__RUNID__&name=Client+B", navDelay: 5200 },
+    ],
+    steps: [
+      { act: "sleep", pane: 0, ms: 1500 },
+      { act: "key", pane: 0, value: "Escape" },
+      { act: "key", pane: 1, value: "Escape" },
+      { act: "sleep", pane: 0, ms: 1200 },
+      { cap: "A brand-new room — two clients, a fresh Q3 sheet", hold: 76 },
+      { cap: "The variance column starts empty", zoom: "testid:artifact-panel", zoomScale: 1.55, hold: 84 },
+
+      { act: "type", pane: 0, sel: "testid:chat-composer", value: "/ask reconcile Q3 revenue", delay: 20 },
+      { cap: "Client A asks the Room NodeAgent to reconcile", cursor: "testid:chat-send", cursorPane: 0, click: true, zoom: "testid:chat-feed", zoomScale: 1.65, hold: 54 },
+      { act: "click", pane: 0, sel: "testid:chat-send" },
+      { act: "sleep", pane: 0, ms: 2600 },
+      { cap: "The agent fills the empty variance — live, on BOTH clients", burst: { ms: 10000, every: 450 }, zoom: "testid:artifact-panel", zoomScale: 1.55, hold: 130 },
+      { act: "waitText", pane: 0, value: "released", timeout: 30000 },
+      { act: "sleep", pane: 0, ms: 1500 },
+      { cap: "Empty → reconciled, broadcast to every client", zoom: "testid:artifact-panel", zoomScale: 1.55, hold: 94 },
+    ],
+  },
 ];

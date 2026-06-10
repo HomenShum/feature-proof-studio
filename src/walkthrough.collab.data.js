@@ -794,5 +794,192 @@ export const COLLAB_WALKTHROUGHS = [
         ]
       }
     ]
+  },
+  {
+    "id": "NRfresh",
+    "title": "NodeRoom · a fresh room, reconciled by the agent",
+    "accent": "#f59e0b",
+    "vw": 1280,
+    "vh": 800,
+    "cropVH": null,
+    "paneLabels": [
+      "Client A (host)",
+      "Client B"
+    ],
+    "steps": [
+      {
+        "caption": "A brand-new room — two clients, a fresh Q3 sheet",
+        "hold": 76,
+        "burst": false,
+        "zoomScale": null,
+        "panes": [
+          {
+            "img": "wt-collab/NRfresh/p0_00.png",
+            "cursor": null,
+            "click": false,
+            "zoom": null
+          },
+          {
+            "img": "wt-collab/NRfresh/p1_00.png",
+            "cursor": null,
+            "click": false,
+            "zoom": null
+          }
+        ]
+      },
+      {
+        "caption": "The variance column starts empty",
+        "hold": 84,
+        "burst": false,
+        "zoomScale": 1.55,
+        "panes": [
+          {
+            "img": "wt-collab/NRfresh/p0_01.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 753,
+              "y": 426
+            }
+          },
+          {
+            "img": "wt-collab/NRfresh/p1_01.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 753,
+              "y": 426
+            }
+          }
+        ]
+      },
+      {
+        "caption": "Client A asks the Room NodeAgent to reconcile",
+        "hold": 54,
+        "burst": false,
+        "zoomScale": 1.65,
+        "panes": [
+          {
+            "img": "wt-collab/NRfresh/p0_02.png",
+            "cursor": {
+              "x": 518,
+              "y": 677
+            },
+            "click": true,
+            "zoom": {
+              "x": 406,
+              "y": 372
+            }
+          },
+          {
+            "img": "wt-collab/NRfresh/p1_02.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 406,
+              "y": 372
+            }
+          }
+        ]
+      },
+      {
+        "caption": "The agent fills the empty variance — live, on BOTH clients",
+        "hold": 130,
+        "burst": true,
+        "zoomScale": 1.55,
+        "panes": [
+          {
+            "imgs": [
+              "wt-collab/NRfresh/p0_03_00.png",
+              "wt-collab/NRfresh/p0_03_01.png",
+              "wt-collab/NRfresh/p0_03_02.png",
+              "wt-collab/NRfresh/p0_03_03.png",
+              "wt-collab/NRfresh/p0_03_04.png",
+              "wt-collab/NRfresh/p0_03_05.png",
+              "wt-collab/NRfresh/p0_03_06.png",
+              "wt-collab/NRfresh/p0_03_07.png",
+              "wt-collab/NRfresh/p0_03_08.png",
+              "wt-collab/NRfresh/p0_03_09.png",
+              "wt-collab/NRfresh/p0_03_10.png",
+              "wt-collab/NRfresh/p0_03_11.png",
+              "wt-collab/NRfresh/p0_03_12.png",
+              "wt-collab/NRfresh/p0_03_13.png",
+              "wt-collab/NRfresh/p0_03_14.png",
+              "wt-collab/NRfresh/p0_03_15.png",
+              "wt-collab/NRfresh/p0_03_16.png",
+              "wt-collab/NRfresh/p0_03_17.png",
+              "wt-collab/NRfresh/p0_03_18.png",
+              "wt-collab/NRfresh/p0_03_19.png",
+              "wt-collab/NRfresh/p0_03_20.png",
+              "wt-collab/NRfresh/p0_03_21.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 753,
+              "y": 426
+            }
+          },
+          {
+            "imgs": [
+              "wt-collab/NRfresh/p1_03_00.png",
+              "wt-collab/NRfresh/p1_03_01.png",
+              "wt-collab/NRfresh/p1_03_02.png",
+              "wt-collab/NRfresh/p1_03_03.png",
+              "wt-collab/NRfresh/p1_03_04.png",
+              "wt-collab/NRfresh/p1_03_05.png",
+              "wt-collab/NRfresh/p1_03_06.png",
+              "wt-collab/NRfresh/p1_03_07.png",
+              "wt-collab/NRfresh/p1_03_08.png",
+              "wt-collab/NRfresh/p1_03_09.png",
+              "wt-collab/NRfresh/p1_03_10.png",
+              "wt-collab/NRfresh/p1_03_11.png",
+              "wt-collab/NRfresh/p1_03_12.png",
+              "wt-collab/NRfresh/p1_03_13.png",
+              "wt-collab/NRfresh/p1_03_14.png",
+              "wt-collab/NRfresh/p1_03_15.png",
+              "wt-collab/NRfresh/p1_03_16.png",
+              "wt-collab/NRfresh/p1_03_17.png",
+              "wt-collab/NRfresh/p1_03_18.png",
+              "wt-collab/NRfresh/p1_03_19.png",
+              "wt-collab/NRfresh/p1_03_20.png",
+              "wt-collab/NRfresh/p1_03_21.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 753,
+              "y": 426
+            }
+          }
+        ]
+      },
+      {
+        "caption": "Empty → reconciled, broadcast to every client",
+        "hold": 94,
+        "burst": false,
+        "zoomScale": 1.55,
+        "panes": [
+          {
+            "img": "wt-collab/NRfresh/p0_04.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 753,
+              "y": 426
+            }
+          },
+          {
+            "img": "wt-collab/NRfresh/p1_04.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 753,
+              "y": 426
+            }
+          }
+        ]
+      }
+    ]
   }
 ];
