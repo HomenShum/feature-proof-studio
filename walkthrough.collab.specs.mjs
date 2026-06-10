@@ -15,11 +15,14 @@
 //
 // The demo app is expected to serve a shared collaborative board at :8930 and key each
 // client off the ?user= query param. Adjust testids/URLs to match your app.
+import { NODEROOM_SPECS } from "./walkthrough.noderoom.specs.mjs";
+
 export const COLLAB_SPECS = [
   {
     id: "LiveSync",
     title: "Live Collaboration",
     accent: "#10b981",
+    cropVH: 360,
     panes: [
       { label: "Client A", url: "http://127.0.0.1:8930/?user=A" },
       { label: "Client B", url: "http://127.0.0.1:8930/?user=B" },
@@ -62,6 +65,7 @@ export const COLLAB_SPECS = [
     id: "LiveSync3",
     title: "Live Collaboration · 3 clients",
     accent: "#34d399",
+    cropVH: 360,
     panes: [
       { label: "Client A", url: "http://127.0.0.1:8930/?user=A" },
       { label: "Client B", url: "http://127.0.0.1:8930/?user=B" },
@@ -91,4 +95,7 @@ export const COLLAB_SPECS = [
       { cap: "Every client sees the same final state", hold: 92 },
     ],
   },
+
+  // Real-world example: the LIVE deployed NodeRoom (a Convex + React live-collab app).
+  ...NODEROOM_SPECS,
 ];

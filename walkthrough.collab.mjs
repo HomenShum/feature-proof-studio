@@ -50,13 +50,14 @@ const loc = (p, sel) => {
 const cursorOf = async (p, sel) => {
   if (!sel) return null;
   try {
+    const vp = p.viewportSize() || { width: VW, height: VH };
     const el = loc(p, sel);
     await el.scrollIntoViewIfNeeded({ timeout: 4000 }).catch(() => {});
     const box = await el.evaluate((n) => {
       const r = n.getBoundingClientRect();
       return { x: r.left + r.width / 2, y: r.top + Math.min(r.height / 2, 22) };
     });
-    return { x: Math.max(8, Math.min(VW - 8, Math.round(box.x))), y: Math.max(8, Math.min(VH - 8, Math.round(box.y))) };
+    return { x: Math.max(8, Math.min(vp.width - 8, Math.round(box.x))), y: Math.max(8, Math.min(vp.height - 8, Math.round(box.y))) };
   } catch { return null; }
 };
 
@@ -71,6 +72,9 @@ const doAct = async (page, a) => {
     await sleep(page, 350);
   } else if (a.act === "click") {
     await loc(page, a.sel).click();
+    await sleep(page, 250);
+  } else if (a.act === "key") {
+    await page.keyboard.press(a.value);
     await sleep(page, 250);
   } else if (a.act === "type") {
     const el = loc(page, a.sel);
@@ -114,7 +118,7 @@ const run = async () => {
     const contexts = [];
     const pages = [];
     for (const pane of spec.panes) {
-      const ctx = await browser.newContext({ viewport: { width: VW, height: VH }, deviceScaleFactor: 2 });
+      const ctx = await browser.newContext({ viewport: { width: spec.vw || VW, height: spec.vh || VH }, deviceScaleFactor: 2 });
       const page = await ctx.newPage();
       page.setDefaultTimeout(60000);
       contexts.push(ctx);
@@ -202,6 +206,9 @@ const run = async () => {
       id: spec.id,
       title: spec.title,
       accent: spec.accent,
+      vw: spec.vw || VW,
+      vh: spec.vh || VH,
+      cropVH: spec.cropVH || null,
       paneLabels: spec.panes.map((p) => p.label),
       steps,
     });

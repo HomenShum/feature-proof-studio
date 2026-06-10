@@ -4,6 +4,9 @@ export const COLLAB_WALKTHROUGHS = [
     "id": "LiveSync",
     "title": "Live Collaboration",
     "accent": "#10b981",
+    "vw": 1280,
+    "vh": 600,
+    "cropVH": 360,
     "paneLabels": [
       "Client A",
       "Client B"
@@ -212,6 +215,9 @@ export const COLLAB_WALKTHROUGHS = [
     "id": "LiveSync3",
     "title": "Live Collaboration · 3 clients",
     "accent": "#34d399",
+    "vw": 1280,
+    "vh": 600,
+    "cropVH": 360,
     "paneLabels": [
       "Client A",
       "Client B",
@@ -473,6 +479,298 @@ export const COLLAB_WALKTHROUGHS = [
           },
           {
             "img": "wt-collab/LiveSync3/p2_07.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "NRsolo",
+    "title": "NodeRoom · human + agent, no clobber",
+    "accent": "#8b5cf6",
+    "vw": 1280,
+    "vh": 800,
+    "cropVH": null,
+    "paneLabels": [
+      "NodeRoom — memory mode (offline, deterministic)"
+    ],
+    "steps": [
+      {
+        "caption": "A shared room — humans + a NodeAgent on one spreadsheet",
+        "hold": 80,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/NRsolo/p0_00.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Run collaboration — a human and the agent edit at once",
+        "hold": 58,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/NRsolo/p0_01.png",
+            "cursor": {
+              "x": 839,
+              "y": 169
+            },
+            "click": true
+          }
+        ]
+      },
+      {
+        "caption": "The agent locks a cell, drafts, then smart-merges — no clobber",
+        "hold": 100,
+        "burst": true,
+        "panes": [
+          {
+            "imgs": [
+              "wt-collab/NRsolo/p0_02_00.png",
+              "wt-collab/NRsolo/p0_02_01.png",
+              "wt-collab/NRsolo/p0_02_02.png",
+              "wt-collab/NRsolo/p0_02_03.png",
+              "wt-collab/NRsolo/p0_02_04.png",
+              "wt-collab/NRsolo/p0_02_05.png",
+              "wt-collab/NRsolo/p0_02_06.png",
+              "wt-collab/NRsolo/p0_02_07.png",
+              "wt-collab/NRsolo/p0_02_08.png",
+              "wt-collab/NRsolo/p0_02_09.png",
+              "wt-collab/NRsolo/p0_02_10.png",
+              "wt-collab/NRsolo/p0_02_11.png",
+              "wt-collab/NRsolo/p0_02_12.png"
+            ],
+            "cursor": {
+              "x": 870,
+              "y": 160
+            },
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Every change — human or agent — lands in the audit trace",
+        "hold": 92,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/NRsolo/p0_03.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "NRsync",
+    "title": "NodeRoom · live cross-client sync",
+    "accent": "#34d399",
+    "vw": 1280,
+    "vh": 800,
+    "cropVH": null,
+    "paneLabels": [
+      "Client A",
+      "Client B"
+    ],
+    "steps": [
+      {
+        "caption": "Two clients, one shared NodeRoom",
+        "hold": 76,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/NRsync/p0_00.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/NRsync/p1_00.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Client A types a message",
+        "hold": 52,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/NRsync/p0_01.png",
+            "cursor": {
+              "x": 388,
+              "y": 677
+            },
+            "click": false
+          },
+          {
+            "img": "wt-collab/NRsync/p1_01.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Client A sends it",
+        "hold": 52,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/NRsync/p0_02.png",
+            "cursor": {
+              "x": 518,
+              "y": 677
+            },
+            "click": true
+          },
+          {
+            "img": "wt-collab/NRsync/p1_02.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Client A posts → Client B sees it live (Convex reactivity)",
+        "hold": 90,
+        "burst": true,
+        "panes": [
+          {
+            "imgs": [
+              "wt-collab/NRsync/p0_03_00.png",
+              "wt-collab/NRsync/p0_03_01.png",
+              "wt-collab/NRsync/p0_03_02.png",
+              "wt-collab/NRsync/p0_03_03.png",
+              "wt-collab/NRsync/p0_03_04.png",
+              "wt-collab/NRsync/p0_03_05.png",
+              "wt-collab/NRsync/p0_03_06.png",
+              "wt-collab/NRsync/p0_03_07.png",
+              "wt-collab/NRsync/p0_03_08.png",
+              "wt-collab/NRsync/p0_03_09.png",
+              "wt-collab/NRsync/p0_03_10.png"
+            ],
+            "cursor": {
+              "x": 518,
+              "y": 674
+            },
+            "click": false
+          },
+          {
+            "imgs": [
+              "wt-collab/NRsync/p1_03_00.png",
+              "wt-collab/NRsync/p1_03_01.png",
+              "wt-collab/NRsync/p1_03_02.png",
+              "wt-collab/NRsync/p1_03_03.png",
+              "wt-collab/NRsync/p1_03_04.png",
+              "wt-collab/NRsync/p1_03_05.png",
+              "wt-collab/NRsync/p1_03_06.png",
+              "wt-collab/NRsync/p1_03_07.png",
+              "wt-collab/NRsync/p1_03_08.png",
+              "wt-collab/NRsync/p1_03_09.png",
+              "wt-collab/NRsync/p1_03_10.png"
+            ],
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Synced across clients — no refresh",
+        "hold": 78,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/NRsync/p0_04.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/NRsync/p1_04.png",
+            "cursor": null,
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Client B replies",
+        "hold": 52,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/NRsync/p0_05.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/NRsync/p1_05.png",
+            "cursor": {
+              "x": 518,
+              "y": 677
+            },
+            "click": true
+          }
+        ]
+      },
+      {
+        "caption": "Both directions sync instantly — one shared backend",
+        "hold": 86,
+        "burst": true,
+        "panes": [
+          {
+            "imgs": [
+              "wt-collab/NRsync/p0_06_00.png",
+              "wt-collab/NRsync/p0_06_01.png",
+              "wt-collab/NRsync/p0_06_02.png",
+              "wt-collab/NRsync/p0_06_03.png",
+              "wt-collab/NRsync/p0_06_04.png",
+              "wt-collab/NRsync/p0_06_05.png",
+              "wt-collab/NRsync/p0_06_06.png",
+              "wt-collab/NRsync/p0_06_07.png",
+              "wt-collab/NRsync/p0_06_08.png",
+              "wt-collab/NRsync/p0_06_09.png"
+            ],
+            "cursor": null,
+            "click": false
+          },
+          {
+            "imgs": [
+              "wt-collab/NRsync/p1_06_00.png",
+              "wt-collab/NRsync/p1_06_01.png",
+              "wt-collab/NRsync/p1_06_02.png",
+              "wt-collab/NRsync/p1_06_03.png",
+              "wt-collab/NRsync/p1_06_04.png",
+              "wt-collab/NRsync/p1_06_05.png",
+              "wt-collab/NRsync/p1_06_06.png",
+              "wt-collab/NRsync/p1_06_07.png",
+              "wt-collab/NRsync/p1_06_08.png",
+              "wt-collab/NRsync/p1_06_09.png"
+            ],
+            "cursor": {
+              "x": 518,
+              "y": 674
+            },
+            "click": false
+          }
+        ]
+      },
+      {
+        "caption": "Every client converges on the same room",
+        "hold": 82,
+        "burst": false,
+        "panes": [
+          {
+            "img": "wt-collab/NRsync/p0_07.png",
+            "cursor": null,
+            "click": false
+          },
+          {
+            "img": "wt-collab/NRsync/p1_07.png",
             "cursor": null,
             "click": false
           }

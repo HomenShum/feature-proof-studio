@@ -92,13 +92,24 @@ export const Walkthrough2up = ({ wt }) => {
   const cur = steps[i];
   const prev = steps[i - 1];
 
-  // Pane count drives the layout (2-up or 3-up share this composition).
+  // Pane count + per-walkthrough capture geometry drive the layout. vw/vh = the capture
+  // viewport; cropVH = how much of the content-bearing top to show. Defaults keep the local
+  // demo's tight 600px framing; a dense app like NodeRoom records vh:800 + no crop.
   const N = (wt.paneLabels && wt.paneLabels.length) || (cur.panes && cur.panes.length) || 2;
   const paneLabels = wt.paneLabels || Array.from({ length: N }, (_, k) => `Client ${String.fromCharCode(65 + k)}`);
-  const PANE_W = Math.floor((WT2_W - SIDE_MARGIN * 2 - GAP * (N - 1)) / N);
-  const PANE_H = Math.round(PANE_W * CROP_VH / CAP_VW);  // window clips the image to the content-bearing top
-  const SCALE = PANE_W / CAP_VW;                          // uniform cursor-coord scale
-  const winTop = Math.max(120, Math.round((WT2_H - (CHROME_H + PANE_H)) / 2) - 4);
+  const capVW = wt.vw || CAP_VW;
+  const capVH = wt.vh || CAP_VH;
+  const cropVH = wt.cropVH || capVH;
+  // Fit each pane to the per-N width budget, then cap to available height so a tall 1-up
+  // (a dense app) never overflows the canvas; center the row both ways.
+  const MAX_H = WT2_H - 230;
+  let PANE_W = Math.floor((WT2_W - SIDE_MARGIN * 2 - GAP * (N - 1)) / N);
+  let PANE_H = Math.round(PANE_W * cropVH / capVW);
+  if (PANE_H > MAX_H) { PANE_H = MAX_H; PANE_W = Math.round(PANE_H * capVW / cropVH); }
+  const SCALE = PANE_W / capVW;                               // uniform cursor-coord scale
+  const rowW = PANE_W * N + GAP * (N - 1);
+  const startX = Math.round((WT2_W - rowW) / 2);              // center the row horizontally
+  const winTop = Math.max(116, Math.round((WT2_H - (CHROME_H + PANE_H)) / 2) - 4);
 
   const fadeIn = interpolate(lf, [0, 11], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const capY = interpolate(lf, [4, 22], [26, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -132,12 +143,12 @@ export const Walkthrough2up = ({ wt }) => {
         <div style={{ fontFamily: FONT, fontWeight: 700, fontSize: 16, color: wt.accent, border: `2px solid ${wt.accent}`, borderRadius: 8, padding: "3px 10px" }}>
           Step {i + 1} / {steps.length}
         </div>
-        <div style={{ fontFamily: FONT, fontWeight: 600, fontSize: 15, color: "#9fb3c8" }}>· {N} clients, one shared backend</div>
+        {N > 1 && <div style={{ fontFamily: FONT, fontWeight: 600, fontSize: 15, color: "#9fb3c8" }}>· {N} clients, one shared backend</div>}
       </div>
 
       {Array.from({ length: N }, (_, pi) => {
         const p = panes[pi] || {};
-        const left = SIDE_MARGIN + pi * (PANE_W + GAP);
+        const left = startX + pi * (PANE_W + GAP);
         return (
           <PaneWindow
             key={pi} left={left} top={winTop} paneW={PANE_W} paneH={PANE_H}
