@@ -102,6 +102,32 @@ Selector shorthand (resolved against the **active tab panel** — see lesson #1)
 7. **Don't match caption text in your wait conditions**: e.g. waiting for "Adjusted
    EBITDA" fires instantly if it's in a page header. Wait for a post-result-only
    string (a computed value, a status="complete" label).
+8. **Presence before negative assertion.** "The spinner is gone" passes vacuously on a
+   page that never rendered — always require the container to EXIST first, then wait
+   for the absence (see `notRunning` in `walkthrough.mjs`). This exact bug produced a
+   "passing" multi-user capture where user 2's panel was never mounted at all.
+9. **Retry nondeterministic specs in a FRESH environment.** LLM-backed steps flake
+   (~50% observed across a day of live captures). Mark them `retries: N` — each attempt
+   wipes the frame dir and reopens a fresh page; a half-driven UI poisons every frame
+   after the failure, so reusing the page just re-captures the damage.
+10. **Freeze failure forensics.** On any capture error, screenshot `zz-fail.png` + log a
+   body-text snippet before moving on. "Which state was the page actually in" turns an
+   hour of hypothesis ping-pong into one image. (It once exposed a real product bug:
+   returning visitors landed in a collapsed layout nothing else ever exercised.)
+11. **One browser context per persona.** Two pages in one context share localStorage —
+   "user 2" silently reuses user 1's session and every multi-user claim is fake.
+   Real users = isolated `browser.newContext()` per persona.
+12. **Deterministic-engine fallback for un-walkthrough-able flows** — but root-cause
+   first. When a live-LLM flow won't reproduce, capture against a scripted/demo engine
+   at the SAME URL and label the clip honestly. In our case the "flaky" review-mode flow
+   turned out to be a real agent bug (the model was never told approval mode existed);
+   the walkthrough capturer is what found it. Fallback is a labeled last resort, not the
+   first move.
+13. **GIF camera rule: ease over a FIXED short window, then HOLD static.** Continuous
+   zoom/pan relax changes every pixel of every frame — inter-frame delta IS the GIF
+   size budget (observed 2–3× blow-up, 8–16MB). Motion is cheap in H.264, brutal in
+   GIF; this composition's pre-move-delay → glide → hold pattern is the right shape,
+   keep it that way through refactors.
 
 ## Reuse in a new project
 1. Copy `scripts/walkthrough.mjs` + `scripts/Walkthrough.jsx` into the Remotion project
