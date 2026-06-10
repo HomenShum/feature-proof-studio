@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, Img, staticFile, useCurrentFrame, interpolate, Easing } from "remotion";
+import { AbsoluteFill, Img, staticFile, useCurrentFrame, interpolate, spring, Easing } from "remotion";
 
 export const WT_FPS = 30;
 export const WT_W = 1920;
@@ -94,11 +94,14 @@ export const Walkthrough = ({ wt }) => {
   ty = Math.min(0, Math.max(IMG_H - IMG_H * s, ty));
 
   // ---- Pointer glide (in image-space; the camera scales it along with the UI).
+  // Spring rather than cubic interpolate: stiffness 400 / damping 45 / clamped is the
+  // production-tested "confident cursor" (MagicUI SmoothCursor params; Remotion spring docs) —
+  // it accelerates and settles like a hand, where a symmetric cubic reads as a tween.
   let cursor = null, cursorOp = 0;
   if (cur.cursor) {
     const c = { x: cur.cursor.x * SX, y: cur.cursor.y * SY };
     const from = prev && prev.cursor ? { x: prev.cursor.x * SX, y: prev.cursor.y * SY } : c;
-    const t = interpolate(lf, [0, 18], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
+    const t = spring({ frame: lf, fps: WT_FPS, durationInFrames: 18, config: { stiffness: 400, damping: 45, mass: 1 }, overshootClamping: true });
     cursor = { x: from.x + (c.x - from.x) * t, y: from.y + (c.y - from.y) * t };
     cursorOp = interpolate(lf, [0, 8], [prev && prev.cursor ? 1 : 0, 1], { extrapolateRight: "clamp" });
   }

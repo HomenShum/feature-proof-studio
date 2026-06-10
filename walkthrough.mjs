@@ -21,7 +21,14 @@ const VW = 1280, VH = 800, DEFAULT_HOLD = 60;
 
 const sleep = (p, ms) => p.waitForTimeout(ms);
 const panel = (p) => p.locator('[data-baseweb="tab-panel"]:visible').first();
-const notRunning = (p, t = 220000) => p.waitForFunction(() => !document.querySelector('[data-testid="stStatusWidget"]'), { timeout: t, polling: 1000 }).catch(() => {});
+// PRESENCE BEFORE NEGATIVE ASSERTION: "the status widget is gone" passes vacuously on a page
+// that never rendered at all (blank tab, crashed app) — so first require the active panel to
+// exist, THEN wait for the spinner's absence. A negative wait without a presence guard is the
+// most common source of walkthroughs that "pass" while capturing an empty screen.
+const notRunning = async (p, t = 220000) => {
+  await panel(p).waitFor({ state: "visible", timeout: 30000 }).catch(() => {});
+  await p.waitForFunction(() => !document.querySelector('[data-testid="stStatusWidget"]'), { timeout: t, polling: 1000 }).catch(() => {});
+};
 const waitText = (p, s, t = 220000) => p.waitForFunction((x) => new RegExp(x).test(document.body.innerText), s, { timeout: t, polling: 1500 }).catch(() => {});
 
 // Resolve a spec selector to a Playwright Locator scoped to the ACTIVE tab panel.
@@ -77,20 +84,35 @@ const doAct = async (p, a) => {
   }
 };
 
-const run = async () => {
-  rmSync(PUB, { recursive: true, force: true });
-  const browser = await chromium.launch({ headless: true });
+// Fresh harness page — used at start AND for per-spec retries. A retried spec must run in a
+// brand-new page (LLM-backed steps flake ~50% in our experience, and a half-driven UI poisons
+// every frame after the failure; reusing the page just re-captures the poisoned state).
+const openHarness = async (browser) => {
   const page = await browser.newPage({ viewport: { width: VW, height: VH }, deviceScaleFactor: 2 });
   page.setDefaultTimeout(60000);
   await page.goto(BASE, { waitUntil: "networkidle" });
   await page.waitForFunction(() => [...document.querySelectorAll('[data-baseweb="tab"]')].some((t) => /List Intelligence/.test(t.innerText)), { timeout: 60000 });
   await sleep(page, 1500);
+  return page;
+};
+
+const run = async () => {
+  rmSync(PUB, { recursive: true, force: true });
+  const browser = await chromium.launch({ headless: true });
+  let page = await openHarness(browser);
 
   const out = [];
   for (const spec of SPECS) {
     const dir = join(PUB, spec.id);
+    // Per-spec retries (opt-in via `retries: N` on the spec — give it to any spec whose steps
+    // call an LLM or other nondeterministic backend). Each attempt wipes the frame dir and runs
+    // in a FRESH page so retried captures never inherit poisoned UI state.
+    const maxAttempts = 1 + (spec.retries || 0);
+    let steps = [];
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    rmSync(dir, { recursive: true, force: true });
     mkdirSync(dir, { recursive: true });
-    const steps = [];
+    steps = [];
     try {
       await clickTab(page, spec.tab);
       let n = 0;
@@ -123,7 +145,22 @@ const run = async () => {
           await doAct(page, op);
         }
       }
-    } catch (e) { console.log(spec.id, "err", e.message); }
+      break; // attempt succeeded
+    } catch (e) {
+      // FAILURE FORENSICS: freeze the exact UI state + a body-text snippet before retrying or
+      // shipping a partial — "which state was the page actually in" ends debugging guesswork.
+      // zz-fail.png sorts last in the frame dir and is never referenced by walkthrough.data.js.
+      await page.screenshot({ path: join(dir, "zz-fail.png") }).catch(() => {});
+      const bodyText = await page.evaluate(() => document.body.innerText.replace(/\s+/g, " ").slice(0, 200)).catch(() => "(unreadable)");
+      console.log(`${spec.id} attempt ${attempt}/${maxAttempts} err: ${e.message.split("\n")[0]}`);
+      console.log(`  fail-state: ${bodyText}`);
+      if (attempt < maxAttempts) {
+        await page.close().catch(() => {});
+        page = await openHarness(browser);
+        console.log(`  retrying ${spec.id} in a fresh page`);
+      }
+    }
+    }
     out.push({ id: spec.id, title: spec.title, accent: spec.accent, steps });
   }
   await browser.close();
