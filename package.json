@@ -1,0 +1,25 @@
+{
+  "name": "feature-walkthrough-gif",
+  "version": "0.1.0",
+  "description": "Turn any web feature into a polished, annotated walkthrough GIF — every UI state, an animated cursor that glides to each click, step captions, a zoom-to-focus camera, and a progress bar. Playwright capture → Remotion render → ffmpeg GIF.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Homen Shum",
+  "repository": { "type": "git", "url": "https://github.com/HomenShum/feature-walkthrough-gif" },
+  "keywords": ["demo", "gif", "walkthrough", "screencast", "remotion", "playwright", "product-demo", "readme", "streamlit"],
+  "scripts": {
+    "capture": "node walkthrough.mjs",
+    "studio": "remotion studio src/index.js",
+    "render": "remotion render src/index.js",
+    "render:example": "remotion render src/index.js WT-ListIntel out/example.mp4 --concurrency=2"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.474",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.474"
+  },
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  }
+}

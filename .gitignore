@@ -1,0 +1,9 @@
+node_modules/
+out/
+recordings/
+.remotion/
+*.log
+# The capturer regenerates these; the repo ships a worked example, so they ARE
+# committed here. Uncomment to keep your own captures out of version control:
+# public/wt/
+# src/walkthrough.data.js
