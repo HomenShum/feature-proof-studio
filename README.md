@@ -4,7 +4,7 @@
 
 ### Turn any web feature into a polished, **annotated walkthrough GIF**.
 
-Every UI state · an animated cursor that **glides to each click** (with a ripple) · a **zoom‑to‑focus camera** · step captions · a progress bar.
+Every UI state · an animated cursor that **glides to each click** (with a ripple) · a **zoom‑to‑focus camera** · the **loading/streaming captured live** (spinner spinning, results coming in) · step captions · a progress bar.
 Not a single final‑state "hero shot" — the viewer follows the *whole flow*.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -91,6 +91,7 @@ the captured frames + `src/walkthrough.data.js` are included so it renders immed
    }
    ```
    - `cap` = **capture** this state. `cursor` = where the pointer glides (`click:true` ripples there). `hold` = frames to dwell.
+   - `cap` + `burst: { ms, every }` = **capture the loading/streaming motion** — a rapid frame sequence (spinner spinning, status updating, results streaming in), played back as real motion instead of a frozen snapshot. Put it right after the click that starts the work.
    - `act` = **advance** the UI: `fill | click | upload | sleep | waitText | notRunning | scrollEl | scrollText | scrollLastChat | scrollTop | scrollY`.
    - Selector shorthand: `textarea` · `input` · `file` · `drop` · `chat` · `btn:<name regex>` · `aria:<label>` · `aria^:<prefix>` · `df`/`iframe`/`metric` (for `scrollEl`) · any CSS.
 2. **Capture + render:** start your app's clean harness, then
