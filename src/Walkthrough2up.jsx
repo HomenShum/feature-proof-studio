@@ -65,14 +65,17 @@ const Chrome = ({ accent, label, acting }) => (
 );
 
 // One browser window for a single pane (dimensions passed in, so 2-up and 3-up share this).
-const PaneWindow = ({ left, top, paneW, paneH, accent, label, acting, img, prevImg, cursor, cursorOp, click, lf, fadeIn }) => (
+const PaneWindow = ({ left, top, paneW, paneH, accent, label, acting, img, prevImg, cursor, cursorOp, click, lf, fadeIn, cam, imgH }) => (
   <div style={{ position: "absolute", left, top, width: paneW, borderRadius: 14, overflow: "hidden", boxShadow: acting ? `0 30px 70px rgba(0,0,0,0.55), 0 0 0 2px ${accent}` : "0 30px 70px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06)", background: "#0d1526" }}>
     <Chrome accent={accent} label={label} acting={acting} />
     <div style={{ position: "relative", width: paneW, height: paneH, overflow: "hidden", background: "#fff" }}>
-      {prevImg && <Img src={staticFile(prevImg)} style={{ position: "absolute", top: 0, left: 0, width: paneW }} />}
-      {img && <Img src={staticFile(img)} style={{ position: "absolute", top: 0, left: 0, width: paneW, opacity: fadeIn }} />}
-      {cursor && <Ripple x={cursor.x} y={cursor.y} lf={click ? lf : -999} accent={accent} />}
-      {cursor && <Pointer x={cursor.x} y={cursor.y} opacity={cursorOp} />}
+      {/* camera container: img + cursor zoom/pan together so the cursor stays glued to the image */}
+      <div style={{ position: "absolute", top: 0, left: 0, width: paneW, height: imgH || paneH, transformOrigin: "0 0", transform: cam || "none" }}>
+        {prevImg && <Img src={staticFile(prevImg)} style={{ position: "absolute", top: 0, left: 0, width: paneW }} />}
+        {img && <Img src={staticFile(img)} style={{ position: "absolute", top: 0, left: 0, width: paneW, opacity: fadeIn }} />}
+        {cursor && <Ripple x={cursor.x} y={cursor.y} lf={click ? lf : -999} accent={accent} />}
+        {cursor && <Pointer x={cursor.x} y={cursor.y} opacity={cursorOp} />}
+      </div>
     </div>
   </div>
 );
@@ -116,6 +119,7 @@ export const Walkthrough2up = ({ wt }) => {
   const capOp = interpolate(lf, [4, 22], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const progress = (starts[i] + Math.min(lf, cur.hold || 60)) / total;
 
+  const imgHnat = Math.round(PANE_W * capVH / capVW);   // natural displayed image height
   const panes = (cur.panes || []).map((paneStep, pi) => {
     const img = burstFrame(paneStep, cur, lf);
     const prevPane = prev && prev.panes ? prev.panes[pi] : null;
@@ -130,7 +134,21 @@ export const Walkthrough2up = ({ wt }) => {
       cursor = { x: from.x + (c.x - from.x) * t, y: from.y + (c.y - from.y) * t };
       cursorOp = interpolate(lf, [0, 8], [prevPane && prevPane.cursor ? 1 : 0, 1], { extrapolateRight: "clamp" });
     }
-    return { img, prevImg, cursor, cursorOp, click: !!(paneStep && paneStep.click), acting: !!(paneStep && paneStep.cursor) };
+    // Per-pane Arcade-style camera: a step that sets `zoom` records each pane's focus point, so a
+    // dense app's sync/agent detail is legible; ease prev->cur, identity (s=1) when no zoom is set.
+    const tgtOf = (ps, step) => (ps && ps.zoom)
+      ? { s: (step && step.zoomScale) || 1.9, fx: ps.zoom.x * SCALE, fy: ps.zoom.y * SCALE }
+      : { s: 1, fx: PANE_W / 2, fy: PANE_H / 2 };
+    const tc = tgtOf(paneStep, cur);
+    const tp = tgtOf(prevPane, prev);
+    const ce = interpolate(lf, [6, 26], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
+    const s = tp.s + (tc.s - tp.s) * ce;
+    const fx = tp.fx + (tc.fx - tp.fx) * ce;
+    const fy = tp.fy + (tc.fy - tp.fy) * ce;
+    const tx = Math.min(0, Math.max(PANE_W * (1 - s), PANE_W / 2 - s * fx));
+    const ty = Math.min(0, Math.max(PANE_H - imgHnat * s, PANE_H / 2 - s * fy));
+    const cam = `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px) scale(${s.toFixed(4)})`;
+    return { img, prevImg, cursor, cursorOp, click: !!(paneStep && paneStep.click), acting: !!(paneStep && paneStep.cursor), cam, imgH: imgHnat };
   });
 
   return (
@@ -155,6 +173,7 @@ export const Walkthrough2up = ({ wt }) => {
             accent={wt.accent} label={paneLabels[pi] || `Client ${String.fromCharCode(65 + pi)}`}
             acting={p.acting} img={p.img} prevImg={p.prevImg}
             cursor={p.cursor} cursorOp={p.cursorOp} click={p.click} lf={lf} fadeIn={fadeIn}
+            cam={p.cam} imgH={p.imgH}
           />
         );
       })}
