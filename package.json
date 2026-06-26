@@ -5,17 +5,31 @@
   "type": "module",
   "license": "MIT",
   "author": "Homen Shum",
-  "repository": { "type": "git", "url": "https://github.com/HomenShum/feature-walkthrough-gif" },
-  "keywords": ["demo", "gif", "walkthrough", "screencast", "remotion", "playwright", "product-demo", "readme", "streamlit"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HomenShum/feature-walkthrough-gif"
+  },
+  "keywords": [
+    "demo",
+    "gif",
+    "walkthrough",
+    "screencast",
+    "remotion",
+    "playwright",
+    "product-demo",
+    "readme",
+    "streamlit"
+  ],
   "scripts": {
     "capture": "node walkthrough.mjs",
     "studio": "remotion studio src/index.js",
     "render": "remotion render src/index.js",
-    "render:example": "remotion render src/index.js WT-ListIntel out/example.mp4 --concurrency=2",
+    "render:example": "remotion render src/index.js WT-SoloFounder out/example.mp4 --concurrency=2",
     "judge": "node judge-video.mjs"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.474",
+    "feature-walkthrough-gif": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remotion": "^4.0.474"

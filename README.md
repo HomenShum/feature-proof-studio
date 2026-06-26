@@ -12,9 +12,9 @@ Not a single final‑state "hero shot" — the viewer follows the *whole flow*.
 ![Playwright](https://img.shields.io/badge/capture-Playwright-2EAD33)
 ![ffmpeg](https://img.shields.io/badge/encode-ffmpeg-007808)
 
-<img src="assets/demo.gif" alt="A feature walkthrough GIF: paste a company list → the cursor glides to Run and clicks → the pipeline runs → the scored result is centered" width="760">
+<img src="assets/solo-founder-walkthrough.gif" alt="A feature walkthrough GIF: builder console → cursor glides to Generate and clicks → the 3D scroll story renders → customer page → proof report" width="760">
 
-<sub>↑ produced by this tool — every state, the click, the loading, the result.</sub>
+<sub>↑ produced by this tool — every state, the click, the generation, the result.</sub>
 
 </div>
 
@@ -67,9 +67,10 @@ npm run render:example                 # -> out/example.mp4
 ffmpeg -y -i out/example.mp4 -vf "fps=15,scale=720:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128:stats_mode=diff[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle" -loop 0 example.gif
 ```
 
-The bundled example is the 5 tabs of [ParselyFi](https://github.com/HomenShum/Parselyfi)
-(List Intelligence, Relationship Graph, Card→Rows, Document Brain, EBITDA Bridge) —
-the captured frames + `src/walkthrough.data.js` are included so it renders immediately.
+The bundled example is a [solo-founder 3D proof-run app](https://github.com/HomenShum/solo-founder-agent-builder)
+(builder console → generate a scroll-driven 3D product story → customer-facing landing
+page → internal proof report with gates) — the captured frames +
+`src/walkthrough.data.js` are included so it renders immediately.
 
 ## Make it your own
 
@@ -101,7 +102,10 @@ the captured frames + `src/walkthrough.data.js` are included so it renders immed
 > Built and battle‑tested against **Streamlit** (see the capture lessons in
 > [`SKILL.md`](SKILL.md): scope locators to the active tab panel, await upload
 > registration, data‑grids are canvas, capture the loading state on purpose), but the
-> spec/selector model works for any browser UI.
+> spec/selector model works for any browser UI. See
+> [`walkthrough.solo-founder.mjs`](walkthrough.solo-founder.mjs) for a non-Streamlit
+> adaptation (React SPA with hash routes — simpler selector model, `goto` action for
+> URL-based navigation).
 
 ## Design principles (researched)
 
@@ -156,6 +160,34 @@ npx remotion render src/index.js WTC-LiveSync out/collab.mp4
 Panes + steps live in `walkthrough.collab.specs.mjs`; the 2-up renderer is
 `src/Walkthrough2up.jsx`. See **[`STACK_GUIDELINES.md`](STACK_GUIDELINES.md)** for why
 Convex + React demos need this and Streamlit doesn't.
+
+## Real-world example: NodeRoom (Convex + React)
+
+The repo also ships with captured walkthroughs of [NodeRoom](https://github.com/HomenShum/noderoom) —
+a production Convex + React live-collaborative diligence room. These prove the tool works
+against a real, deployed app (not just a demo harness).
+
+<details><summary><b>NodeRoom · human + agent, no clobber</b> (single-pane, memory mode)</summary>
+
+<img src="assets/feature-noderoom-solo.gif" alt="NodeRoom memory mode: a human and the NodeAgent edit the same spreadsheet simultaneously — the agent locks a cell, drafts, then smart-merges without clobbering the human's edit" width="760">
+
+</details>
+
+<details><summary><b>NodeRoom · live sync + server-led agent</b> (2-pane, deployed app)</summary>
+
+<img src="assets/feature-noderoom-sync.gif" alt="Two clients on the live NodeRoom app: Client A sends a message and asks the Room NodeAgent to reconcile Q3; the agent locks cells and fills the variance — broadcast to both clients in real time" width="900">
+
+</details>
+
+<details><summary><b>NodeRoom · fresh room, empty → filled by the agent</b> (2-pane, deployed app)</summary>
+
+<img src="assets/feature-noderoom-sync-fresh.gif" alt="A brand-new NodeRoom with an empty variance column; the agent fills it live on both clients — the dramatic empty-to-filled reveal" width="900">
+
+</details>
+
+Specs: `walkthrough.noderoom.specs.mjs`. Capture: `node walkthrough.collab.mjs` (the NodeRoom
+specs are imported into the collab specs). Render: `npx remotion render src/index.js WTC-NRsolo`
+/ `WTC-NRsync` / `WTC-NRfresh`.
 
 ## Designing for specific stacks
 
