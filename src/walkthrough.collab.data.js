@@ -981,5 +981,131 @@ export const COLLAB_WALKTHROUGHS = [
         ]
       }
     ]
+  },
+  {
+    "id": "NRdeepDive",
+    "title": "NodeRoom · deep-dive fan-out: events, people & contacts",
+    "accent": "#f97316",
+    "vw": 1280,
+    "vh": 800,
+    "cropVH": null,
+    "paneLabels": [
+      "NodeRoom — live dev room with enriched companies"
+    ],
+    "steps": [
+      {
+        "caption": "Enriched companies — research complete, ready for deep dive",
+        "hold": 90,
+        "burst": false,
+        "zoomScale": 1.4,
+        "panes": [
+          {
+            "img": "wt-collab/NRdeepDive/p0_00.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 539,
+              "y": 382
+            }
+          }
+        ]
+      },
+      {
+        "caption": "Ask the agent to deep-dive a completed company",
+        "hold": 56,
+        "burst": false,
+        "zoomScale": 1.5,
+        "panes": [
+          {
+            "img": "wt-collab/NRdeepDive/p0_01.png",
+            "cursor": {
+              "x": 1230,
+              "y": 588
+            },
+            "click": true,
+            "zoom": {
+              "x": 1100,
+              "y": 351
+            }
+          }
+        ]
+      },
+      {
+        "caption": "The agent researches events, founders, and possible contacts",
+        "hold": 140,
+        "burst": true,
+        "zoomScale": 1.5,
+        "panes": [
+          {
+            "imgs": [
+              "wt-collab/NRdeepDive/p0_02_00.png",
+              "wt-collab/NRdeepDive/p0_02_01.png",
+              "wt-collab/NRdeepDive/p0_02_02.png",
+              "wt-collab/NRdeepDive/p0_02_03.png",
+              "wt-collab/NRdeepDive/p0_02_04.png",
+              "wt-collab/NRdeepDive/p0_02_05.png",
+              "wt-collab/NRdeepDive/p0_02_06.png",
+              "wt-collab/NRdeepDive/p0_02_07.png",
+              "wt-collab/NRdeepDive/p0_02_08.png",
+              "wt-collab/NRdeepDive/p0_02_09.png",
+              "wt-collab/NRdeepDive/p0_02_10.png",
+              "wt-collab/NRdeepDive/p0_02_11.png",
+              "wt-collab/NRdeepDive/p0_02_12.png",
+              "wt-collab/NRdeepDive/p0_02_13.png",
+              "wt-collab/NRdeepDive/p0_02_14.png",
+              "wt-collab/NRdeepDive/p0_02_15.png",
+              "wt-collab/NRdeepDive/p0_02_16.png",
+              "wt-collab/NRdeepDive/p0_02_17.png",
+              "wt-collab/NRdeepDive/p0_02_18.png",
+              "wt-collab/NRdeepDive/p0_02_19.png",
+              "wt-collab/NRdeepDive/p0_02_20.png",
+              "wt-collab/NRdeepDive/p0_02_21.png",
+              "wt-collab/NRdeepDive/p0_02_22.png",
+              "wt-collab/NRdeepDive/p0_02_23.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 1100,
+              "y": 351
+            }
+          }
+        ]
+      },
+      {
+        "caption": "Deep-dive columns: team background, events, founder profiles, contacts",
+        "hold": 100,
+        "burst": false,
+        "zoomScale": 1.45,
+        "panes": [
+          {
+            "img": "wt-collab/NRdeepDive/p0_03.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 539,
+              "y": 382
+            }
+          }
+        ]
+      },
+      {
+        "caption": "Per-founder research, outreach topics, and possible contacts — all source-backed",
+        "hold": 94,
+        "burst": false,
+        "zoomScale": 1.4,
+        "panes": [
+          {
+            "img": "wt-collab/NRdeepDive/p0_04.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 539,
+              "y": 382
+            }
+          }
+        ]
+      }
+    ]
   }
 ];

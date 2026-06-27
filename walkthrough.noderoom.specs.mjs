@@ -96,4 +96,40 @@ export const NODEROOM_SPECS = [
       { cap: "Empty → reconciled, broadcast to every client", zoom: "testid:artifact-panel", zoomScale: 1.55, hold: 94 },
     ],
   },
+
+  // DEEP-DIVE FAN-OUT — single pane on the local dev server. Shows the full arc:
+  // enriched companies (status=complete) → @nodeagent deep dive → agent spawns child
+  // frames for per-founder research, events, contacts → deep-dive columns fill in.
+  {
+    id: "NRdeepDive",
+    title: "NodeRoom · deep-dive fan-out: events, people & contacts",
+    accent: "#f97316",
+    vw: 1280, vh: 800,
+    retries: 2,
+    panes: [{ label: "NodeRoom — live dev room with enriched companies", url: "http://localhost:5260/?room=XQP3HUB0&name=Homen" }],
+    steps: [
+      { act: "sleep", pane: 0, ms: 4000 },
+      { act: "key", pane: 0, value: "Escape" },
+      { act: "sleep", pane: 0, ms: 1500 },
+      // 1) Show the enriched sheet — companies with status "complete"
+      { cap: "Enriched companies — research complete, ready for deep dive", zoom: "testid:artifact-panel", zoomScale: 1.4, hold: 90 },
+
+      // 2) Type the deep-dive command
+      { act: "type", pane: 0, sel: "testid:chat-composer", value: "@nodeagent deep dive Mercury", delay: 22 },
+      { cap: "Ask the agent to deep-dive a completed company", cursor: "testid:chat-send", cursorPane: 0, click: true, zoom: "testid:chat-feed", zoomScale: 1.5, hold: 56 },
+      { act: "click", pane: 0, sel: "testid:chat-send" },
+
+      // 3) Agent starts working — burst capture the streaming
+      { act: "sleep", pane: 0, ms: 3000 },
+      { cap: "The agent researches events, founders, and possible contacts", burst: { ms: 12000, every: 500 }, zoom: "testid:chat-feed", zoomScale: 1.5, hold: 140 },
+
+      // 4) Show the deep-dive columns filling in
+      { act: "sleep", pane: 0, ms: 2000 },
+      { cap: "Deep-dive columns: team background, events, founder profiles, contacts", zoom: "testid:artifact-panel", zoomScale: 1.45, hold: 100 },
+
+      // 5) Final state — the sheet with deep-dive data
+      { act: "sleep", pane: 0, ms: 1500 },
+      { cap: "Per-founder research, outreach topics, and possible contacts — all source-backed", zoom: "testid:artifact-panel", zoomScale: 1.4, hold: 94 },
+    ],
+  },
 ];
