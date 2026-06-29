@@ -819,210 +819,78 @@ export const COLLAB_WALKTHROUGHS = [
   },
   {
     "id": "NRfresh",
-    "title": "NodeRoom · a fresh room, reconciled by the agent",
+    "title": "NodeRoom · the bulk batch — every company enriched",
     "accent": "#f59e0b",
     "vw": 1280,
     "vh": 800,
     "cropVH": null,
     "paneLabels": [
-      "Client A (host)",
-      "Client B"
+      "NodeRoom — memory mode (offline, deterministic)"
     ],
     "steps": [
       {
-        "caption": "A brand-new room — two clients, a fresh Q3 sheet",
-        "hold": 76,
+        "caption": "A research sheet — every company still pending",
+        "hold": 84,
         "burst": false,
-        "zoomScale": null,
+        "zoomScale": 1.4,
         "panes": [
           {
             "img": "wt-collab/NRfresh/p0_00.png",
             "cursor": null,
             "click": false,
-            "zoom": null
-          },
-          {
-            "img": "wt-collab/NRfresh/p1_00.png",
-            "cursor": null,
-            "click": false,
-            "zoom": null
+            "zoom": {
+              "x": 588,
+              "y": 382
+            }
           }
         ]
       },
       {
-        "caption": "The variance column starts empty",
-        "hold": 84,
+        "caption": "One command to enrich the whole batch",
+        "hold": 54,
         "burst": false,
-        "zoomScale": 1.55,
+        "zoomScale": 1.5,
         "panes": [
           {
             "img": "wt-collab/NRfresh/p0_01.png",
-            "cursor": null,
-            "click": false,
-            "zoom": {
-              "x": 753,
-              "y": 426
-            }
-          },
-          {
-            "img": "wt-collab/NRfresh/p1_01.png",
-            "cursor": null,
-            "click": false,
-            "zoom": {
-              "x": 753,
-              "y": 426
-            }
-          }
-        ]
-      },
-      {
-        "caption": "Client A asks the Room NodeAgent to reconcile",
-        "hold": 54,
-        "burst": false,
-        "zoomScale": 1.65,
-        "panes": [
-          {
-            "img": "wt-collab/NRfresh/p0_02.png",
             "cursor": {
-              "x": 518,
-              "y": 677
+              "x": 1230,
+              "y": 588
             },
             "click": true,
             "zoom": {
-              "x": 406,
-              "y": 372
-            }
-          },
-          {
-            "img": "wt-collab/NRfresh/p1_02.png",
-            "cursor": null,
-            "click": false,
-            "zoom": {
-              "x": 406,
-              "y": 372
+              "x": 1100,
+              "y": 334
             }
           }
         ]
       },
       {
-        "caption": "The agent fills the empty variance — live, on BOTH clients",
-        "hold": 130,
+        "caption": "The agent researches all five — structured fields + two sources each",
+        "hold": 112,
         "burst": true,
-        "zoomScale": 1.55,
-        "panes": [
-          {
-            "imgs": [
-              "wt-collab/NRfresh/p0_03_00.png",
-              "wt-collab/NRfresh/p0_03_01.png",
-              "wt-collab/NRfresh/p0_03_02.png",
-              "wt-collab/NRfresh/p0_03_03.png",
-              "wt-collab/NRfresh/p0_03_04.png",
-              "wt-collab/NRfresh/p0_03_05.png",
-              "wt-collab/NRfresh/p0_03_06.png",
-              "wt-collab/NRfresh/p0_03_07.png",
-              "wt-collab/NRfresh/p0_03_08.png",
-              "wt-collab/NRfresh/p0_03_09.png",
-              "wt-collab/NRfresh/p0_03_10.png",
-              "wt-collab/NRfresh/p0_03_11.png",
-              "wt-collab/NRfresh/p0_03_12.png",
-              "wt-collab/NRfresh/p0_03_13.png",
-              "wt-collab/NRfresh/p0_03_14.png",
-              "wt-collab/NRfresh/p0_03_15.png",
-              "wt-collab/NRfresh/p0_03_16.png",
-              "wt-collab/NRfresh/p0_03_17.png",
-              "wt-collab/NRfresh/p0_03_18.png",
-              "wt-collab/NRfresh/p0_03_19.png",
-              "wt-collab/NRfresh/p0_03_20.png",
-              "wt-collab/NRfresh/p0_03_21.png"
-            ],
-            "cursor": null,
-            "click": false,
-            "zoom": {
-              "x": 753,
-              "y": 426
-            }
-          },
-          {
-            "imgs": [
-              "wt-collab/NRfresh/p1_03_00.png",
-              "wt-collab/NRfresh/p1_03_01.png",
-              "wt-collab/NRfresh/p1_03_02.png",
-              "wt-collab/NRfresh/p1_03_03.png",
-              "wt-collab/NRfresh/p1_03_04.png",
-              "wt-collab/NRfresh/p1_03_05.png",
-              "wt-collab/NRfresh/p1_03_06.png",
-              "wt-collab/NRfresh/p1_03_07.png",
-              "wt-collab/NRfresh/p1_03_08.png",
-              "wt-collab/NRfresh/p1_03_09.png",
-              "wt-collab/NRfresh/p1_03_10.png",
-              "wt-collab/NRfresh/p1_03_11.png",
-              "wt-collab/NRfresh/p1_03_12.png",
-              "wt-collab/NRfresh/p1_03_13.png",
-              "wt-collab/NRfresh/p1_03_14.png",
-              "wt-collab/NRfresh/p1_03_15.png",
-              "wt-collab/NRfresh/p1_03_16.png",
-              "wt-collab/NRfresh/p1_03_17.png",
-              "wt-collab/NRfresh/p1_03_18.png",
-              "wt-collab/NRfresh/p1_03_19.png",
-              "wt-collab/NRfresh/p1_03_20.png",
-              "wt-collab/NRfresh/p1_03_21.png"
-            ],
-            "cursor": null,
-            "click": false,
-            "zoom": {
-              "x": 753,
-              "y": 426
-            }
-          }
-        ]
-      },
-      {
-        "caption": "Empty → reconciled, broadcast to every client",
-        "hold": 94,
-        "burst": false,
-        "zoomScale": 1.55,
-        "panes": [
-          {
-            "img": "wt-collab/NRfresh/p0_04.png",
-            "cursor": null,
-            "click": false,
-            "zoom": {
-              "x": 753,
-              "y": 426
-            }
-          },
-          {
-            "img": "wt-collab/NRfresh/p1_04.png",
-            "cursor": null,
-            "click": false,
-            "zoom": {
-              "x": 753,
-              "y": 426
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "NRdeepDive",
-    "title": "NodeRoom · deep-dive fan-out: events, people & contacts",
-    "accent": "#f97316",
-    "vw": 1280,
-    "vh": 800,
-    "cropVH": null,
-    "paneLabels": [
-      "NodeRoom — live dev room with enriched companies"
-    ],
-    "steps": [
-      {
-        "caption": "Enriched companies — research complete, ready for deep dive",
-        "hold": 90,
-        "burst": false,
         "zoomScale": 1.4,
         "panes": [
           {
-            "img": "wt-collab/NRdeepDive/p0_00.png",
+            "imgs": [
+              "wt-collab/NRfresh/p0_02_00.png",
+              "wt-collab/NRfresh/p0_02_01.png",
+              "wt-collab/NRfresh/p0_02_02.png",
+              "wt-collab/NRfresh/p0_02_03.png",
+              "wt-collab/NRfresh/p0_02_04.png",
+              "wt-collab/NRfresh/p0_02_05.png",
+              "wt-collab/NRfresh/p0_02_06.png",
+              "wt-collab/NRfresh/p0_02_07.png",
+              "wt-collab/NRfresh/p0_02_08.png",
+              "wt-collab/NRfresh/p0_02_09.png",
+              "wt-collab/NRfresh/p0_02_10.png",
+              "wt-collab/NRfresh/p0_02_11.png",
+              "wt-collab/NRfresh/p0_02_12.png",
+              "wt-collab/NRfresh/p0_02_13.png",
+              "wt-collab/NRfresh/p0_02_14.png",
+              "wt-collab/NRfresh/p0_02_15.png",
+              "wt-collab/NRfresh/p0_02_16.png"
+            ],
             "cursor": null,
             "click": false,
             "zoom": {
@@ -1033,8 +901,55 @@ export const COLLAB_WALKTHROUGHS = [
         ]
       },
       {
-        "caption": "Ask the agent to deep-dive a completed company",
-        "hold": 56,
+        "caption": "Pending → complete across the batch, every row source-backed",
+        "hold": 96,
+        "burst": false,
+        "zoomScale": 1.4,
+        "panes": [
+          {
+            "img": "wt-collab/NRfresh/p0_03.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 539,
+              "y": 382
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "NRdeepDive",
+    "title": "NodeRoom · Q3 variance, reconciled by the agent",
+    "accent": "#f97316",
+    "vw": 1280,
+    "vh": 800,
+    "cropVH": null,
+    "paneLabels": [
+      "NodeRoom — memory mode (offline, deterministic)"
+    ],
+    "steps": [
+      {
+        "caption": "A Q3 P&L — the variance column still empty",
+        "hold": 84,
+        "burst": false,
+        "zoomScale": 1.4,
+        "panes": [
+          {
+            "img": "wt-collab/NRdeepDive/p0_00.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 588,
+              "y": 382
+            }
+          }
+        ]
+      },
+      {
+        "caption": "Ask the Room NodeAgent to reconcile the quarter",
+        "hold": 54,
         "burst": false,
         "zoomScale": 1.5,
         "panes": [
@@ -1047,16 +962,16 @@ export const COLLAB_WALKTHROUGHS = [
             "click": true,
             "zoom": {
               "x": 1100,
-              "y": 351
+              "y": 334
             }
           }
         ]
       },
       {
-        "caption": "The agent researches events, founders, and possible contacts",
-        "hold": 140,
+        "caption": "It locks the column, computes each line's variance, and commits",
+        "hold": 110,
         "burst": true,
-        "zoomScale": 1.5,
+        "zoomScale": 1.4,
         "panes": [
           {
             "imgs": [
@@ -1075,33 +990,8 @@ export const COLLAB_WALKTHROUGHS = [
               "wt-collab/NRdeepDive/p0_02_12.png",
               "wt-collab/NRdeepDive/p0_02_13.png",
               "wt-collab/NRdeepDive/p0_02_14.png",
-              "wt-collab/NRdeepDive/p0_02_15.png",
-              "wt-collab/NRdeepDive/p0_02_16.png",
-              "wt-collab/NRdeepDive/p0_02_17.png",
-              "wt-collab/NRdeepDive/p0_02_18.png",
-              "wt-collab/NRdeepDive/p0_02_19.png",
-              "wt-collab/NRdeepDive/p0_02_20.png",
-              "wt-collab/NRdeepDive/p0_02_21.png",
-              "wt-collab/NRdeepDive/p0_02_22.png",
-              "wt-collab/NRdeepDive/p0_02_23.png"
+              "wt-collab/NRdeepDive/p0_02_15.png"
             ],
-            "cursor": null,
-            "click": false,
-            "zoom": {
-              "x": 1100,
-              "y": 351
-            }
-          }
-        ]
-      },
-      {
-        "caption": "Deep-dive columns: team background, events, founder profiles, contacts",
-        "hold": 100,
-        "burst": false,
-        "zoomScale": 1.45,
-        "panes": [
-          {
-            "img": "wt-collab/NRdeepDive/p0_03.png",
             "cursor": null,
             "click": false,
             "zoom": {
@@ -1112,13 +1002,13 @@ export const COLLAB_WALKTHROUGHS = [
         ]
       },
       {
-        "caption": "Per-founder research, outreach topics, and possible contacts — all source-backed",
-        "hold": 94,
+        "caption": "Revenue +24%, COGS +27.5%, net income +22.4% — lock released",
+        "hold": 96,
         "burst": false,
         "zoomScale": 1.4,
         "panes": [
           {
-            "img": "wt-collab/NRdeepDive/p0_04.png",
+            "img": "wt-collab/NRdeepDive/p0_03.png",
             "cursor": null,
             "click": false,
             "zoom": {

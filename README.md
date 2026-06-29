@@ -179,15 +179,21 @@ against a real, deployed app (not just a demo harness).
 
 </details>
 
-<details><summary><b>NodeRoom · fresh room, empty → filled by the agent</b> (2-pane, deployed app)</summary>
+<details><summary><b>NodeRoom · the bulk batch — every company enriched</b> (single-pane, memory mode)</summary>
 
-<img src="assets/feature-noderoom-sync-fresh.gif" alt="A brand-new NodeRoom with an empty variance column; the agent fills it live on both clients — the dramatic empty-to-filled reveal" width="900">
+<img src="assets/feature-noderoom-bulk.gif" alt="NodeRoom memory mode: open the Company research sheet with every company still pending, then one '@nodeagent enrich companies' command researches all five at once — pending to complete across the batch, each row with structured fields and two sources" width="760">
+
+</details>
+
+<details><summary><b>NodeRoom · Q3 variance, reconciled by the agent</b> (single-pane, memory mode)</summary>
+
+<img src="assets/feature-noderoom-deepdive.gif" alt="NodeRoom memory mode: open a Q3 P&L whose variance column is empty, then '@nodeagent reconcile Q3 variance' locks the column, computes each line's variance (Revenue +24%, COGS +27.5%, net income +22.4%), commits, and releases the lock" width="760">
 
 </details>
 
 Specs: `walkthrough.noderoom.specs.mjs`. Capture: `node walkthrough.collab.mjs` (the NodeRoom
 specs are imported into the collab specs). Render: `npx remotion render src/index.js WTC-NRsolo`
-/ `WTC-NRsync` / `WTC-NRfresh`.
+/ `WTC-NRsync` / `WTC-NRfresh` / `WTC-NRdeepDive`.
 
 ## Designing for specific stacks
 

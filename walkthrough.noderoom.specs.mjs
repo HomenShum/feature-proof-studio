@@ -79,72 +79,67 @@ export const NODEROOM_SPECS = [
     ],
   },
 
-  // FRESH SEEDED ROOM — Client A creates a brand-new room (?create seeds a Q3 sheet with an EMPTY
-  // variance column); Client B joins it. /ask reconcile then FILLS the empty variance live on both
-  // — the dramatic empty->filled reveal the crowded shared room can't show. `__RUNID__` => a unique
-  // room code per run/attempt (always a fresh, empty room); navDelay staggers create-then-join.
+  // THE BULK BATCH — the room's own narrative is "CardioNova first, then the bulk batch". NRsolo does
+  // the one company; this does the rest: open Company research (every company `pending`), then ONE
+  // `@nodeagent enrich companies` researches all five at once → pending->complete across the batch.
+  // Scripted in memory mode (deterministic, no LLM). (The redesign made `?create` rooms BLANK — no
+  // seeded Q3 sheet — so the old 2-pane "fresh empty Q3" premise isn't reproducible; this is the
+  // faithful, deterministic successor of the empty->filled reveal.)
   {
     id: "NRfresh",
-    title: "NodeRoom · a fresh room, reconciled by the agent",
+    title: "NodeRoom · the bulk batch — every company enriched",
     accent: "#f59e0b",
     vw: 1280, vh: 800,
-    retries: 1,
-    panes: [
-      { label: "Client A (host)", url: "https://noderoom.live/?create=__RUNID__&name=Client+A" },
-      { label: "Client B", url: "https://noderoom.live/?room=__RUNID__&name=Client+B", navDelay: 5200 },
-    ],
+    retries: 2,
+    panes: [{ label: "NodeRoom — memory mode (offline, deterministic)", url: "https://noderoom.live/?mode=memory" }],
     steps: [
-      { act: "sleep", pane: 0, ms: 1500 },
-      { act: "key", pane: 0, value: "Escape" },
-      { act: "key", pane: 1, value: "Escape" },
-      { act: "sleep", pane: 0, ms: 1200 },
-      { cap: "A brand-new room — two clients, a fresh Q3 sheet", hold: 76 },
-      { cap: "The variance column starts empty", zoom: "testid:artifact-panel", zoomScale: 1.55, hold: 84 },
-
-      { act: "type", pane: 0, sel: "testid:chat-composer", value: "/ask reconcile Q3 revenue", delay: 20 },
-      { cap: "Client A asks the Room NodeAgent to reconcile", cursor: "testid:chat-send", cursorPane: 0, click: true, zoom: "testid:chat-feed", zoomScale: 1.65, hold: 54 },
-      { act: "click", pane: 0, sel: "testid:chat-send" },
       { act: "sleep", pane: 0, ms: 2600 },
-      { cap: "The agent fills the empty variance — live, on BOTH clients", burst: { ms: 10000, every: 450 }, zoom: "testid:artifact-panel", zoomScale: 1.55, hold: 130 },
-      { act: "waitText", pane: 0, value: "released", timeout: 30000 },
-      { act: "sleep", pane: 0, ms: 1500 },
-      { cap: "Empty → reconciled, broadcast to every client", zoom: "testid:artifact-panel", zoomScale: 1.55, hold: 94 },
+      { act: "click", pane: 0, sel: "testid:start-demo-room" },
+      { act: "sleep", pane: 0, ms: 3800 },
+      { act: "click", pane: 0, sel: "testid:tour-skip" },
+      { act: "sleep", pane: 0, ms: 700 },
+      { act: "click", pane: 0, sel: "text:Company research" },
+      { act: "sleep", pane: 0, ms: 1300 },
+      { cap: "A research sheet — every company still pending", zoom: "testid:artifact-panel", zoomScale: 1.4, hold: 84 },
+      { act: "type", pane: 0, sel: "testid:chat-composer", value: "@nodeagent enrich companies", delay: 22 },
+      { cap: "One command to enrich the whole batch", cursor: "testid:chat-send", cursorPane: 0, click: true, zoom: "testid:chat-feed", zoomScale: 1.5, hold: 54 },
+      { act: "click", pane: 0, sel: "testid:chat-send" },
+      { act: "sleep", pane: 0, ms: 700 },
+      { cap: "The agent researches all five — structured fields + two sources each", burst: { ms: 5500, every: 320 }, zoom: "testid:artifact-panel", zoomScale: 1.4, hold: 112 },
+      { act: "sleep", pane: 0, ms: 800 },
+      { cap: "Pending → complete across the batch, every row source-backed", zoom: "testid:artifact-panel", zoomScale: 1.4, hold: 96 },
     ],
   },
 
-  // DEEP-DIVE FAN-OUT — single pane on the local dev server. Shows the full arc:
-  // enriched companies (status=complete) → @nodeagent deep dive → agent spawns child
-  // frames for per-founder research, events, contacts → deep-dive columns fill in.
+  // Q3 VARIANCE RECONCILE — open the Q3 P&L (the VARIANCE column starts empty), then
+  // `@nodeagent reconcile Q3 variance` locks the column, computes each line's variance, and commits
+  // (Revenue +24%, COGS +27.5%, GP +21.7%, Net income +22.4%) — lock released. A different artifact
+  // (financial statement) + a different value (computed reconcile) from the company-research clips.
+  // Scripted in memory mode (deterministic, no LLM); the live founder/events fan-out it replaces
+  // needed a local dev server with a pre-enriched room (not reproducible against noderoom.live).
   {
     id: "NRdeepDive",
-    title: "NodeRoom · deep-dive fan-out: events, people & contacts",
+    title: "NodeRoom · Q3 variance, reconciled by the agent",
     accent: "#f97316",
     vw: 1280, vh: 800,
     retries: 2,
-    panes: [{ label: "NodeRoom — live dev room with enriched companies", url: "http://localhost:5260/?room=XQP3HUB0&name=Homen" }],
+    panes: [{ label: "NodeRoom — memory mode (offline, deterministic)", url: "https://noderoom.live/?mode=memory" }],
     steps: [
-      { act: "sleep", pane: 0, ms: 4000 },
-      { act: "key", pane: 0, value: "Escape" },
-      { act: "sleep", pane: 0, ms: 1500 },
-      // 1) Show the enriched sheet — companies with status "complete"
-      { cap: "Enriched companies — research complete, ready for deep dive", zoom: "testid:artifact-panel", zoomScale: 1.4, hold: 90 },
-
-      // 2) Type the deep-dive command
-      { act: "type", pane: 0, sel: "testid:chat-composer", value: "@nodeagent deep dive Mercury", delay: 22 },
-      { cap: "Ask the agent to deep-dive a completed company", cursor: "testid:chat-send", cursorPane: 0, click: true, zoom: "testid:chat-feed", zoomScale: 1.5, hold: 56 },
+      { act: "sleep", pane: 0, ms: 2600 },
+      { act: "click", pane: 0, sel: "testid:start-demo-room" },
+      { act: "sleep", pane: 0, ms: 3800 },
+      { act: "click", pane: 0, sel: "testid:tour-skip" },
+      { act: "sleep", pane: 0, ms: 700 },
+      { act: "click", pane: 0, sel: "text:Q3 variance" },
+      { act: "sleep", pane: 0, ms: 1300 },
+      { cap: "A Q3 P&L — the variance column still empty", zoom: "testid:artifact-panel", zoomScale: 1.4, hold: 84 },
+      { act: "type", pane: 0, sel: "testid:chat-composer", value: "@nodeagent reconcile Q3 variance", delay: 22 },
+      { cap: "Ask the Room NodeAgent to reconcile the quarter", cursor: "testid:chat-send", cursorPane: 0, click: true, zoom: "testid:chat-feed", zoomScale: 1.5, hold: 54 },
       { act: "click", pane: 0, sel: "testid:chat-send" },
-
-      // 3) Agent starts working — burst capture the streaming
-      { act: "sleep", pane: 0, ms: 3000 },
-      { cap: "The agent researches events, founders, and possible contacts", burst: { ms: 12000, every: 500 }, zoom: "testid:chat-feed", zoomScale: 1.5, hold: 140 },
-
-      // 4) Show the deep-dive columns filling in
-      { act: "sleep", pane: 0, ms: 2000 },
-      { cap: "Deep-dive columns: team background, events, founder profiles, contacts", zoom: "testid:artifact-panel", zoomScale: 1.45, hold: 100 },
-
-      // 5) Final state — the sheet with deep-dive data
-      { act: "sleep", pane: 0, ms: 1500 },
-      { cap: "Per-founder research, outreach topics, and possible contacts — all source-backed", zoom: "testid:artifact-panel", zoomScale: 1.4, hold: 94 },
+      { act: "sleep", pane: 0, ms: 700 },
+      { cap: "It locks the column, computes each line's variance, and commits", burst: { ms: 5000, every: 320 }, zoom: "testid:artifact-panel", zoomScale: 1.4, hold: 110 },
+      { act: "sleep", pane: 0, ms: 800 },
+      { cap: "Revenue +24%, COGS +27.5%, net income +22.4% — lock released", zoom: "testid:artifact-panel", zoomScale: 1.4, hold: 96 },
     ],
   },
 ];
