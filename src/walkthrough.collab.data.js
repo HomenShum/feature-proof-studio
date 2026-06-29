@@ -603,19 +603,19 @@ export const COLLAB_WALKTHROUGHS = [
   },
   {
     "id": "NRsync",
-    "title": "NodeRoom · live sync + a server-led agent",
+    "title": "NodeRoom · live sync across two clients",
     "accent": "#34d399",
     "vw": 1280,
     "vh": 800,
     "cropVH": null,
     "paneLabels": [
-      "Client A",
-      "Client B"
+      "Client A · Maya (host)",
+      "Client B · Sam"
     ],
     "steps": [
       {
-        "caption": "Two clients, one shared NodeRoom",
-        "hold": 74,
+        "caption": "Two independent clients, one shared NodeRoom",
+        "hold": 76,
         "burst": false,
         "zoomScale": null,
         "panes": [
@@ -634,33 +634,39 @@ export const COLLAB_WALKTHROUGHS = [
         ]
       },
       {
-        "caption": "Client A sends a message",
+        "caption": "Client A (Maya) sends a message",
         "hold": 50,
         "burst": false,
-        "zoomScale": null,
+        "zoomScale": 1.6,
         "panes": [
           {
             "img": "wt-collab/NRsync/p0_01.png",
             "cursor": {
-              "x": 518,
-              "y": 677
+              "x": 1230,
+              "y": 588
             },
             "click": true,
-            "zoom": null
+            "zoom": {
+              "x": 1100,
+              "y": 333
+            }
           },
           {
             "img": "wt-collab/NRsync/p1_01.png",
             "cursor": null,
             "click": false,
-            "zoom": null
+            "zoom": {
+              "x": 1100,
+              "y": 333
+            }
           }
         ]
       },
       {
         "caption": "It lands in Client B instantly — no refresh",
-        "hold": 88,
+        "hold": 90,
         "burst": true,
-        "zoomScale": 1.65,
+        "zoomScale": 1.6,
         "panes": [
           {
             "imgs": [
@@ -673,13 +679,14 @@ export const COLLAB_WALKTHROUGHS = [
               "wt-collab/NRsync/p0_02_06.png",
               "wt-collab/NRsync/p0_02_07.png",
               "wt-collab/NRsync/p0_02_08.png",
-              "wt-collab/NRsync/p0_02_09.png"
+              "wt-collab/NRsync/p0_02_09.png",
+              "wt-collab/NRsync/p0_02_10.png"
             ],
             "cursor": null,
             "click": false,
             "zoom": {
-              "x": 406,
-              "y": 385
+              "x": 1100,
+              "y": 333
             }
           },
           {
@@ -693,49 +700,50 @@ export const COLLAB_WALKTHROUGHS = [
               "wt-collab/NRsync/p1_02_06.png",
               "wt-collab/NRsync/p1_02_07.png",
               "wt-collab/NRsync/p1_02_08.png",
-              "wt-collab/NRsync/p1_02_09.png"
+              "wt-collab/NRsync/p1_02_09.png",
+              "wt-collab/NRsync/p1_02_10.png"
             ],
             "cursor": null,
             "click": false,
             "zoom": {
-              "x": 406,
-              "y": 389
+              "x": 1100,
+              "y": 333
             }
           }
         ]
       },
       {
-        "caption": "Client A asks the Room NodeAgent to reconcile Q3",
-        "hold": 54,
+        "caption": "Client B (Sam) replies",
+        "hold": 50,
         "burst": false,
-        "zoomScale": 1.65,
+        "zoomScale": 1.6,
         "panes": [
           {
             "img": "wt-collab/NRsync/p0_03.png",
-            "cursor": {
-              "x": 518,
-              "y": 677
-            },
-            "click": true,
+            "cursor": null,
+            "click": false,
             "zoom": {
-              "x": 406,
-              "y": 389
+              "x": 1100,
+              "y": 333
             }
           },
           {
             "img": "wt-collab/NRsync/p1_03.png",
-            "cursor": null,
-            "click": false,
+            "cursor": {
+              "x": 1230,
+              "y": 588
+            },
+            "click": true,
             "zoom": {
-              "x": 406,
-              "y": 389
+              "x": 1100,
+              "y": 333
             }
           }
         ]
       },
       {
-        "caption": "The agent locks cells and fills the variance — live, on BOTH clients",
-        "hold": 120,
+        "caption": "And straight back to Client A — live, both ways",
+        "hold": 92,
         "burst": true,
         "zoomScale": 1.6,
         "panes": [
@@ -750,23 +758,13 @@ export const COLLAB_WALKTHROUGHS = [
               "wt-collab/NRsync/p0_04_06.png",
               "wt-collab/NRsync/p0_04_07.png",
               "wt-collab/NRsync/p0_04_08.png",
-              "wt-collab/NRsync/p0_04_09.png",
-              "wt-collab/NRsync/p0_04_10.png",
-              "wt-collab/NRsync/p0_04_11.png",
-              "wt-collab/NRsync/p0_04_12.png",
-              "wt-collab/NRsync/p0_04_13.png",
-              "wt-collab/NRsync/p0_04_14.png",
-              "wt-collab/NRsync/p0_04_15.png",
-              "wt-collab/NRsync/p0_04_16.png",
-              "wt-collab/NRsync/p0_04_17.png",
-              "wt-collab/NRsync/p0_04_18.png",
-              "wt-collab/NRsync/p0_04_19.png"
+              "wt-collab/NRsync/p0_04_09.png"
             ],
             "cursor": null,
             "click": false,
             "zoom": {
-              "x": 753,
-              "y": 426
+              "x": 1100,
+              "y": 333
             }
           },
           {
@@ -780,40 +778,30 @@ export const COLLAB_WALKTHROUGHS = [
               "wt-collab/NRsync/p1_04_06.png",
               "wt-collab/NRsync/p1_04_07.png",
               "wt-collab/NRsync/p1_04_08.png",
-              "wt-collab/NRsync/p1_04_09.png",
-              "wt-collab/NRsync/p1_04_10.png",
-              "wt-collab/NRsync/p1_04_11.png",
-              "wt-collab/NRsync/p1_04_12.png",
-              "wt-collab/NRsync/p1_04_13.png",
-              "wt-collab/NRsync/p1_04_14.png",
-              "wt-collab/NRsync/p1_04_15.png",
-              "wt-collab/NRsync/p1_04_16.png",
-              "wt-collab/NRsync/p1_04_17.png",
-              "wt-collab/NRsync/p1_04_18.png",
-              "wt-collab/NRsync/p1_04_19.png"
+              "wt-collab/NRsync/p1_04_09.png"
             ],
             "cursor": null,
             "click": false,
             "zoom": {
-              "x": 753,
-              "y": 426
+              "x": 1100,
+              "y": 333
             }
           }
         ]
       },
       {
-        "caption": "One server-led agent, broadcast to every client",
-        "hold": 90,
+        "caption": "One shared room — every message, every client, in real time",
+        "hold": 88,
         "burst": false,
-        "zoomScale": 1.6,
+        "zoomScale": 1.5,
         "panes": [
           {
             "img": "wt-collab/NRsync/p0_05.png",
             "cursor": null,
             "click": false,
             "zoom": {
-              "x": 753,
-              "y": 426
+              "x": 1100,
+              "y": 333
             }
           },
           {
@@ -821,8 +809,8 @@ export const COLLAB_WALKTHROUGHS = [
             "cursor": null,
             "click": false,
             "zoom": {
-              "x": 753,
-              "y": 426
+              "x": 1100,
+              "y": 333
             }
           }
         ]

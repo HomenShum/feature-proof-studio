@@ -41,38 +41,41 @@ export const NODEROOM_SPECS = [
   },
   {
     id: "NRsync",
-    title: "NodeRoom · live sync + a server-led agent",
+    title: "NodeRoom · live sync across two clients",
     accent: "#34d399",
     vw: 1280, vh: 800,
-    retries: 1,
+    retries: 2,
+    // Two INDEPENDENT clients in ONE room: pane 0 `?create=__RUNID__` mints a fresh room code,
+    // pane 1 `?room=__RUNID__` joins it (navDelay staggers create-then-join). The sync is pure
+    // Convex reactivity (a chat message A->B and B->A) — deterministic, no /ask, NO LLM cost.
     panes: [
-      { label: "Client A", url: "https://noderoom.live/" },
-      { label: "Client B", url: "https://noderoom.live/" },
+      { label: "Client A · Maya (host)", url: "https://noderoom.live/?create=__RUNID__&name=Maya" },
+      { label: "Client B · Sam", url: "https://noderoom.live/?room=__RUNID__&name=Sam", navDelay: 4200 },
     ],
     steps: [
-      { act: "sleep", pane: 0, ms: 4000 },
-      { act: "key", pane: 0, value: "Escape" },
-      { act: "key", pane: 1, value: "Escape" },
-      { act: "sleep", pane: 0, ms: 1000 },
-      { cap: "Two clients, one shared NodeRoom", hold: 74 },
+      { act: "sleep", pane: 0, ms: 2200 },
+      { act: "click", pane: 0, sel: "testid:tour-skip" },
+      { act: "click", pane: 1, sel: "testid:tour-skip" },
+      { act: "sleep", pane: 0, ms: 900 },
+      { cap: "Two independent clients, one shared NodeRoom", hold: 76 },
 
-      // Beat 1 — a human message syncs A -> B; zoom to the chat feed so it's legible at 2-up.
-      { act: "type", pane: 0, sel: "testid:chat-composer", value: "Hi from Client A", delay: 28 },
-      { cap: "Client A sends a message", cursor: "testid:chat-send", cursorPane: 0, click: true, hold: 50 },
+      // A -> B: a human message in Client A appears live in Client B (no refresh).
+      { act: "type", pane: 0, sel: "testid:chat-composer", value: "Maya: kicking off CardioNova diligence", delay: 22 },
+      { cap: "Client A (Maya) sends a message", cursor: "testid:chat-send", cursorPane: 0, click: true, zoom: "testid:chat-feed", zoomScale: 1.6, hold: 50 },
       { act: "click", pane: 0, sel: "testid:chat-send" },
       { act: "sleep", pane: 1, ms: 150 },
-      { cap: "It lands in Client B instantly — no refresh", burst: { ms: 3000, every: 300 }, zoom: "testid:chat-feed", zoomScale: 1.65, hold: 88 },
-      { act: "waitText", pane: 1, value: "Hi from Client A" },
+      { cap: "It lands in Client B instantly — no refresh", burst: { ms: 3200, every: 300 }, zoom: "testid:chat-feed", zoomScale: 1.6, hold: 90 },
+      { act: "waitText", pane: 1, value: "kicking off CardioNova" },
 
-      // Beat 2 — the REAL Room NodeAgent (server-led, real LLM): Client A runs /ask; the agent
-      // locks cells + edits the shared sheet and its work broadcasts to BOTH clients at once.
-      { act: "type", pane: 0, sel: "testid:chat-composer", value: "/ask reconcile Q3 revenue", delay: 20 },
-      { cap: "Client A asks the Room NodeAgent to reconcile Q3", cursor: "testid:chat-send", cursorPane: 0, click: true, zoom: "testid:chat-feed", zoomScale: 1.65, hold: 54 },
-      { act: "click", pane: 0, sel: "testid:chat-send" },
-      { act: "sleep", pane: 0, ms: 2600 },
-      { cap: "The agent locks cells and fills the variance — live, on BOTH clients", burst: { ms: 9000, every: 450 }, zoom: "testid:artifact-panel", zoomScale: 1.6, hold: 120 },
-      { act: "sleep", pane: 0, ms: 2400 },
-      { cap: "One server-led agent, broadcast to every client", zoom: "testid:artifact-panel", zoomScale: 1.6, hold: 90 },
+      // B -> A: Client B replies; it syncs straight back to Client A — live, both ways.
+      { act: "type", pane: 1, sel: "testid:chat-composer", value: "Sam: on it — pulling the filings now", delay: 22 },
+      { cap: "Client B (Sam) replies", cursor: "testid:chat-send", cursorPane: 1, click: true, zoom: "testid:chat-feed", zoomScale: 1.6, hold: 50 },
+      { act: "click", pane: 1, sel: "testid:chat-send" },
+      { act: "sleep", pane: 0, ms: 150 },
+      { cap: "And straight back to Client A — live, both ways", burst: { ms: 3000, every: 300 }, zoom: "testid:chat-feed", zoomScale: 1.6, hold: 92 },
+      { act: "waitText", pane: 0, value: "pulling the filings" },
+
+      { cap: "One shared room — every message, every client, in real time", zoom: "testid:chat-feed", zoomScale: 1.5, hold: 88 },
     ],
   },
 

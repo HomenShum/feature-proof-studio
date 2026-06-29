@@ -173,9 +173,9 @@ against a real, deployed app (not just a demo harness).
 
 </details>
 
-<details><summary><b>NodeRoom · live sync + server-led agent</b> (2-pane, deployed app)</summary>
+<details><summary><b>NodeRoom · live sync across two clients</b> (2-pane, deployed app)</summary>
 
-<img src="assets/feature-noderoom-sync.gif" alt="Two clients on the live NodeRoom app: Client A sends a message and asks the Room NodeAgent to reconcile Q3; the agent locks cells and fills the variance — broadcast to both clients in real time" width="900">
+<img src="assets/feature-noderoom-sync.gif" alt="Two independent clients in one live NodeRoom: Client A (Maya) sends a chat message and it appears instantly in Client B (Sam) with no refresh; Sam replies and it syncs straight back to Maya — real-time, both ways, over Convex reactivity" width="900">
 
 </details>
 
