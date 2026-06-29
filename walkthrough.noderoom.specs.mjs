@@ -8,23 +8,35 @@
 export const NODEROOM_SPECS = [
   {
     id: "NRsolo",
-    title: "NodeRoom · human + agent, no clobber",
+    title: "NodeRoom · a shared diligence room + a NodeAgent",
     accent: "#8b5cf6",
     vw: 1280, vh: 800,
-    retries: 1,
+    retries: 2,
+    // Memory mode (offline, deterministic, no keys). Entry is now the public landing surface →
+    // `start-demo-room` seeds a full diligence room; `@nodeagent diligence CardioNova` runs a
+    // SCRIPTED research pass that locks the CardioNova row, fills it (status -> complete), and
+    // releases the lock — the signature human+agent no-clobber story, end to end.
     panes: [{ label: "NodeRoom — memory mode (offline, deterministic)", url: "https://noderoom.live/?mode=memory" }],
     steps: [
-      { act: "click", pane: 0, sel: "btn:Enter the Q3" },
+      // 0) The public landing surface
+      { act: "sleep", pane: 0, ms: 2600 },
+      { cap: "Bring people and agents into the same room", cursor: "testid:start-demo-room", cursorPane: 0, click: true, hold: 70 },
+      // 1) Enter the seeded diligence room, dismiss the welcome tour
+      { act: "click", pane: 0, sel: "testid:start-demo-room" },
       { act: "sleep", pane: 0, ms: 3800 },
-      { act: "key", pane: 0, value: "Escape" },
+      { act: "click", pane: 0, sel: "testid:tour-skip" },
       { act: "sleep", pane: 0, ms: 1000 },
-      { cap: "A shared room — humans + a NodeAgent on one spreadsheet", hold: 80 },
-      { cap: "Run collaboration — a human and the agent edit at once", cursor: "testid:collab-run", cursorPane: 0, click: true, hold: 58 },
-      { act: "click", pane: 0, sel: "testid:collab-run" },
+      { cap: "A shared diligence room — people + NodeAgents on the same artifacts", hold: 84 },
+      // 2) Ask the Room NodeAgent
+      { act: "type", pane: 0, sel: "testid:chat-composer", value: "@nodeagent diligence CardioNova", delay: 24 },
+      { cap: "Ask the Room NodeAgent to run diligence on CardioNova", cursor: "testid:chat-send", cursorPane: 0, click: true, zoom: "testid:chat-feed", zoomScale: 1.5, hold: 56 },
+      { act: "click", pane: 0, sel: "testid:chat-send" },
       { act: "sleep", pane: 0, ms: 700 },
-      { cap: "The agent locks a cell, drafts, then smart-merges — no clobber", burst: { ms: 4200, every: 320 }, cursor: "testid:collab-run", cursorPane: 0, hold: 100 },
-      { act: "sleep", pane: 0, ms: 600 },
-      { cap: "Every change — human or agent — lands in the audit trace", hold: 92 },
+      // 3) Burst — the agent locks the row, researches, and fills it live
+      { cap: "It locks the row, researches, and fills it — no clobber", burst: { ms: 5200, every: 320 }, zoom: "testid:artifact-panel", zoomScale: 1.45, hold: 110 },
+      { act: "sleep", pane: 0, ms: 900 },
+      // 4) Result — CardioNova complete, two sources, lock released
+      { cap: "CardioNova → complete: structured fields, two sources, lock released", zoom: "testid:artifact-panel", zoomScale: 1.45, hold: 96 },
     ],
   },
   {

@@ -167,9 +167,9 @@ The repo also ships with captured walkthroughs of [NodeRoom](https://github.com/
 a production Convex + React live-collaborative diligence room. These prove the tool works
 against a real, deployed app (not just a demo harness).
 
-<details><summary><b>NodeRoom · human + agent, no clobber</b> (single-pane, memory mode)</summary>
+<details><summary><b>NodeRoom · a shared diligence room + a NodeAgent</b> (single-pane, memory mode)</summary>
 
-<img src="assets/feature-noderoom-solo.gif" alt="NodeRoom memory mode: a human and the NodeAgent edit the same spreadsheet simultaneously — the agent locks a cell, drafts, then smart-merges without clobbering the human's edit" width="760">
+<img src="assets/feature-noderoom-solo.gif" alt="NodeRoom memory mode: from the public landing, create a shared diligence room, then ask the Room NodeAgent to run diligence on CardioNova — it locks the row, researches, and fills it to complete (structured fields + two sources), then releases the lock" width="760">
 
 </details>
 
