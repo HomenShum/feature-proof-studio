@@ -12,9 +12,9 @@ Not a single final‑state "hero shot" — the viewer follows the *whole flow*.
 ![Playwright](https://img.shields.io/badge/capture-Playwright-2EAD33)
 ![ffmpeg](https://img.shields.io/badge/encode-ffmpeg-007808)
 
-<img src="assets/solo-founder-walkthrough.gif" alt="A feature walkthrough GIF: builder console → cursor glides to Generate and clicks → the 3D scroll story renders → customer page → proof report" width="760">
+<img src="assets/feature-noderoom-hero.gif" alt="A feature walkthrough GIF of NodeRoom: from the landing page, create a shared diligence room, ask the NodeAgent to run diligence on CardioNova — it locks the row, researches, and fills it to complete — then open the audit Trace, where every agent action carries a verdict, attribution, and evidence" width="760">
 
-<sub>↑ produced by this tool — every state, the click, the generation, the result.</sub>
+<sub>↑ produced by this tool — every state, the click, the agent's work, and the proof.</sub>
 
 </div>
 

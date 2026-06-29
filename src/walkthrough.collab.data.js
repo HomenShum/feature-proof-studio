@@ -1019,5 +1019,136 @@ export const COLLAB_WALKTHROUGHS = [
         ]
       }
     ]
+  },
+  {
+    "id": "NRhero",
+    "title": "NodeRoom — people + agents in one room, every action proven",
+    "accent": "#8b5cf6",
+    "vw": 1280,
+    "vh": 800,
+    "cropVH": null,
+    "paneLabels": [
+      "NodeRoom — memory mode (offline, deterministic)"
+    ],
+    "steps": [
+      {
+        "caption": "Bring people and agents into the same room",
+        "hold": 64,
+        "burst": false,
+        "zoomScale": null,
+        "panes": [
+          {
+            "img": "wt-collab/NRhero/p0_00.png",
+            "cursor": {
+              "x": 222,
+              "y": 467
+            },
+            "click": true,
+            "zoom": null
+          }
+        ]
+      },
+      {
+        "caption": "A live diligence room — shared sheets, notes, and a NodeAgent",
+        "hold": 80,
+        "burst": false,
+        "zoomScale": null,
+        "panes": [
+          {
+            "img": "wt-collab/NRhero/p0_01.png",
+            "cursor": null,
+            "click": false,
+            "zoom": null
+          }
+        ]
+      },
+      {
+        "caption": "Ask the NodeAgent to run diligence on CardioNova",
+        "hold": 50,
+        "burst": false,
+        "zoomScale": 1.5,
+        "panes": [
+          {
+            "img": "wt-collab/NRhero/p0_02.png",
+            "cursor": {
+              "x": 1230,
+              "y": 588
+            },
+            "click": true,
+            "zoom": {
+              "x": 1100,
+              "y": 334
+            }
+          }
+        ]
+      },
+      {
+        "caption": "It locks the row, researches, and fills it — no clobber",
+        "hold": 96,
+        "burst": true,
+        "zoomScale": 1.45,
+        "panes": [
+          {
+            "imgs": [
+              "wt-collab/NRhero/p0_03_00.png",
+              "wt-collab/NRhero/p0_03_01.png",
+              "wt-collab/NRhero/p0_03_02.png",
+              "wt-collab/NRhero/p0_03_03.png",
+              "wt-collab/NRhero/p0_03_04.png",
+              "wt-collab/NRhero/p0_03_05.png",
+              "wt-collab/NRhero/p0_03_06.png",
+              "wt-collab/NRhero/p0_03_07.png",
+              "wt-collab/NRhero/p0_03_08.png",
+              "wt-collab/NRhero/p0_03_09.png",
+              "wt-collab/NRhero/p0_03_10.png",
+              "wt-collab/NRhero/p0_03_11.png",
+              "wt-collab/NRhero/p0_03_12.png",
+              "wt-collab/NRhero/p0_03_13.png",
+              "wt-collab/NRhero/p0_03_14.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 539,
+              "y": 382
+            }
+          }
+        ]
+      },
+      {
+        "caption": "CardioNova → complete: structured fields, two sources",
+        "hold": 68,
+        "burst": false,
+        "zoomScale": 1.45,
+        "panes": [
+          {
+            "img": "wt-collab/NRhero/p0_04.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 539,
+              "y": 382
+            }
+          }
+        ]
+      },
+      {
+        "caption": "And every agent action is provable — verdict, attribution, evidence",
+        "hold": 112,
+        "burst": false,
+        "zoomScale": 1.28,
+        "panes": [
+          {
+            "img": "wt-collab/NRhero/p0_05.png",
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 539,
+              "y": 382
+            }
+          }
+        ]
+      }
+    ]
   }
 ];

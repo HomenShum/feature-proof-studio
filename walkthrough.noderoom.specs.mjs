@@ -6,6 +6,37 @@
 //            Convex reactivity (no /ask, so no LLM cost — just cheap Convex writes).
 // NodeRoom is a dense full app, so capture at a taller viewport (vh:800) and DON'T crop.
 export const NODEROOM_SPECS = [
+  // HERO — the flagship "this is NodeRoom" walkthrough (top of the README). Distinct from the
+  // single-feature clips below: it shows the WHOLE arc — a shared room → the agent does real work
+  // (locks, researches, fills CardioNova) → AND every action is provable in the audit Trace
+  // (verdict + attribution by evidence source). Memory mode, scripted, deterministic, no LLM.
+  {
+    id: "NRhero",
+    title: "NodeRoom — people + agents in one room, every action proven",
+    accent: "#8b5cf6",
+    vw: 1280, vh: 800,
+    retries: 2,
+    panes: [{ label: "NodeRoom — memory mode (offline, deterministic)", url: "https://noderoom.live/?mode=memory" }],
+    steps: [
+      { act: "sleep", pane: 0, ms: 2600 },
+      { cap: "Bring people and agents into the same room", cursor: "testid:start-demo-room", cursorPane: 0, click: true, hold: 64 },
+      { act: "click", pane: 0, sel: "testid:start-demo-room" },
+      { act: "sleep", pane: 0, ms: 3800 },
+      { act: "click", pane: 0, sel: "testid:tour-skip" },
+      { act: "sleep", pane: 0, ms: 900 },
+      { cap: "A live diligence room — shared sheets, notes, and a NodeAgent", hold: 80 },
+      { act: "type", pane: 0, sel: "testid:chat-composer", value: "@nodeagent diligence CardioNova", delay: 22 },
+      { cap: "Ask the NodeAgent to run diligence on CardioNova", cursor: "testid:chat-send", cursorPane: 0, click: true, zoom: "testid:chat-feed", zoomScale: 1.5, hold: 50 },
+      { act: "click", pane: 0, sel: "testid:chat-send" },
+      { act: "sleep", pane: 0, ms: 700 },
+      { cap: "It locks the row, researches, and fills it — no clobber", burst: { ms: 4800, every: 320 }, zoom: "testid:artifact-panel", zoomScale: 1.45, hold: 96 },
+      { act: "sleep", pane: 0, ms: 700 },
+      { cap: "CardioNova → complete: structured fields, two sources", zoom: "testid:artifact-panel", zoomScale: 1.45, hold: 68 },
+      { act: "click", pane: 0, sel: "testid:trace-tab" },
+      { act: "sleep", pane: 0, ms: 1600 },
+      { cap: "And every agent action is provable — verdict, attribution, evidence", zoom: "testid:artifact-panel", zoomScale: 1.28, hold: 112 },
+    ],
+  },
   {
     id: "NRsolo",
     title: "NodeRoom · a shared diligence room + a NodeAgent",
