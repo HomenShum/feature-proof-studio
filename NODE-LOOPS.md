@@ -157,6 +157,7 @@ loop by hand per the severity policy. Per the spec, that puts this repo in the
   image, not an hour of guessing.
 - **Inline-size guard** — the judge refuses MP4s > ~19 MB inline (points you to the
   Files API / a smaller cut) rather than failing opaquely.
+- **PROVE-BEFORE-CLAIM** (agent-side gate) — never assert done/pass/fixed/blocked/absent/"root cause" from a *proxy* (an affordance, a keyword/template echo, a rendered shell, or a prior-based hypothesis); name the artifact that proves it and check THAT, independent-confirm anything that "looks done", and treat no gate as real until the autonomous path is tried. Canonical gate + observed failure signals: https://github.com/HomenShum/noderl/blob/main/spec/prove-before-claim.md
 
 ---
 
