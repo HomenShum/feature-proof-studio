@@ -149,30 +149,66 @@ The composition scales to **N panes** — same spec model, one window per client
 
 </details>
 
-### Room OS V0 -> V3 live production comparison
+### Room OS V0 -> V3 readable production proof
 
-This repo now includes a four-pane production walkthrough for
+This repo now includes a production proof for
 [Room OS](https://github.com/HomenShum/local-collab-mvp). The capture script opens
 four fresh rooms on [room-os-live.vercel.app](https://room-os-live.vercel.app), selects
 V0/V1/V2/V3, starts the same live model task, sends the same mid-run interrupt, opens
-the internal state layer, and renders the result as one educational comparison. The
-storyboard alternates all-version overview shots with focused transcript/state shots
-so the human steer, agent outputs, `roomState`, and V3 worker stats stay readable.
-The clip includes explicit comparison axes, per-version verdicts, and a final
-scorecard so the viewer can understand the conclusion without guessing from camera
-movement.
+the internal state layer, and exports both motion and static README evidence.
 
-<img src="assets/room-os-v0-v1-v2-v3.gif" alt="Room OS live production comparison: V0 raw transcript, V1 shared reducer, V2 typed intent, V3 agent OS with workers, artifacts, cost, and latency stats" width="940">
+The README should not force readers to decode a fast four-pane GIF. The readable proof
+is segmented below: one still per version, then a final comparison table.
 
-For text-heavy review, open the high-resolution
+#### V0 Failure: transcript-only coordination
+
+<img src="assets/room-os-v0-failure.png" alt="Room OS V0 failure: the human interrupt is visible as transcript text, but there is no durable count progress object" width="940">
+
+V0 can speak, but the steer is just another transcript row. There is no authoritative
+count target, no count progress object, and no durable control event.
+
+#### V1 Room State: reducer-owned progress
+
+<img src="assets/room-os-v1-room-state.png" alt="Room OS V1 room state: reducer-owned floor, turn, act, and count progress are visible while agents count" width="940">
+
+V1 gives the room a reducer. Floor, turn, next act, count, done, and loop-risk become
+explicit state instead of being inferred from agent prose.
+
+#### V2 Work Room: typed human interrupts
+
+<img src="assets/room-os-v2-work-room.png" alt="Room OS V2 work room: the same count run is governed by typed intent and visible room state" width="940">
+
+V2 keeps the reducer and routes human steering as typed room intent. A mid-run steer
+becomes a state transition, not loose chat that the next model turn may ignore.
+
+#### V3 Agent OS: governed agent work
+
+<img src="assets/room-os-v3-agent-os.png" alt="Room OS V3 agent OS: goals, workers, artifacts, policy, expected cost, and observed latency are visible" width="940">
+
+V3 adds the control plane around the room: goals, workers, artifacts, policy, expected
+cost, expected latency, observed runtime, and trace payloads.
+
+#### Final comparison
+
+<img src="assets/room-os-final-scorecard.png" alt="Room OS final scorecard comparing V0, V1, V2, and V3 across memory, interrupt handling, progress, parallel work, cost latency, and auditability" width="940">
+
+| Axis | V0 Failure | V1 Room State | V2 Work Room | V3 Agent OS |
+|---|---|---|---|---|
+| Memory | Transcript only | Reducer state | Reducer plus typed intent | Goal graph plus world beliefs |
+| Interrupt | Loose chat; easy to lose | Retargets count state | Parsed as room-control intent | Can become goals and workstreams |
+| Progress | Inferred from words | Count, floor, act, done are explicit | State plus semantic steer history | Goals, tasks, workers, artifacts |
+| Parallel work | None | Single room loop | Single room plus intent lane | Worker budget and task lanes |
+| Cost / latency | Hidden | Hidden | Hidden | Expected cost, expected latency, observed runtime |
+| Audit | Read transcript manually | Inspect roomState and traces | Inspect typed intent plus state | Inspect full control plane and trace payloads |
+
+<details><summary><b>Optional motion capture</b></summary>
+
+<img src="assets/room-os-v0-v1-v2-v3.gif" alt="Room OS live production comparison GIF: V0 raw transcript, V1 shared reducer, V2 typed intent, V3 agent OS" width="940">
+
+For a clearer moving version, open
 [`room-os-v0-v1-v2-v3.mp4`](assets/room-os-v0-v1-v2-v3.mp4).
 
-What the clip teaches:
-
-- **V0 Failure**: raw transcript coordination can speak, but it cannot prove durable progress.
-- **V1 Room State**: the reducer owns floor, turn, count, done, and loop-risk state.
-- **V2 Work Room**: user interrupts become typed intent, so retargeting is durable.
-- **V3 Agent OS**: the room adds goals, workers, artifacts, policy, expected cost, observed latency, and trace payloads.
+</details>
 
 Reproduce the clip:
 

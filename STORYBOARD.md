@@ -35,6 +35,8 @@ Use explicit scene metadata whenever the renderer supports it:
 
 For comparison demos, include a final scorecard scene. A viewer should not need to reverse-engineer the conclusion from small UI differences.
 
+For dense comparisons, ship static README sections as the primary artifact: one section per version or actor, one full-width still per section, and a final markdown table. Keep GIF/MP4 as optional supporting motion, not the only explanation.
+
 Run the video judge on the rendered MP4 before publishing. It scores `storyboard_clarity` alongside legibility, state coverage, cursor truth, proof feel, and loop etiquette.
 
 ## Quality Bar
