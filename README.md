@@ -152,7 +152,7 @@ The composition scales to **N panes** — same spec model, one window per client
 ### Room OS V0 -> V3 readable production proof
 
 This repo now includes a production proof for
-[Room OS](https://github.com/HomenShum/local-collab-mvp). The capture script opens
+[Room OS](https://github.com/HomenShum/room-os). The capture script opens
 four fresh rooms on [room-os-live.vercel.app](https://room-os-live.vercel.app), selects
 V0/V1/V2/V3, starts the same live model task, sends the same mid-run interrupt, opens
 the internal state layer, and exports motion, static README evidence, and raw JSON state snapshots.
