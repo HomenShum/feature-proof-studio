@@ -2,6 +2,7 @@ import React from "react";
 import { Composition } from "remotion";
 import { Walkthrough, WT_FPS, WT_W, WT_H, wtDuration } from "./Walkthrough.jsx";
 import { WALKTHROUGHS } from "./walkthrough.data.js";
+import { VISUAL_WALKTHROUGHS } from "./walkthrough.visual.data.js";
 import { Walkthrough2up, WT2_FPS, WT2_W, WT2_H, wt2Duration } from "./Walkthrough2up.jsx";
 import { COLLAB_WALKTHROUGHS } from "./walkthrough.collab.data.js";
 
@@ -10,7 +11,7 @@ import { COLLAB_WALKTHROUGHS } from "./walkthrough.collab.data.js";
 // `node walkthrough.mjs`; COLLAB_WALKTHROUGHS by `node walkthrough.collab.mjs`.
 export const RemotionRoot = () => (
   <>
-    {WALKTHROUGHS.map((w) => (
+    {[...WALKTHROUGHS, ...VISUAL_WALKTHROUGHS].map((w) => (
       <Composition
         key={"WT-" + w.id}
         id={"WT-" + w.id}

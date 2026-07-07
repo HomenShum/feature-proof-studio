@@ -164,6 +164,22 @@ npx remotion render src/roomos-index.js WTG-RoomOSV0123 out/room-os-v0-v1-v2-v3.
 ffmpeg -y -i out/room-os-v0-v1-v2-v3.mp4 -vf "fps=10,scale=1280:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128:stats_mode=diff[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle" -loop 0 assets/room-os-v0-v1-v2-v3.gif
 ```
 
+### Visual Labs full-flow walkthrough
+
+Visual Labs is a single-pane example of an agentic creative workflow: trend-to-prompt,
+prompt refinement, image render, dry-run publishing, analytics pull, and a Fastino-ready
+export loop. It is useful as the opposite shape from Room OS: one browser, many states,
+with burst captures over the moments where agent/tool output streams back into the UI.
+
+<img src="assets/visual-labs-full-flow.gif" alt="Visual Labs walkthrough: enter the remix studio, ask the agent to improve a prompt, generate an image, prepare a safe post, pull analytics, and export Fastino-ready training data" width="760">
+
+Reproduce the clip:
+
+```bash
+VISUAL_URL=http://127.0.0.1:3000 node walkthrough.visual.mjs
+npx remotion render src/index.js WT-VisualLabsFlow out/visual-labs-full-flow.mp4 --concurrency=2
+```
+
 Ships with a **worked example** (the live-collab counterpart to the single-pane one):
 - **[`examples/collab-demo/`](examples/collab-demo/)** — a runnable, **zero-dependency**
   local app (Node SSE server + vanilla JS) that faithfully reproduces the Convex
