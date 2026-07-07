@@ -43,6 +43,10 @@ const INITIAL_GOAL =
 const INTERRUPT =
   "Actually switch goals: count from 1 to 6 out loud, one number per agent turn, stopping exactly at 6. Do not overlap.";
 
+const verdict = (label, text, tone = "neutral") => ({ label, text, tone });
+const verdicts = (byKey) => PROFILES.map((profile) => byKey[profile.key] || null);
+const cell = (text, tone = "neutral") => ({ text, tone });
+
 const sleep = (page, ms) => page.waitForTimeout(ms);
 
 const centerOf = async (page, locator) => {
@@ -81,7 +85,15 @@ const focusOfText = async (page, text) => {
 
 const waitForRoom = async (page) => {
   await page.waitForFunction(
-    () => /roomState|live roomState|Start|Invite/i.test(document.body.innerText),
+    () => {
+      const text = document.body.innerText || "";
+      const url = new URL(window.location.href);
+      return (
+        url.searchParams.has("room") ||
+        Boolean(document.querySelector('[placeholder="Message or steer the agents"]')) ||
+        /roomState|live roomState|Room created|Scan from your phone/i.test(text)
+      );
+    },
     { timeout: 90000, polling: 750 },
   );
 };
@@ -144,6 +156,7 @@ const createRoom = async (browser, profile, runId) => {
   await page.locator(`button[title="${profile.buttonTitle}"]`).click();
   await page.getByRole("button", { name: /Create room/i }).click();
   await waitForRoom(page);
+  await page.getByPlaceholder("Message or steer the agents").first().waitFor({ state: "visible", timeout: 60000 });
   await sleep(page, 1200);
   await hideInvitePanel(page);
   await sleep(page, 500);
@@ -151,6 +164,7 @@ const createRoom = async (browser, profile, runId) => {
 };
 
 const snap = async (panes, stepIndex, caption, detail, options = {}) => {
+  await Promise.all(panes.map(({ page }) => hideInvitePanel(page).catch(() => {})));
   const burst = Boolean(options.burst);
   const burstCount = burst ? options.frames || 8 : 1;
   const paneSteps = PROFILES.map(() => ({ imgs: [] }));
@@ -184,12 +198,18 @@ const snap = async (panes, stepIndex, caption, detail, options = {}) => {
   }
 
   return {
+    scene: options.scene,
+    axis: options.axis,
+    question: options.question,
     caption,
     detail,
+    takeaway: options.takeaway,
     hold: options.hold || 84,
     burst,
     layout: options.layout || "grid",
     focusPane: typeof options.focusPane === "number" ? options.focusPane : undefined,
+    verdicts: options.verdicts || [],
+    scorecard: options.scorecard,
     panes: paneSteps,
   };
 };
@@ -268,9 +288,22 @@ const run = async () => {
       await snap(
         panes,
         0,
-        "Four fresh production rooms, one per agent version",
-        "Same live task, same model surface, different coordination layer. The QR is hidden so the transcript and state can stay visible.",
-        { hold: 88, zoom: zoomAll(620, 218, 1.18) },
+        "Test setup: same task, same interrupt, four room versions",
+        "All panes are live production rooms. We start with trip planning, then send the same steer: count 1-6, one agent per turn.",
+        {
+          hold: 108,
+          scene: "SCENE 1 / SETUP",
+          axis: "same live task, four architectures",
+          question: "What changes when the room owns state instead of only chat?",
+          takeaway: "The evidence is live UI; the story is the coordination layer.",
+          verdicts: verdicts({
+            v0: verdict("baseline", "Transcript-only coordination.", "fail"),
+            v1: verdict("state", "Reducer owns floor and progress.", "pass"),
+            v2: verdict("intent", "Interrupts become typed room intent.", "strong"),
+            v3: verdict("os", "Goals, workers, cost, latency, traces.", "strong"),
+          }),
+          zoom: zoomAll(620, 218, 1.18),
+        },
       ),
     );
 
@@ -279,9 +312,24 @@ const run = async () => {
       await snap(
         panes,
         1,
-        "Start the same planning task in every version",
-        "V0 hears transcript only. V1 owns floor/count state. V2 routes interrupts. V3 also exposes goals, workers, artifacts, cost, and latency.",
-        { hold: 76, active: "all", cursor: startCursors, click: true },
+        "Baseline: every version can produce a normal agent turn",
+        "This is not the win condition. The comparison starts when the user changes the mission while the agents are already moving.",
+        {
+          hold: 92,
+          scene: "SCENE 2 / BASELINE",
+          axis: "before the interrupt",
+          question: "Can each version talk before the mission changes?",
+          takeaway: "Speech is table stakes; durable retargeting is the test.",
+          active: "all",
+          cursor: startCursors,
+          click: true,
+          verdicts: verdicts({
+            v0: verdict("talks", "Can produce transcript output.", "neutral"),
+            v1: verdict("talks", "Can produce output plus roomState.", "pass"),
+            v2: verdict("talks", "Can produce output plus intent lane.", "pass"),
+            v3: verdict("talks", "Can produce output plus control plane.", "strong"),
+          }),
+        },
       ),
     );
 
@@ -291,10 +339,20 @@ const run = async () => {
       await snap(
         panes,
         2,
-        "V0 detail: agent output exists, but the memory is only transcript",
-        "This is the failure baseline. Ada and Ben can speak, but there is no durable count state, no typed interrupt, and no worker ledger.",
+        "V0: model output exists, but progress is only implied",
+        "This is the failure baseline. Ada and Ben can speak, but the room has no authoritative count target, no typed interrupt, and no worker ledger.",
         {
-          hold: 104,
+          hold: 122,
+          scene: "SCENE 3 / V0 FAILURE",
+          axis: "memory source",
+          question: "What proof exists after the first model turn?",
+          takeaway: "A transcript is evidence of words, not control of work.",
+          verdicts: verdicts({
+            v0: verdict("failure", "Only transcript rows; no durable progress object.", "fail"),
+            v1: verdict("contrast", "Adds reducer state.", "pass"),
+            v2: verdict("contrast", "Adds typed retargeting.", "strong"),
+            v3: verdict("contrast", "Adds an agent OS layer.", "strong"),
+          }),
           burst: true,
           frames: 5,
           every: 500,
@@ -311,9 +369,25 @@ const run = async () => {
       await snap(
         panes,
         3,
-        "Human input: interrupt all rooms and retarget to counting",
-        "The same steer is sent to every live room: count from 1 to 6, one agent per turn, no overlap.",
-        { hold: 88, active: "all", cursor: steerCursors, click: true, zoom: zoomAll(640, 655, 1.28) },
+        "Same human input: switch goals and count from 1 to 6",
+        "The exact same steer is sent to every room. After this moment, the only thing that matters is whether the room preserves the new mission.",
+        {
+          hold: 104,
+          scene: "SCENE 4 / CONFLICT",
+          axis: "same human interrupt",
+          question: "Does the steer become authoritative state or just another message?",
+          takeaway: "This is the plot turn: new goal, same live run.",
+          active: "all",
+          cursor: steerCursors,
+          click: true,
+          zoom: zoomAll(640, 655, 1.28),
+          verdicts: verdicts({
+            v0: verdict("risk", "Steer is transcript text.", "fail"),
+            v1: verdict("state", "Reducer can retarget count state.", "pass"),
+            v2: verdict("intent", "Intent router interprets the interrupt.", "strong"),
+            v3: verdict("work", "Goal graph can spawn structured work.", "strong"),
+          }),
+        },
       ),
     );
 
@@ -323,10 +397,20 @@ const run = async () => {
       await snap(
         panes,
         4,
-        "V1 detail: reducer state makes the count legible",
+        "V1: reducer-owned count and floor state",
         "The transcript shows the agent messages; the roomState strip shows floor, turn, next act, and count progress as authoritative state.",
         {
-          hold: 110,
+          hold: 128,
+          scene: "SCENE 5 / STATE PROOF",
+          axis: "reducer-owned progress",
+          question: "Can progress be proven without trusting the next LLM sentence?",
+          takeaway: "The room, not the model prose, owns the count.",
+          verdicts: verdicts({
+            v0: verdict("missing", "Still transcript-only.", "fail"),
+            v1: verdict("proof", "Count, floor, turn, and act are visible.", "pass"),
+            v2: verdict("inherits", "Keeps reducer state plus intent.", "strong"),
+            v3: verdict("inherits", "Keeps state plus work control.", "strong"),
+          }),
           burst: true,
           frames: 6,
           every: 520,
@@ -343,10 +427,20 @@ const run = async () => {
       await snap(
         panes,
         5,
-        "V2 detail: the interrupt is interpreted as work-room intent",
-        "V2 keeps the human steer visible while using typed intent to retarget the active work instead of treating it as loose chat.",
+        "V2: the interrupt is routed as work-room intent",
+        "V2 keeps the human steer visible while using typed intent to retarget active work instead of treating it as loose chat.",
         {
-          hold: 108,
+          hold: 128,
+          scene: "SCENE 6 / INTENT ROUTING",
+          axis: "interrupt semantics",
+          question: "Does the system understand the steer as control, not conversation?",
+          takeaway: "The steer becomes a durable work-room event.",
+          verdicts: verdicts({
+            v0: verdict("missing", "No typed control event.", "fail"),
+            v1: verdict("partial", "Stateful, but less semantic.", "pass"),
+            v2: verdict("proof", "Typed intent retargets the active room.", "strong"),
+            v3: verdict("extends", "Typed work feeds the goal graph.", "strong"),
+          }),
           burst: true,
           frames: 6,
           every: 500,
@@ -363,16 +457,29 @@ const run = async () => {
       await snap(
         panes,
         6,
-        "V3 detail: state, workers, cost, and latency are first-class",
-        "The V3 panel exposes policy, worker budget, expected model cost, expected latency, observed runtime, goals, workers, and artifacts.",
+        "V3: goals, workers, cost, latency, and artifacts are first-class",
+        "V3 shifts the comparison from counting correctly to operating a budgeted agent workroom with policy, workers, artifacts, and runtime stats.",
         {
-          hold: 118,
+          hold: 136,
+          scene: "SCENE 7 / AGENT OS",
+          axis: "parallel work control",
+          question: "What does V3 add once basic steering works?",
+          takeaway: "This is where the demo becomes an operating system, not a chat room.",
+          verdicts: verdicts({
+            v0: verdict("baseline", "No worker or budget layer.", "fail"),
+            v1: verdict("foundation", "Stateful turn-taking.", "pass"),
+            v2: verdict("foundation", "Stateful intent routing.", "strong"),
+            v3: verdict("delta", "Goals, tasks, workers, artifacts, cost, latency.", "strong"),
+          }),
           burst: true,
           frames: 6,
           every: 520,
           layout: "focus",
           focusPane: focusPane("v3"),
-          zoom: zoomAll(640, 390, 1.26),
+          zoom: {
+            ...zoomAll(640, 390, 1.26),
+            v3: { x: 628, y: 255, scale: 1.58 },
+          },
         },
       ),
     );
@@ -390,16 +497,26 @@ const run = async () => {
       await snap(
         panes,
         7,
-        "Internal state drawer: the receipts behind the conversation",
-        "The state drawer exposes the reducer snapshot and trace payloads: participants, utterance limits, V3 goals, tasks, workers, artifacts, and world beliefs.",
+        "State drawer: receipts behind the conversation",
+        "The drawer exposes reducer snapshots and trace payloads: participants, utterance limits, V3 goals, tasks, workers, artifacts, and world beliefs.",
         {
-          hold: 126,
+          hold: 142,
+          scene: "SCENE 8 / AUDIT",
+          axis: "human inspectability",
+          question: "Can a human inspect exactly what happened after the run?",
+          takeaway: "Trust comes from inspectable internal state, not vibes.",
           active: "all",
           cursor: stateCursors,
           click: true,
           layout: "focus",
           focusPane: focusPane("v3"),
           zoom: stateZooms,
+          verdicts: verdicts({
+            v0: verdict("thin", "Transcript is the main receipt.", "warn"),
+            v1: verdict("state", "Reducer snapshot is inspectable.", "pass"),
+            v2: verdict("trace", "Intent and reducer state are inspectable.", "strong"),
+            v3: verdict("full", "Goals, workers, artifacts, costs, traces.", "strong"),
+          }),
         },
       ),
     );
@@ -408,14 +525,77 @@ const run = async () => {
       await snap(
         panes,
         8,
-        "Final comparison: overview plus readable receipts",
-        "The GIF alternates between all-version context and focused detail so the agent inputs, outputs, roomState, and V3 control plane are readable.",
+        "Final decision: from agents talking to agent work being governed",
+        "The viewer should leave knowing exactly what each version proves, what it cannot prove, and why V3 is the full live-room target.",
         {
-          hold: 96,
-          burst: true,
-          frames: 4,
-          every: 500,
-          zoom: zoomAll(640, 360, 1.14),
+          hold: 164,
+          scene: "SCENE 9 / VERDICT",
+          axis: "decision table",
+          question: "What changed from V0 to V3?",
+          takeaway: "V3 is the goal; V1/V2 are the required stepping stones.",
+          layout: "scorecard",
+          scorecard: {
+            title: "Room OS V0 -> V3: what the live run proves",
+            subtitle:
+              "Same task, same interrupt, same production surface. The difference is how much work state the room can own, expose, and govern.",
+            columns: PROFILES.map((profile) => profile.title),
+            rows: [
+              {
+                axis: "Memory",
+                cells: [
+                  cell("Transcript only.", "fail"),
+                  cell("Reducer state.", "pass"),
+                  cell("Reducer plus typed intent.", "strong"),
+                  cell("Goal graph plus world beliefs.", "strong"),
+                ],
+              },
+              {
+                axis: "Interrupt",
+                cells: [
+                  cell("Loose chat; easy to lose.", "fail"),
+                  cell("Retargets count state.", "pass"),
+                  cell("Parsed as room-control intent.", "strong"),
+                  cell("Can become new goals and workstreams.", "strong"),
+                ],
+              },
+              {
+                axis: "Progress",
+                cells: [
+                  cell("Inferred from words.", "fail"),
+                  cell("Count, floor, act, done are explicit.", "pass"),
+                  cell("State plus semantic steer history.", "strong"),
+                  cell("Goals, tasks, workers, artifacts.", "strong"),
+                ],
+              },
+              {
+                axis: "Parallel work",
+                cells: [
+                  cell("None.", "fail"),
+                  cell("Single room loop.", "neutral"),
+                  cell("Single room plus intent lane.", "pass"),
+                  cell("Worker budget and task lanes.", "strong"),
+                ],
+              },
+              {
+                axis: "Cost/latency",
+                cells: [
+                  cell("Hidden.", "fail"),
+                  cell("Hidden.", "warn"),
+                  cell("Hidden.", "warn"),
+                  cell("Expected cost, expected latency, observed runtime.", "strong"),
+                ],
+              },
+              {
+                axis: "Audit",
+                cells: [
+                  cell("Read the transcript manually.", "warn"),
+                  cell("Inspect roomState and traces.", "pass"),
+                  cell("Inspect typed intent plus state.", "strong"),
+                  cell("Inspect full control plane and trace payloads.", "strong"),
+                ],
+              },
+            ],
+          },
         },
       ),
     );

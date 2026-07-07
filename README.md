@@ -20,6 +20,16 @@ Not a single final‑state "hero shot" — the viewer follows the *whole flow*.
 
 ---
 
+## Storyboard first
+
+The default quality bar is not "nice zooms." A walkthrough should have a clear
+premise, viewer question, comparison axis, conflict, evidence, verdict, and final
+decision before capture starts. Camera moves are subordinate to the story.
+
+For comparison demos, the renderer supports explicit `scene`, `axis`, `question`,
+`takeaway`, per-pane `verdicts`, and a final `scorecard` scene. See
+[`STORYBOARD.md`](STORYBOARD.md) for the required story beats and anti-patterns.
+
 ## Why
 
 Most README/demo GIFs are **hero shots** — they show the *final* screen, so a viewer
@@ -148,8 +158,14 @@ V0/V1/V2/V3, starts the same live model task, sends the same mid-run interrupt, 
 the internal state layer, and renders the result as one educational comparison. The
 storyboard alternates all-version overview shots with focused transcript/state shots
 so the human steer, agent outputs, `roomState`, and V3 worker stats stay readable.
+The clip includes explicit comparison axes, per-version verdicts, and a final
+scorecard so the viewer can understand the conclusion without guessing from camera
+movement.
 
 <img src="assets/room-os-v0-v1-v2-v3.gif" alt="Room OS live production comparison: V0 raw transcript, V1 shared reducer, V2 typed intent, V3 agent OS with workers, artifacts, cost, and latency stats" width="940">
+
+For text-heavy review, open the high-resolution
+[`room-os-v0-v1-v2-v3.mp4`](assets/room-os-v0-v1-v2-v3.mp4).
 
 What the clip teaches:
 
@@ -162,7 +178,7 @@ Reproduce the clip:
 
 ```bash
 node walkthrough.roomos.mjs
-npx remotion render src/roomos-index.js WTG-RoomOSV0123 out/room-os-v0-v1-v2-v3.mp4 --concurrency=2
+npm run render:roomos
 ffmpeg -y -i out/room-os-v0-v1-v2-v3.mp4 -vf "fps=10,scale=1280:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128:stats_mode=diff[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle" -loop 0 assets/room-os-v0-v1-v2-v3.gif
 ```
 

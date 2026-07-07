@@ -25,6 +25,7 @@
     "studio": "remotion studio src/index.js",
     "render": "remotion render src/index.js",
     "render:example": "remotion render src/index.js WT-SoloFounder out/example.mp4 --concurrency=2",
+    "render:roomos": "remotion render src/roomos-index.js WTG-RoomOSV0123 out/room-os-v0-v1-v2-v3.mp4 --concurrency=2",
     "judge": "node judge-video.mjs"
   },
   "dependencies": {

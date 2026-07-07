@@ -20,11 +20,37 @@ export const ROOMOS_WALKTHROUGHS = [
     ],
     "steps": [
       {
-        "caption": "Four fresh production rooms, one per agent version",
-        "detail": "Same live task, same model surface, different coordination layer. The QR is hidden so the transcript and state can stay visible.",
-        "hold": 88,
+        "scene": "SCENE 1 / SETUP",
+        "axis": "same live task, four architectures",
+        "question": "What changes when the room owns state instead of only chat?",
+        "caption": "Test setup: same task, same interrupt, four room versions",
+        "detail": "All panes are live production rooms. We start with trip planning, then send the same steer: count 1-6, one agent per turn.",
+        "takeaway": "The evidence is live UI; the story is the coordination layer.",
+        "hold": 108,
         "burst": false,
         "layout": "grid",
+        "verdicts": [
+          {
+            "label": "baseline",
+            "text": "Transcript-only coordination.",
+            "tone": "fail"
+          },
+          {
+            "label": "state",
+            "text": "Reducer owns floor and progress.",
+            "tone": "pass"
+          },
+          {
+            "label": "intent",
+            "text": "Interrupts become typed room intent.",
+            "tone": "strong"
+          },
+          {
+            "label": "os",
+            "text": "Goals, workers, cost, latency, traces.",
+            "tone": "strong"
+          }
+        ],
         "panes": [
           {
             "imgs": [],
@@ -85,11 +111,37 @@ export const ROOMOS_WALKTHROUGHS = [
         ]
       },
       {
-        "caption": "Start the same planning task in every version",
-        "detail": "V0 hears transcript only. V1 owns floor/count state. V2 routes interrupts. V3 also exposes goals, workers, artifacts, cost, and latency.",
-        "hold": 76,
+        "scene": "SCENE 2 / BASELINE",
+        "axis": "before the interrupt",
+        "question": "Can each version talk before the mission changes?",
+        "caption": "Baseline: every version can produce a normal agent turn",
+        "detail": "This is not the win condition. The comparison starts when the user changes the mission while the agents are already moving.",
+        "takeaway": "Speech is table stakes; durable retargeting is the test.",
+        "hold": 92,
         "burst": false,
         "layout": "grid",
+        "verdicts": [
+          {
+            "label": "talks",
+            "text": "Can produce transcript output.",
+            "tone": "neutral"
+          },
+          {
+            "label": "talks",
+            "text": "Can produce output plus roomState.",
+            "tone": "pass"
+          },
+          {
+            "label": "talks",
+            "text": "Can produce output plus intent lane.",
+            "tone": "pass"
+          },
+          {
+            "label": "talks",
+            "text": "Can produce output plus control plane.",
+            "tone": "strong"
+          }
+        ],
         "panes": [
           {
             "imgs": [],
@@ -162,12 +214,38 @@ export const ROOMOS_WALKTHROUGHS = [
         ]
       },
       {
-        "caption": "V0 detail: agent output exists, but the memory is only transcript",
-        "detail": "This is the failure baseline. Ada and Ben can speak, but there is no durable count state, no typed interrupt, and no worker ledger.",
-        "hold": 104,
+        "scene": "SCENE 3 / V0 FAILURE",
+        "axis": "memory source",
+        "question": "What proof exists after the first model turn?",
+        "caption": "V0: model output exists, but progress is only implied",
+        "detail": "This is the failure baseline. Ada and Ben can speak, but the room has no authoritative count target, no typed interrupt, and no worker ledger.",
+        "takeaway": "A transcript is evidence of words, not control of work.",
+        "hold": 122,
         "burst": true,
         "layout": "focus",
         "focusPane": 0,
+        "verdicts": [
+          {
+            "label": "failure",
+            "text": "Only transcript rows; no durable progress object.",
+            "tone": "fail"
+          },
+          {
+            "label": "contrast",
+            "text": "Adds reducer state.",
+            "tone": "pass"
+          },
+          {
+            "label": "contrast",
+            "text": "Adds typed retargeting.",
+            "tone": "strong"
+          },
+          {
+            "label": "contrast",
+            "text": "Adds an agent OS layer.",
+            "tone": "strong"
+          }
+        ],
         "panes": [
           {
             "imgs": [
@@ -276,11 +354,37 @@ export const ROOMOS_WALKTHROUGHS = [
         ]
       },
       {
-        "caption": "Human input: interrupt all rooms and retarget to counting",
-        "detail": "The same steer is sent to every live room: count from 1 to 6, one agent per turn, no overlap.",
-        "hold": 88,
+        "scene": "SCENE 4 / CONFLICT",
+        "axis": "same human interrupt",
+        "question": "Does the steer become authoritative state or just another message?",
+        "caption": "Same human input: switch goals and count from 1 to 6",
+        "detail": "The exact same steer is sent to every room. After this moment, the only thing that matters is whether the room preserves the new mission.",
+        "takeaway": "This is the plot turn: new goal, same live run.",
+        "hold": 104,
         "burst": false,
         "layout": "grid",
+        "verdicts": [
+          {
+            "label": "risk",
+            "text": "Steer is transcript text.",
+            "tone": "fail"
+          },
+          {
+            "label": "state",
+            "text": "Reducer can retarget count state.",
+            "tone": "pass"
+          },
+          {
+            "label": "intent",
+            "text": "Intent router interprets the interrupt.",
+            "tone": "strong"
+          },
+          {
+            "label": "work",
+            "text": "Goal graph can spawn structured work.",
+            "tone": "strong"
+          }
+        ],
         "panes": [
           {
             "imgs": [],
@@ -381,12 +485,38 @@ export const ROOMOS_WALKTHROUGHS = [
         ]
       },
       {
-        "caption": "V1 detail: reducer state makes the count legible",
+        "scene": "SCENE 5 / STATE PROOF",
+        "axis": "reducer-owned progress",
+        "question": "Can progress be proven without trusting the next LLM sentence?",
+        "caption": "V1: reducer-owned count and floor state",
         "detail": "The transcript shows the agent messages; the roomState strip shows floor, turn, next act, and count progress as authoritative state.",
-        "hold": 110,
+        "takeaway": "The room, not the model prose, owns the count.",
+        "hold": 128,
         "burst": true,
         "layout": "focus",
         "focusPane": 1,
+        "verdicts": [
+          {
+            "label": "missing",
+            "text": "Still transcript-only.",
+            "tone": "fail"
+          },
+          {
+            "label": "proof",
+            "text": "Count, floor, turn, and act are visible.",
+            "tone": "pass"
+          },
+          {
+            "label": "inherits",
+            "text": "Keeps reducer state plus intent.",
+            "tone": "strong"
+          },
+          {
+            "label": "inherits",
+            "text": "Keeps state plus work control.",
+            "tone": "strong"
+          }
+        ],
         "panes": [
           {
             "imgs": [
@@ -499,12 +629,38 @@ export const ROOMOS_WALKTHROUGHS = [
         ]
       },
       {
-        "caption": "V2 detail: the interrupt is interpreted as work-room intent",
-        "detail": "V2 keeps the human steer visible while using typed intent to retarget the active work instead of treating it as loose chat.",
-        "hold": 108,
+        "scene": "SCENE 6 / INTENT ROUTING",
+        "axis": "interrupt semantics",
+        "question": "Does the system understand the steer as control, not conversation?",
+        "caption": "V2: the interrupt is routed as work-room intent",
+        "detail": "V2 keeps the human steer visible while using typed intent to retarget active work instead of treating it as loose chat.",
+        "takeaway": "The steer becomes a durable work-room event.",
+        "hold": 128,
         "burst": true,
         "layout": "focus",
         "focusPane": 2,
+        "verdicts": [
+          {
+            "label": "missing",
+            "text": "No typed control event.",
+            "tone": "fail"
+          },
+          {
+            "label": "partial",
+            "text": "Stateful, but less semantic.",
+            "tone": "pass"
+          },
+          {
+            "label": "proof",
+            "text": "Typed intent retargets the active room.",
+            "tone": "strong"
+          },
+          {
+            "label": "extends",
+            "text": "Typed work feeds the goal graph.",
+            "tone": "strong"
+          }
+        ],
         "panes": [
           {
             "imgs": [
@@ -617,12 +773,38 @@ export const ROOMOS_WALKTHROUGHS = [
         ]
       },
       {
-        "caption": "V3 detail: state, workers, cost, and latency are first-class",
-        "detail": "The V3 panel exposes policy, worker budget, expected model cost, expected latency, observed runtime, goals, workers, and artifacts.",
-        "hold": 118,
+        "scene": "SCENE 7 / AGENT OS",
+        "axis": "parallel work control",
+        "question": "What does V3 add once basic steering works?",
+        "caption": "V3: goals, workers, cost, latency, and artifacts are first-class",
+        "detail": "V3 shifts the comparison from counting correctly to operating a budgeted agent workroom with policy, workers, artifacts, and runtime stats.",
+        "takeaway": "This is where the demo becomes an operating system, not a chat room.",
+        "hold": 136,
         "burst": true,
         "layout": "focus",
         "focusPane": 3,
+        "verdicts": [
+          {
+            "label": "baseline",
+            "text": "No worker or budget layer.",
+            "tone": "fail"
+          },
+          {
+            "label": "foundation",
+            "text": "Stateful turn-taking.",
+            "tone": "pass"
+          },
+          {
+            "label": "foundation",
+            "text": "Stateful intent routing.",
+            "tone": "strong"
+          },
+          {
+            "label": "delta",
+            "text": "Goals, tasks, workers, artifacts, cost, latency.",
+            "tone": "strong"
+          }
+        ],
         "panes": [
           {
             "imgs": [
@@ -717,9 +899,9 @@ export const ROOMOS_WALKTHROUGHS = [
             "cursor": null,
             "click": false,
             "zoom": {
-              "x": 640,
-              "y": 390,
-              "scale": 1.26
+              "x": 628,
+              "y": 255,
+              "scale": 1.58
             },
             "prevCursor": {
               "x": 953,
@@ -735,12 +917,38 @@ export const ROOMOS_WALKTHROUGHS = [
         ]
       },
       {
-        "caption": "Internal state drawer: the receipts behind the conversation",
-        "detail": "The state drawer exposes the reducer snapshot and trace payloads: participants, utterance limits, V3 goals, tasks, workers, artifacts, and world beliefs.",
-        "hold": 126,
+        "scene": "SCENE 8 / AUDIT",
+        "axis": "human inspectability",
+        "question": "Can a human inspect exactly what happened after the run?",
+        "caption": "State drawer: receipts behind the conversation",
+        "detail": "The drawer exposes reducer snapshots and trace payloads: participants, utterance limits, V3 goals, tasks, workers, artifacts, and world beliefs.",
+        "takeaway": "Trust comes from inspectable internal state, not vibes.",
+        "hold": 142,
         "burst": false,
         "layout": "focus",
         "focusPane": 3,
+        "verdicts": [
+          {
+            "label": "thin",
+            "text": "Transcript is the main receipt.",
+            "tone": "warn"
+          },
+          {
+            "label": "state",
+            "text": "Reducer snapshot is inspectable.",
+            "tone": "pass"
+          },
+          {
+            "label": "trace",
+            "text": "Intent and reducer state are inspectable.",
+            "tone": "strong"
+          },
+          {
+            "label": "full",
+            "text": "Goals, workers, artifacts, costs, traces.",
+            "tone": "strong"
+          }
+        ],
         "panes": [
           {
             "imgs": [],
@@ -832,35 +1040,170 @@ export const ROOMOS_WALKTHROUGHS = [
               "y": 679
             },
             "prevZoom": {
-              "x": 640,
-              "y": 390,
-              "scale": 1.26
+              "x": 628,
+              "y": 255,
+              "scale": 1.58
             },
             "active": true
           }
         ]
       },
       {
-        "caption": "Final comparison: overview plus readable receipts",
-        "detail": "The GIF alternates between all-version context and focused detail so the agent inputs, outputs, roomState, and V3 control plane are readable.",
-        "hold": 96,
-        "burst": true,
-        "layout": "grid",
+        "scene": "SCENE 9 / VERDICT",
+        "axis": "decision table",
+        "question": "What changed from V0 to V3?",
+        "caption": "Final decision: from agents talking to agent work being governed",
+        "detail": "The viewer should leave knowing exactly what each version proves, what it cannot prove, and why V3 is the full live-room target.",
+        "takeaway": "V3 is the goal; V1/V2 are the required stepping stones.",
+        "hold": 164,
+        "burst": false,
+        "layout": "scorecard",
+        "verdicts": [],
+        "scorecard": {
+          "title": "Room OS V0 -> V3: what the live run proves",
+          "subtitle": "Same task, same interrupt, same production surface. The difference is how much work state the room can own, expose, and govern.",
+          "columns": [
+            "V0 Failure",
+            "V1 Room State",
+            "V2 Work Room",
+            "V3 Agent OS"
+          ],
+          "rows": [
+            {
+              "axis": "Memory",
+              "cells": [
+                {
+                  "text": "Transcript only.",
+                  "tone": "fail"
+                },
+                {
+                  "text": "Reducer state.",
+                  "tone": "pass"
+                },
+                {
+                  "text": "Reducer plus typed intent.",
+                  "tone": "strong"
+                },
+                {
+                  "text": "Goal graph plus world beliefs.",
+                  "tone": "strong"
+                }
+              ]
+            },
+            {
+              "axis": "Interrupt",
+              "cells": [
+                {
+                  "text": "Loose chat; easy to lose.",
+                  "tone": "fail"
+                },
+                {
+                  "text": "Retargets count state.",
+                  "tone": "pass"
+                },
+                {
+                  "text": "Parsed as room-control intent.",
+                  "tone": "strong"
+                },
+                {
+                  "text": "Can become new goals and workstreams.",
+                  "tone": "strong"
+                }
+              ]
+            },
+            {
+              "axis": "Progress",
+              "cells": [
+                {
+                  "text": "Inferred from words.",
+                  "tone": "fail"
+                },
+                {
+                  "text": "Count, floor, act, done are explicit.",
+                  "tone": "pass"
+                },
+                {
+                  "text": "State plus semantic steer history.",
+                  "tone": "strong"
+                },
+                {
+                  "text": "Goals, tasks, workers, artifacts.",
+                  "tone": "strong"
+                }
+              ]
+            },
+            {
+              "axis": "Parallel work",
+              "cells": [
+                {
+                  "text": "None.",
+                  "tone": "fail"
+                },
+                {
+                  "text": "Single room loop.",
+                  "tone": "neutral"
+                },
+                {
+                  "text": "Single room plus intent lane.",
+                  "tone": "pass"
+                },
+                {
+                  "text": "Worker budget and task lanes.",
+                  "tone": "strong"
+                }
+              ]
+            },
+            {
+              "axis": "Cost/latency",
+              "cells": [
+                {
+                  "text": "Hidden.",
+                  "tone": "fail"
+                },
+                {
+                  "text": "Hidden.",
+                  "tone": "warn"
+                },
+                {
+                  "text": "Hidden.",
+                  "tone": "warn"
+                },
+                {
+                  "text": "Expected cost, expected latency, observed runtime.",
+                  "tone": "strong"
+                }
+              ]
+            },
+            {
+              "axis": "Audit",
+              "cells": [
+                {
+                  "text": "Read the transcript manually.",
+                  "tone": "warn"
+                },
+                {
+                  "text": "Inspect roomState and traces.",
+                  "tone": "pass"
+                },
+                {
+                  "text": "Inspect typed intent plus state.",
+                  "tone": "strong"
+                },
+                {
+                  "text": "Inspect full control plane and trace payloads.",
+                  "tone": "strong"
+                }
+              ]
+            }
+          ]
+        },
         "panes": [
           {
-            "imgs": [
-              "wt-roomos/RoomOSV0123/v0_08_00.png",
-              "wt-roomos/RoomOSV0123/v0_08_01.png",
-              "wt-roomos/RoomOSV0123/v0_08_02.png",
-              "wt-roomos/RoomOSV0123/v0_08_03.png"
-            ],
+            "imgs": [],
+            "img": "wt-roomos/RoomOSV0123/v0_08.png",
             "cursor": null,
             "click": false,
-            "zoom": {
-              "x": 640,
-              "y": 360,
-              "scale": 1.14
-            },
+            "zoom": null,
             "prevCursor": {
               "x": 1147,
               "y": 26
@@ -873,19 +1216,11 @@ export const ROOMOS_WALKTHROUGHS = [
             "active": false
           },
           {
-            "imgs": [
-              "wt-roomos/RoomOSV0123/v1_08_00.png",
-              "wt-roomos/RoomOSV0123/v1_08_01.png",
-              "wt-roomos/RoomOSV0123/v1_08_02.png",
-              "wt-roomos/RoomOSV0123/v1_08_03.png"
-            ],
+            "imgs": [],
+            "img": "wt-roomos/RoomOSV0123/v1_08.png",
             "cursor": null,
             "click": false,
-            "zoom": {
-              "x": 640,
-              "y": 360,
-              "scale": 1.14
-            },
+            "zoom": null,
             "prevCursor": {
               "x": 1147,
               "y": 26
@@ -898,19 +1233,11 @@ export const ROOMOS_WALKTHROUGHS = [
             "active": false
           },
           {
-            "imgs": [
-              "wt-roomos/RoomOSV0123/v2_08_00.png",
-              "wt-roomos/RoomOSV0123/v2_08_01.png",
-              "wt-roomos/RoomOSV0123/v2_08_02.png",
-              "wt-roomos/RoomOSV0123/v2_08_03.png"
-            ],
+            "imgs": [],
+            "img": "wt-roomos/RoomOSV0123/v2_08.png",
             "cursor": null,
             "click": false,
-            "zoom": {
-              "x": 640,
-              "y": 360,
-              "scale": 1.14
-            },
+            "zoom": null,
             "prevCursor": {
               "x": 1147,
               "y": 26
@@ -923,19 +1250,11 @@ export const ROOMOS_WALKTHROUGHS = [
             "active": false
           },
           {
-            "imgs": [
-              "wt-roomos/RoomOSV0123/v3_08_00.png",
-              "wt-roomos/RoomOSV0123/v3_08_01.png",
-              "wt-roomos/RoomOSV0123/v3_08_02.png",
-              "wt-roomos/RoomOSV0123/v3_08_03.png"
-            ],
+            "imgs": [],
+            "img": "wt-roomos/RoomOSV0123/v3_08.png",
             "cursor": null,
             "click": false,
-            "zoom": {
-              "x": 640,
-              "y": 360,
-              "scale": 1.14
-            },
+            "zoom": null,
             "prevCursor": {
               "x": 1147,
               "y": 26

@@ -18,6 +18,13 @@ const MONO = '"JetBrains Mono", "SFMono-Regular", Consolas, monospace';
 const CHROME_H = 36;
 const GAP = 20;
 const SIDE = 44;
+const TONES = {
+  fail: { fg: "#fecaca", bg: "rgba(127,29,29,0.66)", border: "rgba(248,113,113,0.45)", dot: "#f87171" },
+  warn: { fg: "#fde68a", bg: "rgba(113,63,18,0.62)", border: "rgba(251,191,36,0.42)", dot: "#fbbf24" },
+  pass: { fg: "#bbf7d0", bg: "rgba(20,83,45,0.58)", border: "rgba(52,211,153,0.42)", dot: "#34d399" },
+  strong: { fg: "#ddd6fe", bg: "rgba(76,29,149,0.62)", border: "rgba(167,139,250,0.48)", dot: "#a78bfa" },
+  neutral: { fg: "#dbe7f6", bg: "rgba(15,23,42,0.72)", border: "rgba(148,163,184,0.30)", dot: "#94a3b8" },
+};
 
 export const wtgDuration = (wt) => (wt.steps || []).reduce((sum, step) => sum + (step.hold || 72), 0);
 
@@ -144,6 +151,245 @@ const BrowserChrome = ({ label, note, accent, active }) => (
   </div>
 );
 
+const normalizeVerdict = (verdict) => {
+  if (!verdict) return null;
+  if (typeof verdict === "string") return { label: "verdict", text: verdict, tone: "neutral" };
+  return {
+    label: verdict.label || "verdict",
+    text: verdict.text || "",
+    tone: verdict.tone || "neutral",
+  };
+};
+
+const StoryboardBar = ({ step, index, total, accent }) => {
+  if (!step.scene && !step.axis && !step.question) return null;
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: SIDE,
+        right: SIDE,
+        top: 94,
+        height: 56,
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        border: "1px solid rgba(255,255,255,0.12)",
+        borderRadius: 16,
+        background: "rgba(5,10,21,0.74)",
+        boxShadow: "0 18px 42px rgba(0,0,0,0.28)",
+        padding: "0 18px",
+        backdropFilter: "blur(9px)",
+      }}
+    >
+      <div
+        style={{
+          borderRadius: 999,
+          border: `1px solid ${accent}`,
+          color: "#f5f3ff",
+          background: "rgba(124,92,255,0.18)",
+          padding: "8px 12px",
+          fontFamily: MONO,
+          fontSize: 13,
+          fontWeight: 900,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {step.scene || `SCENE ${index + 1}/${total}`}
+      </div>
+      {step.axis && (
+        <div
+          style={{
+            color: "#93c5fd",
+            fontFamily: MONO,
+            fontSize: 13,
+            fontWeight: 900,
+            textTransform: "uppercase",
+            letterSpacing: 0,
+            whiteSpace: "nowrap",
+          }}
+        >
+          Compare: {step.axis}
+        </div>
+      )}
+      {step.question && (
+        <div
+          style={{
+            color: "#e5eefc",
+            fontSize: 23,
+            lineHeight: 1.08,
+            fontWeight: 900,
+            minWidth: 0,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {step.question}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const PaneVerdict = ({ verdict, compact }) => {
+  const normalized = normalizeVerdict(verdict);
+  if (!normalized?.text) return null;
+  const tone = TONES[normalized.tone] || TONES.neutral;
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: compact ? 9 : 13,
+        right: compact ? 9 : 13,
+        bottom: compact ? 9 : 13,
+        border: `1px solid ${tone.border}`,
+        borderRadius: compact ? 10 : 13,
+        background: tone.bg,
+        color: tone.fg,
+        padding: compact ? "7px 9px" : "10px 12px",
+        boxShadow: "0 10px 26px rgba(0,0,0,0.34)",
+        backdropFilter: "blur(7px)",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: compact ? 3 : 5 }}>
+        <span style={{ width: 7, height: 7, borderRadius: 999, background: tone.dot, flexShrink: 0 }} />
+        <span
+          style={{
+            fontFamily: MONO,
+            fontSize: compact ? 10 : 12,
+            fontWeight: 900,
+            textTransform: "uppercase",
+            letterSpacing: 0,
+            whiteSpace: "nowrap",
+          }}
+        >
+          {normalized.label}
+        </span>
+      </div>
+      <div style={{ color: "#f8fbff", fontSize: compact ? 12 : 15, lineHeight: 1.16, fontWeight: 800 }}>
+        {normalized.text}
+      </div>
+    </div>
+  );
+};
+
+const ScorecardCell = ({ cell, header }) => {
+  if (header) {
+    return (
+      <div
+        style={{
+          color: "#f8fbff",
+          fontSize: 19,
+          fontWeight: 950,
+          borderBottom: "1px solid rgba(255,255,255,0.14)",
+          padding: "0 14px 14px",
+        }}
+      >
+        {cell}
+      </div>
+    );
+  }
+  const normalized = normalizeVerdict(typeof cell === "string" ? { text: cell, tone: "neutral", label: "" } : cell);
+  const tone = TONES[normalized?.tone] || TONES.neutral;
+  return (
+    <div
+      style={{
+        minHeight: 70,
+        border: `1px solid ${tone.border}`,
+        borderRadius: 12,
+        background: tone.bg,
+        padding: "12px 13px",
+        color: "#f8fbff",
+        fontSize: 17,
+        lineHeight: 1.18,
+        fontWeight: 780,
+      }}
+    >
+      {normalized?.text || ""}
+    </div>
+  );
+};
+
+const Scorecard = ({ step, labels, accent }) => {
+  const rows = step.scorecard?.rows || [];
+  const columns = step.scorecard?.columns || labels;
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: SIDE,
+        right: SIDE,
+        top: 172,
+        bottom: 174,
+        border: "1px solid rgba(255,255,255,0.12)",
+        borderRadius: 22,
+        background: "linear-gradient(135deg, rgba(8,13,25,0.94), rgba(10,18,30,0.90))",
+        boxShadow: "0 30px 90px rgba(0,0,0,0.46)",
+        padding: "28px 30px",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 18, marginBottom: 24 }}>
+        <div
+          style={{
+            width: 12,
+            height: 78,
+            borderRadius: 999,
+            background: accent,
+            boxShadow: `0 0 34px ${accent}`,
+            flexShrink: 0,
+          }}
+        />
+        <div style={{ minWidth: 0 }}>
+          <div style={{ color: "#f8fbff", fontSize: 42, lineHeight: 1.02, fontWeight: 950 }}>
+            {step.scorecard?.title || "Final comparison"}
+          </div>
+          {step.scorecard?.subtitle && (
+            <div style={{ color: "#9fb1c9", fontSize: 20, lineHeight: 1.25, marginTop: 8, fontWeight: 680 }}>
+              {step.scorecard.subtitle}
+            </div>
+          )}
+        </div>
+      </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: `230px repeat(${columns.length}, 1fr)`,
+          gap: 12,
+        }}
+      >
+        <ScorecardCell header cell="Axis" />
+        {columns.map((column) => (
+          <ScorecardCell key={column} header cell={column} />
+        ))}
+        {rows.map((row) => (
+          <React.Fragment key={row.axis}>
+            <div
+              style={{
+                color: "#c7d2e6",
+                fontFamily: MONO,
+                fontSize: 15,
+                fontWeight: 950,
+                textTransform: "uppercase",
+                letterSpacing: 0,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              {row.axis}
+            </div>
+            {(row.cells || []).map((cell, cellIndex) => (
+              <ScorecardCell key={`${row.axis}-${cellIndex}`} cell={cell} />
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Pane = ({
   x,
   y,
@@ -159,6 +405,7 @@ const Pane = ({
   fade,
   capW,
   capH,
+  verdict,
 }) => {
   const active = Boolean(pane?.cursor || pane?.active);
   const scale = w / capW;
@@ -239,6 +486,7 @@ const Pane = ({
           {cursor && <Pointer x={cursor.x} y={cursor.y} opacity={cursorOpacity} />}
         </div>
       </div>
+      <PaneVerdict verdict={verdict} compact={h < 300} />
     </div>
   );
 };
@@ -266,14 +514,16 @@ export const WalkthroughGrid = ({ wt }) => {
   const labels = wt.paneLabels || ["V0", "V1", "V2", "V3"];
   const notes = wt.paneNotes || ["", "", "", ""];
   const focusMode = step.layout === "focus";
+  const scorecardMode = step.layout === "scorecard";
   const focusPane = Math.max(0, Math.min(3, step.focusPane ?? 3));
   const paneW = Math.floor((WTG_W - SIDE * 2 - GAP) / 2);
   const paneH = 360;
-  const focusW = 1292;
-  const focusH = 658;
+  const focusW = 1432;
+  const focusH = 664;
   const thumbW = WTG_W - SIDE * 2 - focusW - GAP;
   const thumbH = Math.floor((focusH - GAP * 2) / 3);
-  const startY = 152;
+  const startY = 172;
+  const verdicts = Array.isArray(step.verdicts) ? step.verdicts : [];
   const panes = Array.from({ length: 4 }, (_, paneIndex) => {
     const pane = step.panes?.[paneIndex] || {};
     const previousPane = prev?.panes?.[paneIndex] || {};
@@ -347,7 +597,11 @@ export const WalkthroughGrid = ({ wt }) => {
         </div>
       </div>
 
-      {panes.map((p, paneIndex) => {
+      <StoryboardBar step={step} index={index} total={steps.length} accent={wt.accent || "#7c5cff"} />
+
+      {scorecardMode ? (
+        <Scorecard step={step} labels={labels} accent={wt.accent || "#7c5cff"} />
+      ) : panes.map((p, paneIndex) => {
         if (focusMode) {
           if (paneIndex === focusPane) {
             return (
@@ -367,6 +621,7 @@ export const WalkthroughGrid = ({ wt }) => {
                 fade={fade}
                 capW={capW}
                 capH={capH}
+                verdict={verdicts[paneIndex]}
               />
             );
           }
@@ -388,6 +643,7 @@ export const WalkthroughGrid = ({ wt }) => {
               fade={fade}
               capW={capW}
               capH={capH}
+              verdict={verdicts[paneIndex]}
             />
           );
         }
@@ -411,6 +667,7 @@ export const WalkthroughGrid = ({ wt }) => {
             fade={fade}
             capW={capW}
             capH={capH}
+            verdict={verdicts[paneIndex]}
           />
         );
       })}
@@ -438,6 +695,26 @@ export const WalkthroughGrid = ({ wt }) => {
           <div style={{ color: "#f7fbff", fontSize: 28, lineHeight: 1.12, fontWeight: 900 }}>{step.caption}</div>
           {step.detail && (
             <div style={{ color: "#9fb1c9", fontSize: 17, lineHeight: 1.26, marginTop: 7, fontWeight: 650 }}>{step.detail}</div>
+          )}
+          {step.takeaway && (
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                marginTop: 10,
+                border: "1px solid rgba(139,92,246,0.38)",
+                borderRadius: 999,
+                background: "rgba(124,92,255,0.12)",
+                color: "#ddd6fe",
+                padding: "6px 11px",
+                fontFamily: MONO,
+                fontSize: 13,
+                fontWeight: 900,
+              }}
+            >
+              TAKEAWAY: {step.takeaway}
+            </div>
           )}
         </div>
       </div>

@@ -27,24 +27,29 @@ const key = () => {
 
 const RUBRIC = `You are judging a rendered product-walkthrough video (a feature demo with an
 animated cursor, click ripples, step captions, and a progress bar — possibly with narration).
-The quality bar is ANTI-HERO-SHOT: a viewer must always see the empty state, where the cursor
+The quality bar is STORY-FIRST and ANTI-HERO-SHOT. The viewer should understand the premise,
+the question being tested, the comparison axis, the conflict/input, the evidence, the verdict,
+and the final decision. Camera moves should reveal evidence, not fake excellence.
+
+A viewer must always see the empty state, where the cursor
 clicked, any loading state, and the result — never just a polished final state.
 
 Score each dimension 0-2 (0=fails, 1=acceptable, 2=strong) WITH specific evidence + timestamps:
-1. state_coverage - does each flow show empty state -> action -> (loading if async) -> result, or does it skip to outcomes (hero-shot smell)?
-2. cursor_truth - does the cursor visibly travel to and land ON the control being used before each state change?
-3. caption_sync - do step captions match what is actually happening on screen (and any narration heard)?
-4. pacing - can a first-time viewer read each caption and register each state? any dead air or rushed beats?
-5. legibility - is app text readable at the rendered size? are captions large and contrasty enough?
-6. proof_feel - does it read as evidence of a real working product (real states, real data motion) rather than staged marketing?
-7. safety - any visible secrets, API keys, tokens, real personal data, or internal URLs that should not ship?
-8. loop_etiquette - if this loops as a GIF, is the total length and final-state hold reasonable (viewers lost on the second loop = too long)?
+1. storyboard_clarity - can a first-time viewer state what is being compared, why it matters, and what each scene proves?
+2. state_coverage - does each flow show empty state -> action -> (loading if async) -> result, or does it skip to outcomes (hero-shot smell)?
+3. cursor_truth - does the cursor visibly travel to and land ON the control being used before each state change?
+4. caption_sync - do step captions match what is actually happening on screen (and any narration heard)?
+5. pacing - can a first-time viewer read each caption and register each state? any dead air or rushed beats?
+6. legibility - is app text readable at the rendered size? are captions large and contrasty enough?
+7. proof_feel - does it read as evidence of a real working product (real states, real data motion) rather than staged marketing?
+8. safety - any visible secrets, API keys, tokens, real personal data, or internal URLs that should not ship?
+9. loop_etiquette - if this loops as a GIF, is the total length and final-state hold reasonable (viewers lost on the second loop = too long)?
 
 Then list DEFECTS: each with timestamp, severity (P0 blocks publishing / P1 fix before posting /
 P2 polish, log and ship), what you observed, and a concrete fix.
 Finally an overall verdict: publish | fix-then-publish | rework.
 
-Return STRICT JSON: {"scores":{"state_coverage":{"score":n,"evidence":"..."},...},
+Return STRICT JSON: {"scores":{"storyboard_clarity":{"score":n,"evidence":"..."},"state_coverage":{"score":n,"evidence":"..."},...},
 "defects":[{"ts":"m:ss","severity":"P0|P1|P2","observed":"...","fix":"..."}],
 "verdict":"...","summary":"2-3 sentences"}`;
 
