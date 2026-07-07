@@ -70,10 +70,11 @@ The Room OS V0 to V3 walkthrough uses this structure:
 5. V1 reducer-owned count proof.
 6. V2 typed-intent proof.
 7. V3 goal, worker, cost, latency, and artifact control plane.
-8. Internal state drawer proofs, with a version-specific JSON schema visible at the top.
+8. Internal state drawer proofs, with a version-specific JSON schema visible at the top and the full JSON exported as code.
 9. One slow proof GIF per version so each section can be read independently.
 10. Final scorecard summarizing what each version proves.
 
 For stateful product demos, every version section should expose the actual state object
-or a deliberately contrastive state snapshot. The motion clip explains sequence; the JSON
-schema proves what the system believed, owned, and committed.
+or a deliberately contrastive state snapshot. Use a crop for visual proof, but include
+the full syntax-highlighted JSON when the state shape is the argument. The motion clip
+explains sequence; the JSON schema proves what the system believed, owned, and committed.

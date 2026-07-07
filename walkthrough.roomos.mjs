@@ -7,6 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const LIVE_URL = process.env.ROOMOS_URL || "https://room-os-live.vercel.app";
 const OUT_ID = "RoomOSV0123";
 const PUB_DIR = join(__dirname, "public", "wt-roomos", OUT_ID);
+const ASSETS_DIR = join(__dirname, "assets");
 const DATA_FILE = join(__dirname, "src", "walkthrough.roomos.data.js");
 const VW = 1280;
 const VH = 720;
@@ -268,6 +269,34 @@ const openStateAll = async (panes) => {
   return cursors;
 };
 
+const exportStateJsonAll = async (panes) => {
+  const exported = {};
+  mkdirSync(ASSETS_DIR, { recursive: true });
+
+  for (const pane of panes) {
+    const raw = await pane.page.evaluate(() => {
+      const pres = [...document.querySelectorAll("pre")].map((node) => node.textContent || "");
+      return (
+        pres.find((text) =>
+          /"(transcriptOnlyState|roomReducerState|workRoomState|agentOsState)"/.test(text),
+        ) || ""
+      );
+    });
+
+    if (!raw.trim()) {
+      throw new Error(`Could not find state JSON for ${pane.profile.key}`);
+    }
+
+    const parsed = JSON.parse(raw);
+    const pretty = `${JSON.stringify(parsed, null, 2)}\n`;
+    const file = `room-os-${pane.profile.key}-state.json`;
+    writeFileSync(join(ASSETS_DIR, file), pretty);
+    exported[pane.profile.key] = { file: `assets/${file}`, bytes: Buffer.byteLength(pretty) };
+  }
+
+  return exported;
+};
+
 const run = async () => {
   const runId = Date.now().toString(36);
   rmSync(PUB_DIR, { recursive: true, force: true });
@@ -485,6 +514,8 @@ const run = async () => {
     );
 
     const stateCursors = await openStateAll(panes);
+    const exportedStateJson = await exportStateJsonAll(panes);
+    console.log(`Exported state JSON: ${JSON.stringify(exportedStateJson)}`);
     const stateZooms = {};
     for (const pane of panes) {
       stateZooms[pane.profile.key] = (await focusOfText(pane.page, pane.profile.key === "v3" ? "expected" : "Internal State")) || {

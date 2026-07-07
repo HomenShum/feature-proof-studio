@@ -1,0 +1,109 @@
+{
+  "roomReducerState": {
+    "reducer": {
+      "goal": "Count from 1 to 6 out loud, one number per agent turn, stopping exactly at 6.",
+      "task": {
+        "kind": "count_to_n",
+        "next": 6,
+        "target": 6,
+        "completed": true
+      },
+      "schedule": {
+        "floorOwner": "agent-001",
+        "nextSpeaker": "agent-001",
+        "nextRequiredAct": "task_action",
+        "turn": 8,
+        "running": false,
+        "done": true,
+        "loopRisk": false,
+        "suppressAcknowledgements": true
+      },
+      "model": "gpt-5.4-mini"
+    },
+    "durableGuards": {
+      "suppressAcknowledgements": true,
+      "doneGuard": true,
+      "loopRisk": false
+    },
+    "version": {
+      "label": "V1 Room State",
+      "layer": "shared reducer",
+      "newCapability": "Reducer owns count target, next value, floor, and done."
+    },
+    "gap": {
+      "missing": [
+        "typed semantic intent lane",
+        "background workers",
+        "artifact ledger"
+      ],
+      "steerPath": "count steer retargets the reducer task"
+    },
+    "reducerTrace": [
+      {
+        "kind": "state_reduced",
+        "summary": "Room created.",
+        "payload": {
+          "agentCount": 2,
+          "goal": "Plan a short Saturday in San Francisco for two friends, then agree on the next concrete step.",
+          "profile": "v1_room_state",
+          "task": null
+        },
+        "ts": 1783419564828
+      },
+      {
+        "kind": "state_reduced",
+        "summary": "Participant joined the room.",
+        "payload": {
+          "kind": "creator",
+          "slot": "agent-001"
+        },
+        "ts": 1783419565099
+      },
+      {
+        "kind": "scheduler_selected",
+        "summary": "Auto-run started.",
+        "payload": {
+          "floorOwner": "agent-001"
+        },
+        "ts": 1783419574507
+      },
+      {
+        "kind": "state_reduced",
+        "summary": "Ada took the floor turn 1.",
+        "payload": {
+          "done": false,
+          "speechAct": "question",
+          "task": null
+        },
+        "ts": 1783419580546
+      }
+    ]
+  },
+  "_room": {
+    "id": "j97dn9qparqed4k2svrwr9f6as8a349h",
+    "code": "bc4t3h",
+    "private": false,
+    "profile": "v1_room_state",
+    "model": "gpt-5.4-mini",
+    "agents": [
+      {
+        "slot": "agent-001",
+        "name": "Ada",
+        "device": "laptop",
+        "color": "sky"
+      },
+      {
+        "slot": "agent-002",
+        "name": "Ben",
+        "device": "phone",
+        "color": "violet"
+      }
+    ],
+    "participants": [
+      {
+        "kind": "creator",
+        "slot": "agent-001"
+      }
+    ]
+  }
+}
