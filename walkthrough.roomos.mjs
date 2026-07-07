@@ -99,6 +99,35 @@ const waitForTurnAtLeast = async (page, turn, timeout = 90000) => {
     .catch(() => {});
 };
 
+const hideInvitePanel = async (page) => {
+  await page.getByText(/Scan from your phone/i).first().waitFor({ state: "visible", timeout: 6000 }).catch(() => {});
+  const hasInvite = await page.evaluate(() => /Scan from your phone/i.test(document.body.innerText)).catch(() => false);
+  if (hasInvite) {
+    await page.getByRole("button", { name: /Invite/i }).first().click().catch(() => {});
+    await page
+      .waitForFunction(() => !/Scan from your phone/i.test(document.body.innerText), { timeout: 5000, polling: 200 })
+      .catch(() => {});
+  }
+};
+
+const scrollTranscriptBottom = async (page) => {
+  await page
+    .evaluate(() => {
+      const scrollables = [...document.querySelectorAll("div")]
+        .filter((el) => el.scrollHeight > el.clientHeight + 24)
+        .sort((a, b) => b.clientHeight - a.clientHeight);
+      const transcript =
+        scrollables.find((el) => /Ada|Ben|you|Start|Resume|steer/i.test(el.textContent || "")) || scrollables[0];
+      if (transcript) transcript.scrollTop = transcript.scrollHeight;
+    })
+    .catch(() => {});
+  await sleep(page, 250);
+};
+
+const scrollAllTranscripts = async (panes) => {
+  await Promise.all(panes.map(({ page }) => scrollTranscriptBottom(page)));
+};
+
 const createRoom = async (browser, profile, runId) => {
   const context = await browser.newContext({
     viewport: { width: VW, height: VH },
@@ -116,7 +145,7 @@ const createRoom = async (browser, profile, runId) => {
   await page.getByRole("button", { name: /Create room/i }).click();
   await waitForRoom(page);
   await sleep(page, 1200);
-  await page.getByRole("button", { name: /Invite/i }).click().catch(() => {});
+  await hideInvitePanel(page);
   await sleep(page, 500);
   return { profile, context, page, lastCursor: null, lastZoom: null };
 };
@@ -159,6 +188,8 @@ const snap = async (panes, stepIndex, caption, detail, options = {}) => {
     detail,
     hold: options.hold || 84,
     burst,
+    layout: options.layout || "grid",
+    focusPane: typeof options.focusPane === "number" ? options.focusPane : undefined,
     panes: paneSteps,
   };
 };
@@ -230,14 +261,16 @@ const run = async () => {
   const steps = [];
   try {
     panes = await Promise.all(PROFILES.map((profile) => createRoom(browser, profile, runId)));
+    const focusPane = (key) => PROFILES.findIndex((profile) => profile.key === key);
+    const zoomAll = (x, y, scale) => Object.fromEntries(PROFILES.map((p) => [p.key, { x, y, scale }]));
 
     steps.push(
       await snap(
         panes,
         0,
         "Four fresh production rooms, one per agent version",
-        "Each pane is a real room on room-os-live.vercel.app. Same starting goal, different coordination layer.",
-        { hold: 92, zoom: Object.fromEntries(PROFILES.map((p) => [p.key, { x: 620, y: 205, scale: 1.16 }])) },
+        "Same live task, same model surface, different coordination layer. The QR is hidden so the transcript and state can stay visible.",
+        { hold: 88, zoom: zoomAll(620, 218, 1.18) },
       ),
     );
 
@@ -253,57 +286,93 @@ const run = async () => {
     );
 
     await Promise.all(panes.map(({ page }) => waitForTurnAtLeast(page, 1, 90000)));
+    await scrollAllTranscripts(panes);
     steps.push(
       await snap(
         panes,
         2,
-        "Live model turns appear; the control surface is already different",
-        "The visible difference is not intelligence. It is what state the system can inspect and commit.",
-        { hold: 86, burst: true, frames: 6, every: 450 },
+        "V0 detail: agent output exists, but the memory is only transcript",
+        "This is the failure baseline. Ada and Ben can speak, but there is no durable count state, no typed interrupt, and no worker ledger.",
+        {
+          hold: 104,
+          burst: true,
+          frames: 5,
+          every: 500,
+          layout: "focus",
+          focusPane: focusPane("v0"),
+          zoom: zoomAll(640, 520, 1.38),
+        },
       ),
     );
 
     const steerCursors = await steerAll(panes);
+    await scrollAllTranscripts(panes);
     steps.push(
       await snap(
         panes,
         3,
-        "Interrupt all rooms: switch from trip planning to counting",
-        "This is the failure case: the human changes the mission mid-run and expects the room to stay coherent.",
-        { hold: 86, active: "all", cursor: steerCursors, click: true },
+        "Human input: interrupt all rooms and retarget to counting",
+        "The same steer is sent to every live room: count from 1 to 6, one agent per turn, no overlap.",
+        { hold: 88, active: "all", cursor: steerCursors, click: true, zoom: zoomAll(640, 655, 1.28) },
       ),
     );
 
     await Promise.all(panes.map(({ page }) => waitForTurnAtLeast(page, 3, 120000)));
+    await scrollAllTranscripts(panes);
     steps.push(
       await snap(
         panes,
         4,
-        "Reducer-owned state is what makes the steer durable",
-        "V1/V2/V3 can expose turn, floor, count, done, and loop-risk state. V0 can only hope the next model reply remembers.",
+        "V1 detail: reducer state makes the count legible",
+        "The transcript shows the agent messages; the roomState strip shows floor, turn, next act, and count progress as authoritative state.",
         {
-          hold: 96,
+          hold: 110,
           burst: true,
-          frames: 7,
+          frames: 6,
           every: 520,
-          zoom: Object.fromEntries(PROFILES.map((p) => [p.key, { x: 650, y: 118, scale: 1.42 }])),
+          layout: "focus",
+          focusPane: focusPane("v1"),
+          zoom: zoomAll(650, 515, 1.36),
+        },
+      ),
+    );
+
+    await Promise.all(panes.map(({ page }) => waitForTurnAtLeast(page, 5, 150000)));
+    await scrollAllTranscripts(panes);
+    steps.push(
+      await snap(
+        panes,
+        5,
+        "V2 detail: the interrupt is interpreted as work-room intent",
+        "V2 keeps the human steer visible while using typed intent to retarget the active work instead of treating it as loose chat.",
+        {
+          hold: 108,
+          burst: true,
+          frames: 6,
+          every: 500,
+          layout: "focus",
+          focusPane: focusPane("v2"),
+          zoom: zoomAll(640, 530, 1.34),
         },
       ),
     );
 
     await Promise.all(panes.map(({ page }) => waitForTurnAtLeast(page, 6, 150000)));
+    await scrollAllTranscripts(panes);
     steps.push(
       await snap(
         panes,
-        5,
-        "End-to-end run: compare the room receipts",
-        "The bounded transcript shows latest entries, while the roomState strip keeps the authoritative progress compact.",
+        6,
+        "V3 detail: state, workers, cost, and latency are first-class",
+        "The V3 panel exposes policy, worker budget, expected model cost, expected latency, observed runtime, goals, workers, and artifacts.",
         {
-          hold: 96,
+          hold: 118,
           burst: true,
           frames: 6,
-          every: 500,
-          zoom: Object.fromEntries(PROFILES.map((p) => [p.key, { x: 640, y: 360, scale: 1.18 }])),
+          every: 520,
+          layout: "focus",
+          focusPane: focusPane("v3"),
+          zoom: zoomAll(640, 390, 1.26),
         },
       ),
     );
@@ -320,10 +389,34 @@ const run = async () => {
     steps.push(
       await snap(
         panes,
-        6,
-        "Open the internal-state drawer for auditability",
-        "V3 adds the agent-OS layer: policy, goal graph, workers, artifacts, expected cost, observed latency, and trace payloads.",
-        { hold: 118, active: "all", cursor: stateCursors, click: true, zoom: stateZooms },
+        7,
+        "Internal state drawer: the receipts behind the conversation",
+        "The state drawer exposes the reducer snapshot and trace payloads: participants, utterance limits, V3 goals, tasks, workers, artifacts, and world beliefs.",
+        {
+          hold: 126,
+          active: "all",
+          cursor: stateCursors,
+          click: true,
+          layout: "focus",
+          focusPane: focusPane("v3"),
+          zoom: stateZooms,
+        },
+      ),
+    );
+
+    steps.push(
+      await snap(
+        panes,
+        8,
+        "Final comparison: overview plus readable receipts",
+        "The GIF alternates between all-version context and focused detail so the agent inputs, outputs, roomState, and V3 control plane are readable.",
+        {
+          hold: 96,
+          burst: true,
+          frames: 4,
+          every: 500,
+          zoom: zoomAll(640, 360, 1.14),
+        },
       ),
     );
   } finally {

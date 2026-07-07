@@ -145,7 +145,9 @@ This repo now includes a four-pane production walkthrough for
 [Room OS](https://github.com/HomenShum/local-collab-mvp). The capture script opens
 four fresh rooms on [room-os-live.vercel.app](https://room-os-live.vercel.app), selects
 V0/V1/V2/V3, starts the same live model task, sends the same mid-run interrupt, opens
-the internal state layer, and renders the result as one educational comparison.
+the internal state layer, and renders the result as one educational comparison. The
+storyboard alternates all-version overview shots with focused transcript/state shots
+so the human steer, agent outputs, `roomState`, and V3 worker stats stay readable.
 
 <img src="assets/room-os-v0-v1-v2-v3.gif" alt="Room OS live production comparison: V0 raw transcript, V1 shared reducer, V2 typed intent, V3 agent OS with workers, artifacts, cost, and latency stats" width="940">
 

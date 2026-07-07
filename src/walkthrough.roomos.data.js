@@ -21,9 +21,10 @@ export const ROOMOS_WALKTHROUGHS = [
     "steps": [
       {
         "caption": "Four fresh production rooms, one per agent version",
-        "detail": "Each pane is a real room on room-os-live.vercel.app. Same starting goal, different coordination layer.",
-        "hold": 92,
+        "detail": "Same live task, same model surface, different coordination layer. The QR is hidden so the transcript and state can stay visible.",
+        "hold": 88,
         "burst": false,
+        "layout": "grid",
         "panes": [
           {
             "imgs": [],
@@ -32,8 +33,8 @@ export const ROOMOS_WALKTHROUGHS = [
             "click": false,
             "zoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "prevCursor": null,
             "prevZoom": null,
@@ -46,8 +47,8 @@ export const ROOMOS_WALKTHROUGHS = [
             "click": false,
             "zoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "prevCursor": null,
             "prevZoom": null,
@@ -60,8 +61,8 @@ export const ROOMOS_WALKTHROUGHS = [
             "click": false,
             "zoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "prevCursor": null,
             "prevZoom": null,
@@ -74,8 +75,8 @@ export const ROOMOS_WALKTHROUGHS = [
             "click": false,
             "zoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "prevCursor": null,
             "prevZoom": null,
@@ -88,6 +89,7 @@ export const ROOMOS_WALKTHROUGHS = [
         "detail": "V0 hears transcript only. V1 owns floor/count state. V2 routes interrupts. V3 also exposes goals, workers, artifacts, cost, and latency.",
         "hold": 76,
         "burst": false,
+        "layout": "grid",
         "panes": [
           {
             "imgs": [],
@@ -101,8 +103,8 @@ export const ROOMOS_WALKTHROUGHS = [
             "prevCursor": null,
             "prevZoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "active": true
           },
@@ -118,8 +120,8 @@ export const ROOMOS_WALKTHROUGHS = [
             "prevCursor": null,
             "prevZoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "active": true
           },
@@ -135,8 +137,8 @@ export const ROOMOS_WALKTHROUGHS = [
             "prevCursor": null,
             "prevZoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "active": true
           },
@@ -145,25 +147,27 @@ export const ROOMOS_WALKTHROUGHS = [
             "img": "wt-roomos/RoomOSV0123/v3_01.png",
             "cursor": {
               "x": 308,
-              "y": 681
+              "y": 679
             },
             "click": true,
             "zoom": null,
             "prevCursor": null,
             "prevZoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "active": true
           }
         ]
       },
       {
-        "caption": "Live model turns appear; the control surface is already different",
-        "detail": "The visible difference is not intelligence. It is what state the system can inspect and commit.",
-        "hold": 86,
+        "caption": "V0 detail: agent output exists, but the memory is only transcript",
+        "detail": "This is the failure baseline. Ada and Ben can speak, but there is no durable count state, no typed interrupt, and no worker ledger.",
+        "hold": 104,
         "burst": true,
+        "layout": "focus",
+        "focusPane": 0,
         "panes": [
           {
             "imgs": [
@@ -171,20 +175,23 @@ export const ROOMOS_WALKTHROUGHS = [
               "wt-roomos/RoomOSV0123/v0_02_01.png",
               "wt-roomos/RoomOSV0123/v0_02_02.png",
               "wt-roomos/RoomOSV0123/v0_02_03.png",
-              "wt-roomos/RoomOSV0123/v0_02_04.png",
-              "wt-roomos/RoomOSV0123/v0_02_05.png"
+              "wt-roomos/RoomOSV0123/v0_02_04.png"
             ],
             "cursor": null,
             "click": false,
-            "zoom": null,
+            "zoom": {
+              "x": 640,
+              "y": 520,
+              "scale": 1.38
+            },
             "prevCursor": {
               "x": 308,
               "y": 679
             },
             "prevZoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "active": false
           },
@@ -194,20 +201,23 @@ export const ROOMOS_WALKTHROUGHS = [
               "wt-roomos/RoomOSV0123/v1_02_01.png",
               "wt-roomos/RoomOSV0123/v1_02_02.png",
               "wt-roomos/RoomOSV0123/v1_02_03.png",
-              "wt-roomos/RoomOSV0123/v1_02_04.png",
-              "wt-roomos/RoomOSV0123/v1_02_05.png"
+              "wt-roomos/RoomOSV0123/v1_02_04.png"
             ],
             "cursor": null,
             "click": false,
-            "zoom": null,
+            "zoom": {
+              "x": 640,
+              "y": 520,
+              "scale": 1.38
+            },
             "prevCursor": {
               "x": 308,
               "y": 679
             },
             "prevZoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "active": false
           },
@@ -217,20 +227,23 @@ export const ROOMOS_WALKTHROUGHS = [
               "wt-roomos/RoomOSV0123/v2_02_01.png",
               "wt-roomos/RoomOSV0123/v2_02_02.png",
               "wt-roomos/RoomOSV0123/v2_02_03.png",
-              "wt-roomos/RoomOSV0123/v2_02_04.png",
-              "wt-roomos/RoomOSV0123/v2_02_05.png"
+              "wt-roomos/RoomOSV0123/v2_02_04.png"
             ],
             "cursor": null,
             "click": false,
-            "zoom": null,
+            "zoom": {
+              "x": 640,
+              "y": 520,
+              "scale": 1.38
+            },
             "prevCursor": {
               "x": 308,
               "y": 679
             },
             "prevZoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "active": false
           },
@@ -240,30 +253,34 @@ export const ROOMOS_WALKTHROUGHS = [
               "wt-roomos/RoomOSV0123/v3_02_01.png",
               "wt-roomos/RoomOSV0123/v3_02_02.png",
               "wt-roomos/RoomOSV0123/v3_02_03.png",
-              "wt-roomos/RoomOSV0123/v3_02_04.png",
-              "wt-roomos/RoomOSV0123/v3_02_05.png"
+              "wt-roomos/RoomOSV0123/v3_02_04.png"
             ],
             "cursor": null,
             "click": false,
-            "zoom": null,
+            "zoom": {
+              "x": 640,
+              "y": 520,
+              "scale": 1.38
+            },
             "prevCursor": {
               "x": 308,
-              "y": 681
+              "y": 679
             },
             "prevZoom": {
               "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "y": 218,
+              "scale": 1.18
             },
             "active": false
           }
         ]
       },
       {
-        "caption": "Interrupt all rooms: switch from trip planning to counting",
-        "detail": "This is the failure case: the human changes the mission mid-run and expects the room to stay coherent.",
-        "hold": 86,
+        "caption": "Human input: interrupt all rooms and retarget to counting",
+        "detail": "The same steer is sent to every live room: count from 1 to 6, one agent per turn, no overlap.",
+        "hold": 88,
         "burst": false,
+        "layout": "grid",
         "panes": [
           {
             "imgs": [],
@@ -273,15 +290,19 @@ export const ROOMOS_WALKTHROUGHS = [
               "y": 679
             },
             "click": true,
-            "zoom": null,
+            "zoom": {
+              "x": 640,
+              "y": 655,
+              "scale": 1.28
+            },
             "prevCursor": {
               "x": 308,
               "y": 679
             },
             "prevZoom": {
-              "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "x": 640,
+              "y": 520,
+              "scale": 1.38
             },
             "active": true
           },
@@ -293,15 +314,19 @@ export const ROOMOS_WALKTHROUGHS = [
               "y": 679
             },
             "click": true,
-            "zoom": null,
+            "zoom": {
+              "x": 640,
+              "y": 655,
+              "scale": 1.28
+            },
             "prevCursor": {
               "x": 308,
               "y": 679
             },
             "prevZoom": {
-              "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "x": 640,
+              "y": 520,
+              "scale": 1.38
             },
             "active": true
           },
@@ -313,15 +338,19 @@ export const ROOMOS_WALKTHROUGHS = [
               "y": 679
             },
             "click": true,
-            "zoom": null,
+            "zoom": {
+              "x": 640,
+              "y": 655,
+              "scale": 1.28
+            },
             "prevCursor": {
               "x": 308,
               "y": 679
             },
             "prevZoom": {
-              "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "x": 640,
+              "y": 520,
+              "scale": 1.38
             },
             "active": true
           },
@@ -330,28 +359,34 @@ export const ROOMOS_WALKTHROUGHS = [
             "img": "wt-roomos/RoomOSV0123/v3_03.png",
             "cursor": {
               "x": 953,
-              "y": 702
+              "y": 679
             },
             "click": true,
-            "zoom": null,
+            "zoom": {
+              "x": 640,
+              "y": 655,
+              "scale": 1.28
+            },
             "prevCursor": {
               "x": 308,
-              "y": 681
+              "y": 679
             },
             "prevZoom": {
-              "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "x": 640,
+              "y": 520,
+              "scale": 1.38
             },
             "active": true
           }
         ]
       },
       {
-        "caption": "Reducer-owned state is what makes the steer durable",
-        "detail": "V1/V2/V3 can expose turn, floor, count, done, and loop-risk state. V0 can only hope the next model reply remembers.",
-        "hold": 96,
+        "caption": "V1 detail: reducer state makes the count legible",
+        "detail": "The transcript shows the agent messages; the roomState strip shows floor, turn, next act, and count progress as authoritative state.",
+        "hold": 110,
         "burst": true,
+        "layout": "focus",
+        "focusPane": 1,
         "panes": [
           {
             "imgs": [
@@ -360,24 +395,23 @@ export const ROOMOS_WALKTHROUGHS = [
               "wt-roomos/RoomOSV0123/v0_04_02.png",
               "wt-roomos/RoomOSV0123/v0_04_03.png",
               "wt-roomos/RoomOSV0123/v0_04_04.png",
-              "wt-roomos/RoomOSV0123/v0_04_05.png",
-              "wt-roomos/RoomOSV0123/v0_04_06.png"
+              "wt-roomos/RoomOSV0123/v0_04_05.png"
             ],
             "cursor": null,
             "click": false,
             "zoom": {
               "x": 650,
-              "y": 118,
-              "scale": 1.42
+              "y": 515,
+              "scale": 1.36
             },
             "prevCursor": {
               "x": 953,
               "y": 679
             },
             "prevZoom": {
-              "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "x": 640,
+              "y": 655,
+              "scale": 1.28
             },
             "active": false
           },
@@ -388,24 +422,23 @@ export const ROOMOS_WALKTHROUGHS = [
               "wt-roomos/RoomOSV0123/v1_04_02.png",
               "wt-roomos/RoomOSV0123/v1_04_03.png",
               "wt-roomos/RoomOSV0123/v1_04_04.png",
-              "wt-roomos/RoomOSV0123/v1_04_05.png",
-              "wt-roomos/RoomOSV0123/v1_04_06.png"
+              "wt-roomos/RoomOSV0123/v1_04_05.png"
             ],
             "cursor": null,
             "click": false,
             "zoom": {
               "x": 650,
-              "y": 118,
-              "scale": 1.42
+              "y": 515,
+              "scale": 1.36
             },
             "prevCursor": {
               "x": 953,
               "y": 679
             },
             "prevZoom": {
-              "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "x": 640,
+              "y": 655,
+              "scale": 1.28
             },
             "active": false
           },
@@ -416,24 +449,23 @@ export const ROOMOS_WALKTHROUGHS = [
               "wt-roomos/RoomOSV0123/v2_04_02.png",
               "wt-roomos/RoomOSV0123/v2_04_03.png",
               "wt-roomos/RoomOSV0123/v2_04_04.png",
-              "wt-roomos/RoomOSV0123/v2_04_05.png",
-              "wt-roomos/RoomOSV0123/v2_04_06.png"
+              "wt-roomos/RoomOSV0123/v2_04_05.png"
             ],
             "cursor": null,
             "click": false,
             "zoom": {
               "x": 650,
-              "y": 118,
-              "scale": 1.42
+              "y": 515,
+              "scale": 1.36
             },
             "prevCursor": {
               "x": 953,
               "y": 679
             },
             "prevZoom": {
-              "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "x": 640,
+              "y": 655,
+              "scale": 1.28
             },
             "active": false
           },
@@ -444,34 +476,35 @@ export const ROOMOS_WALKTHROUGHS = [
               "wt-roomos/RoomOSV0123/v3_04_02.png",
               "wt-roomos/RoomOSV0123/v3_04_03.png",
               "wt-roomos/RoomOSV0123/v3_04_04.png",
-              "wt-roomos/RoomOSV0123/v3_04_05.png",
-              "wt-roomos/RoomOSV0123/v3_04_06.png"
+              "wt-roomos/RoomOSV0123/v3_04_05.png"
             ],
             "cursor": null,
             "click": false,
             "zoom": {
               "x": 650,
-              "y": 118,
-              "scale": 1.42
+              "y": 515,
+              "scale": 1.36
             },
             "prevCursor": {
               "x": 953,
-              "y": 702
+              "y": 679
             },
             "prevZoom": {
-              "x": 620,
-              "y": 205,
-              "scale": 1.16
+              "x": 640,
+              "y": 655,
+              "scale": 1.28
             },
             "active": false
           }
         ]
       },
       {
-        "caption": "End-to-end run: compare the room receipts",
-        "detail": "The bounded transcript shows latest entries, while the roomState strip keeps the authoritative progress compact.",
-        "hold": 96,
+        "caption": "V2 detail: the interrupt is interpreted as work-room intent",
+        "detail": "V2 keeps the human steer visible while using typed intent to retarget the active work instead of treating it as loose chat.",
+        "hold": 108,
         "burst": true,
+        "layout": "focus",
+        "focusPane": 2,
         "panes": [
           {
             "imgs": [
@@ -486,8 +519,8 @@ export const ROOMOS_WALKTHROUGHS = [
             "click": false,
             "zoom": {
               "x": 640,
-              "y": 360,
-              "scale": 1.18
+              "y": 530,
+              "scale": 1.34
             },
             "prevCursor": {
               "x": 953,
@@ -495,8 +528,8 @@ export const ROOMOS_WALKTHROUGHS = [
             },
             "prevZoom": {
               "x": 650,
-              "y": 118,
-              "scale": 1.42
+              "y": 515,
+              "scale": 1.36
             },
             "active": false
           },
@@ -513,8 +546,8 @@ export const ROOMOS_WALKTHROUGHS = [
             "click": false,
             "zoom": {
               "x": 640,
-              "y": 360,
-              "scale": 1.18
+              "y": 530,
+              "scale": 1.34
             },
             "prevCursor": {
               "x": 953,
@@ -522,8 +555,8 @@ export const ROOMOS_WALKTHROUGHS = [
             },
             "prevZoom": {
               "x": 650,
-              "y": 118,
-              "scale": 1.42
+              "y": 515,
+              "scale": 1.36
             },
             "active": false
           },
@@ -540,8 +573,8 @@ export const ROOMOS_WALKTHROUGHS = [
             "click": false,
             "zoom": {
               "x": 640,
-              "y": 360,
-              "scale": 1.18
+              "y": 530,
+              "scale": 1.34
             },
             "prevCursor": {
               "x": 953,
@@ -549,8 +582,8 @@ export const ROOMOS_WALKTHROUGHS = [
             },
             "prevZoom": {
               "x": 650,
-              "y": 118,
-              "scale": 1.42
+              "y": 515,
+              "scale": 1.36
             },
             "active": false
           },
@@ -567,31 +600,151 @@ export const ROOMOS_WALKTHROUGHS = [
             "click": false,
             "zoom": {
               "x": 640,
-              "y": 360,
-              "scale": 1.18
+              "y": 530,
+              "scale": 1.34
             },
             "prevCursor": {
               "x": 953,
-              "y": 702
+              "y": 679
             },
             "prevZoom": {
               "x": 650,
-              "y": 118,
-              "scale": 1.42
+              "y": 515,
+              "scale": 1.36
             },
             "active": false
           }
         ]
       },
       {
-        "caption": "Open the internal-state drawer for auditability",
-        "detail": "V3 adds the agent-OS layer: policy, goal graph, workers, artifacts, expected cost, observed latency, and trace payloads.",
+        "caption": "V3 detail: state, workers, cost, and latency are first-class",
+        "detail": "The V3 panel exposes policy, worker budget, expected model cost, expected latency, observed runtime, goals, workers, and artifacts.",
         "hold": 118,
+        "burst": true,
+        "layout": "focus",
+        "focusPane": 3,
+        "panes": [
+          {
+            "imgs": [
+              "wt-roomos/RoomOSV0123/v0_06_00.png",
+              "wt-roomos/RoomOSV0123/v0_06_01.png",
+              "wt-roomos/RoomOSV0123/v0_06_02.png",
+              "wt-roomos/RoomOSV0123/v0_06_03.png",
+              "wt-roomos/RoomOSV0123/v0_06_04.png",
+              "wt-roomos/RoomOSV0123/v0_06_05.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 640,
+              "y": 390,
+              "scale": 1.26
+            },
+            "prevCursor": {
+              "x": 953,
+              "y": 679
+            },
+            "prevZoom": {
+              "x": 640,
+              "y": 530,
+              "scale": 1.34
+            },
+            "active": false
+          },
+          {
+            "imgs": [
+              "wt-roomos/RoomOSV0123/v1_06_00.png",
+              "wt-roomos/RoomOSV0123/v1_06_01.png",
+              "wt-roomos/RoomOSV0123/v1_06_02.png",
+              "wt-roomos/RoomOSV0123/v1_06_03.png",
+              "wt-roomos/RoomOSV0123/v1_06_04.png",
+              "wt-roomos/RoomOSV0123/v1_06_05.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 640,
+              "y": 390,
+              "scale": 1.26
+            },
+            "prevCursor": {
+              "x": 953,
+              "y": 679
+            },
+            "prevZoom": {
+              "x": 640,
+              "y": 530,
+              "scale": 1.34
+            },
+            "active": false
+          },
+          {
+            "imgs": [
+              "wt-roomos/RoomOSV0123/v2_06_00.png",
+              "wt-roomos/RoomOSV0123/v2_06_01.png",
+              "wt-roomos/RoomOSV0123/v2_06_02.png",
+              "wt-roomos/RoomOSV0123/v2_06_03.png",
+              "wt-roomos/RoomOSV0123/v2_06_04.png",
+              "wt-roomos/RoomOSV0123/v2_06_05.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 640,
+              "y": 390,
+              "scale": 1.26
+            },
+            "prevCursor": {
+              "x": 953,
+              "y": 679
+            },
+            "prevZoom": {
+              "x": 640,
+              "y": 530,
+              "scale": 1.34
+            },
+            "active": false
+          },
+          {
+            "imgs": [
+              "wt-roomos/RoomOSV0123/v3_06_00.png",
+              "wt-roomos/RoomOSV0123/v3_06_01.png",
+              "wt-roomos/RoomOSV0123/v3_06_02.png",
+              "wt-roomos/RoomOSV0123/v3_06_03.png",
+              "wt-roomos/RoomOSV0123/v3_06_04.png",
+              "wt-roomos/RoomOSV0123/v3_06_05.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 640,
+              "y": 390,
+              "scale": 1.26
+            },
+            "prevCursor": {
+              "x": 953,
+              "y": 679
+            },
+            "prevZoom": {
+              "x": 640,
+              "y": 530,
+              "scale": 1.34
+            },
+            "active": false
+          }
+        ]
+      },
+      {
+        "caption": "Internal state drawer: the receipts behind the conversation",
+        "detail": "The state drawer exposes the reducer snapshot and trace payloads: participants, utterance limits, V3 goals, tasks, workers, artifacts, and world beliefs.",
+        "hold": 126,
         "burst": false,
+        "layout": "focus",
+        "focusPane": 3,
         "panes": [
           {
             "imgs": [],
-            "img": "wt-roomos/RoomOSV0123/v0_06.png",
+            "img": "wt-roomos/RoomOSV0123/v0_07.png",
             "cursor": {
               "x": 1147,
               "y": 26
@@ -599,7 +752,7 @@ export const ROOMOS_WALKTHROUGHS = [
             "click": true,
             "zoom": {
               "x": 133,
-              "y": 509,
+              "y": 346,
               "scale": 1.34
             },
             "prevCursor": {
@@ -608,14 +761,14 @@ export const ROOMOS_WALKTHROUGHS = [
             },
             "prevZoom": {
               "x": 640,
-              "y": 360,
-              "scale": 1.18
+              "y": 390,
+              "scale": 1.26
             },
             "active": true
           },
           {
             "imgs": [],
-            "img": "wt-roomos/RoomOSV0123/v1_06.png",
+            "img": "wt-roomos/RoomOSV0123/v1_07.png",
             "cursor": {
               "x": 1147,
               "y": 26
@@ -623,7 +776,7 @@ export const ROOMOS_WALKTHROUGHS = [
             "click": true,
             "zoom": {
               "x": 133,
-              "y": 509,
+              "y": 346,
               "scale": 1.34
             },
             "prevCursor": {
@@ -632,14 +785,14 @@ export const ROOMOS_WALKTHROUGHS = [
             },
             "prevZoom": {
               "x": 640,
-              "y": 360,
-              "scale": 1.18
+              "y": 390,
+              "scale": 1.26
             },
             "active": true
           },
           {
             "imgs": [],
-            "img": "wt-roomos/RoomOSV0123/v2_06.png",
+            "img": "wt-roomos/RoomOSV0123/v2_07.png",
             "cursor": {
               "x": 1147,
               "y": 26
@@ -647,7 +800,7 @@ export const ROOMOS_WALKTHROUGHS = [
             "click": true,
             "zoom": {
               "x": 133,
-              "y": 509,
+              "y": 346,
               "scale": 1.34
             },
             "prevCursor": {
@@ -656,17 +809,17 @@ export const ROOMOS_WALKTHROUGHS = [
             },
             "prevZoom": {
               "x": 640,
-              "y": 360,
-              "scale": 1.18
+              "y": 390,
+              "scale": 1.26
             },
             "active": true
           },
           {
             "imgs": [],
-            "img": "wt-roomos/RoomOSV0123/v3_06.png",
+            "img": "wt-roomos/RoomOSV0123/v3_07.png",
             "cursor": {
               "x": 1147,
-              "y": 22
+              "y": 26
             },
             "click": true,
             "zoom": {
@@ -676,14 +829,123 @@ export const ROOMOS_WALKTHROUGHS = [
             },
             "prevCursor": {
               "x": 953,
-              "y": 702
+              "y": 679
             },
             "prevZoom": {
               "x": 640,
-              "y": 360,
-              "scale": 1.18
+              "y": 390,
+              "scale": 1.26
             },
             "active": true
+          }
+        ]
+      },
+      {
+        "caption": "Final comparison: overview plus readable receipts",
+        "detail": "The GIF alternates between all-version context and focused detail so the agent inputs, outputs, roomState, and V3 control plane are readable.",
+        "hold": 96,
+        "burst": true,
+        "layout": "grid",
+        "panes": [
+          {
+            "imgs": [
+              "wt-roomos/RoomOSV0123/v0_08_00.png",
+              "wt-roomos/RoomOSV0123/v0_08_01.png",
+              "wt-roomos/RoomOSV0123/v0_08_02.png",
+              "wt-roomos/RoomOSV0123/v0_08_03.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 640,
+              "y": 360,
+              "scale": 1.14
+            },
+            "prevCursor": {
+              "x": 1147,
+              "y": 26
+            },
+            "prevZoom": {
+              "x": 133,
+              "y": 346,
+              "scale": 1.34
+            },
+            "active": false
+          },
+          {
+            "imgs": [
+              "wt-roomos/RoomOSV0123/v1_08_00.png",
+              "wt-roomos/RoomOSV0123/v1_08_01.png",
+              "wt-roomos/RoomOSV0123/v1_08_02.png",
+              "wt-roomos/RoomOSV0123/v1_08_03.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 640,
+              "y": 360,
+              "scale": 1.14
+            },
+            "prevCursor": {
+              "x": 1147,
+              "y": 26
+            },
+            "prevZoom": {
+              "x": 133,
+              "y": 346,
+              "scale": 1.34
+            },
+            "active": false
+          },
+          {
+            "imgs": [
+              "wt-roomos/RoomOSV0123/v2_08_00.png",
+              "wt-roomos/RoomOSV0123/v2_08_01.png",
+              "wt-roomos/RoomOSV0123/v2_08_02.png",
+              "wt-roomos/RoomOSV0123/v2_08_03.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 640,
+              "y": 360,
+              "scale": 1.14
+            },
+            "prevCursor": {
+              "x": 1147,
+              "y": 26
+            },
+            "prevZoom": {
+              "x": 133,
+              "y": 346,
+              "scale": 1.34
+            },
+            "active": false
+          },
+          {
+            "imgs": [
+              "wt-roomos/RoomOSV0123/v3_08_00.png",
+              "wt-roomos/RoomOSV0123/v3_08_01.png",
+              "wt-roomos/RoomOSV0123/v3_08_02.png",
+              "wt-roomos/RoomOSV0123/v3_08_03.png"
+            ],
+            "cursor": null,
+            "click": false,
+            "zoom": {
+              "x": 640,
+              "y": 360,
+              "scale": 1.14
+            },
+            "prevCursor": {
+              "x": 1147,
+              "y": 26
+            },
+            "prevZoom": {
+              "x": 335,
+              "y": 720,
+              "scale": 1.34
+            },
+            "active": false
           }
         ]
       }

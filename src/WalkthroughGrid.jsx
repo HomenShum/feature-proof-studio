@@ -265,8 +265,14 @@ export const WalkthroughGrid = ({ wt }) => {
   const capH = wt.vh || 720;
   const labels = wt.paneLabels || ["V0", "V1", "V2", "V3"];
   const notes = wt.paneNotes || ["", "", "", ""];
+  const focusMode = step.layout === "focus";
+  const focusPane = Math.max(0, Math.min(3, step.focusPane ?? 3));
   const paneW = Math.floor((WTG_W - SIDE * 2 - GAP) / 2);
   const paneH = 360;
+  const focusW = 1292;
+  const focusH = 658;
+  const thumbW = WTG_W - SIDE * 2 - focusW - GAP;
+  const thumbH = Math.floor((focusH - GAP * 2) / 3);
   const startY = 152;
   const panes = Array.from({ length: 4 }, (_, paneIndex) => {
     const pane = step.panes?.[paneIndex] || {};
@@ -276,6 +282,7 @@ export const WalkthroughGrid = ({ wt }) => {
         ...pane,
         prevCursor: pane.prevCursor || previousPane.cursor || null,
         prevZoom: pane.prevZoom || previousPane.zoom || null,
+        active: pane.active || (focusMode && paneIndex === focusPane),
       },
       img: paneImage(pane, step, localFrame),
       prevImg: paneImage(previousPane, prev, 99999),
@@ -341,6 +348,50 @@ export const WalkthroughGrid = ({ wt }) => {
       </div>
 
       {panes.map((p, paneIndex) => {
+        if (focusMode) {
+          if (paneIndex === focusPane) {
+            return (
+              <Pane
+                key={paneIndex}
+                x={SIDE}
+                y={startY}
+                w={focusW}
+                h={focusH}
+                img={p.img}
+                prevImg={p.prevImg}
+                pane={p.pane}
+                label={labels[paneIndex]}
+                note={notes[paneIndex]}
+                accent={wt.accent || "#7c5cff"}
+                localFrame={localFrame}
+                fade={fade}
+                capW={capW}
+                capH={capH}
+              />
+            );
+          }
+          const before = paneIndex < focusPane ? paneIndex : paneIndex - 1;
+          return (
+            <Pane
+              key={paneIndex}
+              x={SIDE + focusW + GAP}
+              y={startY + before * (thumbH + GAP)}
+              w={thumbW}
+              h={thumbH}
+              img={p.img}
+              prevImg={p.prevImg}
+              pane={p.pane}
+              label={labels[paneIndex]}
+              note={notes[paneIndex]}
+              accent={wt.accent || "#7c5cff"}
+              localFrame={localFrame}
+              fade={fade}
+              capW={capW}
+              capH={capH}
+            />
+          );
+        }
+
         const col = paneIndex % 2;
         const row = Math.floor(paneIndex / 2);
         return (
