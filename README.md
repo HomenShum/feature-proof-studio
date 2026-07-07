@@ -158,32 +158,41 @@ V0/V1/V2/V3, starts the same live model task, sends the same mid-run interrupt, 
 the internal state layer, and exports both motion and static README evidence.
 
 The README should not force readers to decode a fast four-pane GIF. The readable proof
-is segmented below: one still per version, then a final comparison table.
+is segmented below: one slow GIF and one JSON `stateReceipt` per version, then a final
+comparison table.
 
 #### V0 Failure: transcript-only coordination
 
-<img src="assets/room-os-v0-failure.png" alt="Room OS V0 failure: the human interrupt is visible as transcript text, but there is no durable count progress object" width="940">
+<img src="assets/room-os-v0-proof.gif" alt="Room OS V0 slow proof loop: live room starts with transcript coordination, receives the count interrupt, then opens the state receipt" width="940">
+
+<img src="assets/room-os-v0-state-json.png" alt="Room OS V0 JSON state receipt showing transcript-only profile, no count task, done flag, floor owner, and turn state" width="940">
 
 V0 can speak, but the steer is just another transcript row. There is no authoritative
 count target, no count progress object, and no durable control event.
 
 #### V1 Room State: reducer-owned progress
 
-<img src="assets/room-os-v1-room-state.png" alt="Room OS V1 room state: reducer-owned floor, turn, act, and count progress are visible while agents count" width="940">
+<img src="assets/room-os-v1-proof.gif" alt="Room OS V1 slow proof loop: live room counts with reducer-owned floor and progress, then opens the state receipt" width="940">
+
+<img src="assets/room-os-v1-state-json.png" alt="Room OS V1 JSON state receipt showing count task kind, next value, target value, completion, floor owner, and turn state" width="940">
 
 V1 gives the room a reducer. Floor, turn, next act, count, done, and loop-risk become
 explicit state instead of being inferred from agent prose.
 
 #### V2 Work Room: typed human interrupts
 
-<img src="assets/room-os-v2-work-room.png" alt="Room OS V2 work room: the same count run is governed by typed intent and visible room state" width="940">
+<img src="assets/room-os-v2-proof.gif" alt="Room OS V2 slow proof loop: live room routes the same interrupt as typed intent, counts, then opens the state receipt" width="940">
+
+<img src="assets/room-os-v2-state-json.png" alt="Room OS V2 JSON state receipt showing typed work-room profile, count task next and target, completion, floor owner, and turn state" width="940">
 
 V2 keeps the reducer and routes human steering as typed room intent. A mid-run steer
 becomes a state transition, not loose chat that the next model turn may ignore.
 
 #### V3 Agent OS: governed agent work
 
-<img src="assets/room-os-v3-agent-os.png" alt="Room OS V3 agent OS: goals, workers, artifacts, policy, expected cost, and observed latency are visible" width="940">
+<img src="assets/room-os-v3-proof.gif" alt="Room OS V3 slow proof loop: live room shows goal graph, workers, artifacts, policy, cost and latency, then opens the state receipt" width="940">
+
+<img src="assets/room-os-v3-state-json.png" alt="Room OS V3 JSON state receipt showing agent ecosystem profile, count task next and target, completion, floor owner, and turn state" width="940">
 
 V3 adds the control plane around the room: goals, workers, artifacts, policy, expected
 cost, expected latency, observed runtime, and trace payloads.
@@ -215,8 +224,13 @@ Reproduce the clip:
 ```bash
 node walkthrough.roomos.mjs
 npm run render:roomos
+magick public/wt-roomos/RoomOSV0123/v1_08.png -crop 1085x760+125+650 +repage -resize 1280x assets/room-os-v1-state-json.png
+magick -delay 220 public/wt-roomos/RoomOSV0123/v1_03.png -delay 260 public/wt-roomos/RoomOSV0123/v1_04_05.png -delay 260 public/wt-roomos/RoomOSV0123/v1_05_05.png -delay 520 public/wt-roomos/RoomOSV0123/v1_08.png -resize 1280x -loop 0 -layers Optimize assets/room-os-v1-proof.gif
 ffmpeg -y -i out/room-os-v0-v1-v2-v3.mp4 -vf "fps=10,scale=1280:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128:stats_mode=diff[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle" -loop 0 assets/room-os-v0-v1-v2-v3.gif
 ```
+
+Repeat the `magick` crop/proof pattern for `v0`, `v2`, and `v3`; the committed
+assets are generated from the live capture frames in `public/wt-roomos/RoomOSV0123`.
 
 ### Visual Labs full-flow walkthrough
 
