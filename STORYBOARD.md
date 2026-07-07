@@ -70,10 +70,10 @@ The Room OS V0 to V3 walkthrough uses this structure:
 5. V1 reducer-owned count proof.
 6. V2 typed-intent proof.
 7. V3 goal, worker, cost, latency, and artifact control plane.
-8. Internal state drawer receipts, with a compact JSON `stateReceipt` visible at the top.
+8. Internal state drawer receipts, with a contrastive JSON `stateReceipt` visible at the top.
 9. One slow proof GIF per version so each section can be read independently.
 10. Final scorecard summarizing what each version proves.
 
 For stateful product demos, every version section should expose the actual state object
-or a compact state receipt. The motion clip explains sequence; the JSON receipt proves
+or a contrastive state receipt. The motion clip explains sequence; the JSON receipt proves
 what the system believed, owned, and committed.

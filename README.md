@@ -158,14 +158,14 @@ V0/V1/V2/V3, starts the same live model task, sends the same mid-run interrupt, 
 the internal state layer, and exports both motion and static README evidence.
 
 The README should not force readers to decode a fast four-pane GIF. The readable proof
-is segmented below: one slow GIF and one JSON `stateReceipt` per version, then a final
-comparison table.
+is segmented below: one slow GIF and one contrastive JSON `stateReceipt` per version,
+then a final comparison table.
 
 #### V0 Failure: transcript-only coordination
 
 <img src="assets/room-os-v0-proof.gif" alt="Room OS V0 slow proof loop: live room starts with transcript coordination, receives the count interrupt, then opens the state receipt" width="940">
 
-<img src="assets/room-os-v0-state-json.png" alt="Room OS V0 JSON state receipt showing transcript-only profile, no count task, done flag, floor owner, and turn state" width="940">
+<img src="assets/room-os-v0-state-json.png" alt="Room OS V0 JSON contrast receipt showing transcript-only profile, no durable count task, floor owner, and turn state" width="940">
 
 V0 can speak, but the steer is just another transcript row. There is no authoritative
 count target, no count progress object, and no durable control event.
@@ -174,7 +174,7 @@ count target, no count progress object, and no durable control event.
 
 <img src="assets/room-os-v1-proof.gif" alt="Room OS V1 slow proof loop: live room counts with reducer-owned floor and progress, then opens the state receipt" width="940">
 
-<img src="assets/room-os-v1-state-json.png" alt="Room OS V1 JSON state receipt showing count task kind, next value, target value, completion, floor owner, and turn state" width="940">
+<img src="assets/room-os-v1-state-json.png" alt="Room OS V1 JSON contrast receipt showing reducer-owned count task kind, next value, target value, completion, floor owner, and turn state" width="940">
 
 V1 gives the room a reducer. Floor, turn, next act, count, done, and loop-risk become
 explicit state instead of being inferred from agent prose.
@@ -183,7 +183,7 @@ explicit state instead of being inferred from agent prose.
 
 <img src="assets/room-os-v2-proof.gif" alt="Room OS V2 slow proof loop: live room routes the same interrupt as typed intent, counts, then opens the state receipt" width="940">
 
-<img src="assets/room-os-v2-state-json.png" alt="Room OS V2 JSON state receipt showing typed work-room profile, count task next and target, completion, floor owner, and turn state" width="940">
+<img src="assets/room-os-v2-state-json.png" alt="Room OS V2 JSON contrast receipt showing typed intent profile, count task next and target, completion, floor owner, and turn state" width="940">
 
 V2 keeps the reducer and routes human steering as typed room intent. A mid-run steer
 becomes a state transition, not loose chat that the next model turn may ignore.
@@ -192,7 +192,7 @@ becomes a state transition, not loose chat that the next model turn may ignore.
 
 <img src="assets/room-os-v3-proof.gif" alt="Room OS V3 slow proof loop: live room shows goal graph, workers, artifacts, policy, cost and latency, then opens the state receipt" width="940">
 
-<img src="assets/room-os-v3-state-json.png" alt="Room OS V3 JSON state receipt showing agent ecosystem profile, count task next and target, completion, floor owner, and turn state" width="940">
+<img src="assets/room-os-v3-state-json.png" alt="Room OS V3 JSON contrast receipt showing agent ecosystem profile, count task next and target, completion, floor owner, and control plane state" width="940">
 
 V3 adds the control plane around the room: goals, workers, artifacts, policy, expected
 cost, expected latency, observed runtime, and trace payloads.
