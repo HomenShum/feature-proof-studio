@@ -1,13 +1,13 @@
 {
-  "name": "feature-walkthrough-gif",
+  "name": "feature-proof-studio",
   "version": "0.1.0",
-  "description": "Turn any web feature into a polished, annotated walkthrough GIF — every UI state, an animated cursor that glides to each click, step captions, a zoom-to-focus camera, and a progress bar. Playwright capture → Remotion render → ffmpeg GIF.",
+  "description": "Turn live product flows into storyboarded proof assets: MP4/GIF walkthroughs, screenshots, readable state captures, and README-ready evidence. Playwright capture → Remotion render → ffmpeg/exported artifacts.",
   "type": "module",
   "license": "MIT",
   "author": "Homen Shum",
   "repository": {
     "type": "git",
-    "url": "https://github.com/HomenShum/feature-walkthrough-gif"
+    "url": "https://github.com/HomenShum/feature-proof-studio"
   },
   "keywords": [
     "demo",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@remotion/cli": "^4.0.474",
-    "feature-walkthrough-gif": "file:",
+    "feature-proof-studio": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remotion": "^4.0.474"

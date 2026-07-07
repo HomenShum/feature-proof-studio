@@ -1,22 +1,21 @@
 ---
-name: feature-walkthrough-gif
+name: feature-proof-studio
 description: >-
-  Produce polished, annotated workflow-walkthrough GIFs for a web app (built/tested
-  on Streamlit, works for any browser UI): each GIF shows EVERY UI state of a feature
-  — empty form → cursor gliding to the input → the click (with a ripple) → the loading
-  state → the final result — plus a step caption and progress bar, so a viewer sees
-  exactly what was clicked and what happened. Use when the user wants per-feature demo
-  GIFs / README "skill preview" clips that actually walk through the end-to-end flow
-  rather than just showing a single final-state "hero shot". Pipeline = Playwright
-  capture → generated step data → Remotion render → ffmpeg GIF.
+  Produce storyboarded product proof assets for a web app (built/tested on
+  Streamlit, works for any browser UI): MP4/GIF walkthroughs, screenshots, and
+  readable state captures that show every important UI state of a feature. Use when
+  the user wants README demos, release proof, or side-by-side comparisons that walk
+  through the end-to-end flow rather than showing a single final-state "hero shot".
+  Pipeline = Playwright capture → generated step data → Remotion render → ffmpeg
+  and exported artifacts.
 ---
 
-# Feature Walkthrough GIF
+# Feature Proof Studio
 
-Turn a live feature into a short, looping, **annotated walkthrough GIF**: clean
-state frames + an overlaid cursor that glides to each click (with a ripple) +
-per-step captions + a progress bar. The opposite of a single Ken-Burns "hero"
-frame — the viewer follows the whole flow.
+Turn a live feature into storyboarded proof assets: clean state frames + an
+overlaid cursor that glides to each click (with a ripple) + per-step captions +
+progress bars + optional raw state/code evidence. The opposite of a single
+Ken-Burns "hero" frame — the viewer follows the whole flow.
 
 > **Designing for a specific stack?** What's worth showing — and single-pane vs
 > multi-pane capture — differs by architecture. See [`STACK_GUIDELINES.md`](STACK_GUIDELINES.md)

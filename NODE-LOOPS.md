@@ -1,4 +1,4 @@
-# NODE-LOOPS.md — feature-walkthrough-gif
+# NODE-LOOPS.md — feature-proof-studio
 
 > This repo's self-improving-loop manifest. Companion to CLAUDE.md. Spec: https://github.com/HomenShum/noderl/blob/main/spec/node-loops.md
 

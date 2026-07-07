@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🎬 feature-walkthrough-gif
+# 🎬 feature-proof-studio
 
-### Turn any web feature into a polished, **annotated walkthrough GIF**.
+### Turn live product flows into polished, storyboarded **proof assets**.
 
-Every UI state · an animated cursor that **glides to each click** (with a ripple) · a **zoom‑to‑focus camera** · the **loading/streaming captured live** (spinner spinning, results coming in) · step captions · a progress bar.
+Every UI state · an animated cursor that **glides to each click** (with a ripple) · a **zoom‑to‑focus camera** · the **loading/streaming captured live** (spinner spinning, results coming in) · step captions · raw JSON/state evidence when the proof depends on internals.
 Not a single final‑state "hero shot" — the viewer follows the *whole flow*.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -67,8 +67,8 @@ ffmpeg (two‑pass palette)  4. GIF     stats_mode=diff + lanczos + bayer + diff
 (no‑auth / demo) state.
 
 ```bash
-git clone https://github.com/HomenShum/feature-walkthrough-gif
-cd feature-walkthrough-gif
+git clone https://github.com/HomenShum/feature-proof-studio
+cd feature-proof-studio
 npm install
 npx playwright install chromium
 
