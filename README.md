@@ -139,6 +139,31 @@ The composition scales to **N panes** — same spec model, one window per client
 
 </details>
 
+### Room OS V0 -> V3 live production comparison
+
+This repo now includes a four-pane production walkthrough for
+[Room OS](https://github.com/HomenShum/local-collab-mvp). The capture script opens
+four fresh rooms on [room-os-live.vercel.app](https://room-os-live.vercel.app), selects
+V0/V1/V2/V3, starts the same live model task, sends the same mid-run interrupt, opens
+the internal state layer, and renders the result as one educational comparison.
+
+<img src="assets/room-os-v0-v1-v2-v3.gif" alt="Room OS live production comparison: V0 raw transcript, V1 shared reducer, V2 typed intent, V3 agent OS with workers, artifacts, cost, and latency stats" width="940">
+
+What the clip teaches:
+
+- **V0 Failure**: raw transcript coordination can speak, but it cannot prove durable progress.
+- **V1 Room State**: the reducer owns floor, turn, count, done, and loop-risk state.
+- **V2 Work Room**: user interrupts become typed intent, so retargeting is durable.
+- **V3 Agent OS**: the room adds goals, workers, artifacts, policy, expected cost, observed latency, and trace payloads.
+
+Reproduce the clip:
+
+```bash
+node walkthrough.roomos.mjs
+npx remotion render src/roomos-index.js WTG-RoomOSV0123 out/room-os-v0-v1-v2-v3.mp4 --concurrency=2
+ffmpeg -y -i out/room-os-v0-v1-v2-v3.mp4 -vf "fps=10,scale=1280:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128:stats_mode=diff[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle" -loop 0 assets/room-os-v0-v1-v2-v3.gif
+```
+
 Ships with a **worked example** (the live-collab counterpart to the single-pane one):
 - **[`examples/collab-demo/`](examples/collab-demo/)** — a runnable, **zero-dependency**
   local app (Node SSE server + vanilla JS) that faithfully reproduces the Convex
