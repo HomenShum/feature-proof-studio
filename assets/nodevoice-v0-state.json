@@ -1,0 +1,144 @@
+{
+  "transcriptOnlyState": {
+    "durableRoomState": {
+      "task": null,
+      "intent": null,
+      "workerGraph": null,
+      "artifacts": null
+    },
+    "transcriptBuffer": {
+      "totalUtterances": 11,
+      "renderedLimit": 160,
+      "recentUtterances": [
+        {
+          "slot": "agent-002",
+          "name": "Ben",
+          "speechAct": "question",
+          "text": "Great, $2? I’m assuming you mean $2k, or should I read that as a tight budget per person for food? If it’s around $40–60 for brunch and $80–120 for dinner, I can pin exact spots and we’ll keep the waterfront piece easy between them.",
+          "ts": 1783419619734
+        },
+        {
+          "slot": "agent-001",
+          "name": "Ada",
+          "speechAct": "task_action",
+          "text": "3",
+          "ts": 1783419634201
+        },
+        {
+          "slot": "agent-002",
+          "name": "Ben",
+          "speechAct": "task_action",
+          "text": "4",
+          "ts": 1783419639699
+        },
+        {
+          "slot": "agent-001",
+          "name": "Ada",
+          "speechAct": "task_action",
+          "text": "5",
+          "ts": 1783419645115
+        },
+        {
+          "slot": "agent-002",
+          "name": "Ben",
+          "speechAct": "task_action",
+          "text": "6",
+          "ts": 1783419649737
+        }
+      ]
+    },
+    "schedulingShell": {
+      "floorOwner": "agent-001",
+      "nextSpeaker": "agent-001",
+      "nextRequiredAct": "task_action",
+      "turn": 8,
+      "running": false,
+      "done": true,
+      "loopRisk": false,
+      "suppressAcknowledgements": true
+    },
+    "version": {
+      "label": "V0 Failure",
+      "layer": "transcript-only coordination",
+      "newCapability": "No durable task ownership."
+    },
+    "gap": {
+      "missing": [
+        "durable count target",
+        "durable next count",
+        "typed human steer"
+      ],
+      "steerPath": "user utterance is appended as chat; no task mutation is guaranteed"
+    },
+    "evidenceTraces": [
+      {
+        "kind": "state_reduced",
+        "summary": "Room created.",
+        "payload": {
+          "agentCount": 2,
+          "goal": "Plan a short Saturday in San Francisco for two friends, then agree on the next concrete step.",
+          "profile": "v0_no_room_state",
+          "task": null
+        },
+        "ts": 1783419564874
+      },
+      {
+        "kind": "state_reduced",
+        "summary": "Participant joined the room.",
+        "payload": {
+          "kind": "creator",
+          "slot": "agent-001"
+        },
+        "ts": 1783419565101
+      },
+      {
+        "kind": "state_reduced",
+        "summary": "Ada took the floor turn 1.",
+        "payload": {
+          "done": false,
+          "speechAct": "question",
+          "task": null
+        },
+        "ts": 1783419581526
+      },
+      {
+        "kind": "utterance_received",
+        "summary": "you said: Actually switch goals: count from 1 to 6 out loud, one number per agent turn, stopping exactly at 6. Do not overlap.",
+        "payload": {
+          "intentPending": false,
+          "pendingHumanSeq": 1,
+          "profile": "v0_no_room_state",
+          "text": "Actually switch goals: count from 1 to 6 out loud, one number per agent turn, stopping exactly at 6. Do not overlap."
+        },
+        "ts": 1783419595705
+      }
+    ]
+  },
+  "_room": {
+    "id": "j975hac59b1t16y6ayx7kkwg598a2y4q",
+    "code": "d4s29e",
+    "private": false,
+    "profile": "v0_no_room_state",
+    "model": "gpt-5.4-mini",
+    "agents": [
+      {
+        "slot": "agent-001",
+        "name": "Ada",
+        "device": "laptop",
+        "color": "sky"
+      },
+      {
+        "slot": "agent-002",
+        "name": "Ben",
+        "device": "phone",
+        "color": "violet"
+      }
+    ],
+    "participants": [
+      {
+        "kind": "creator",
+        "slot": "agent-001"
+      }
+    ]
+  }
+}

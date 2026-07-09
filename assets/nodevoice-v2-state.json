@@ -1,0 +1,117 @@
+{
+  "workRoomState": {
+    "intentRouter": {
+      "latestIntent": {
+        "kind": "intent_interpreted",
+        "summary": "Human steer interpreted as count_task.",
+        "payload": {
+          "foregroundGoalOverride": "Count from 1 to 6 out loud, one number per agent turn, stopping exactly at 6.",
+          "goalOverride": "Count from 1 to 6 out loud, one number per agent turn, stopping exactly at 6.",
+          "intent": {
+            "confidence": 0.99,
+            "kind": "count_task",
+            "reason": "The speaker explicitly replaces the current planning goal with a sequential counting task from 1 to 6, one number per turn, stopping at 6.",
+            "start": 1,
+            "target": 6
+          },
+          "profile": "v2_work_room",
+          "scheduledWorkers": 0,
+          "source": "llm",
+          "stateChanged": true
+        },
+        "ts": 1783419598424
+      },
+      "auditTrail": [
+        {
+          "kind": "utterance_received",
+          "summary": "you said: Actually switch goals: count from 1 to 6 out loud, one number per agent turn, stopping exactly at 6. Do not overlap.",
+          "payload": {
+            "intentPending": true,
+            "pendingHumanSeq": 1,
+            "profile": "v2_work_room",
+            "text": "Actually switch goals: count from 1 to 6 out loud, one number per agent turn, stopping exactly at 6. Do not overlap."
+          },
+          "ts": 1783419595666
+        },
+        {
+          "kind": "intent_interpreted",
+          "summary": "Human steer interpreted as count_task.",
+          "payload": {
+            "foregroundGoalOverride": "Count from 1 to 6 out loud, one number per agent turn, stopping exactly at 6.",
+            "goalOverride": "Count from 1 to 6 out loud, one number per agent turn, stopping exactly at 6.",
+            "intent": {
+              "confidence": 0.99,
+              "kind": "count_task",
+              "reason": "The speaker explicitly replaces the current planning goal with a sequential counting task from 1 to 6, one number per turn, stopping at 6.",
+              "start": 1,
+              "target": 6
+            },
+            "profile": "v2_work_room",
+            "scheduledWorkers": 0,
+            "source": "llm",
+            "stateChanged": true
+          },
+          "ts": 1783419598424
+        }
+      ]
+    },
+    "reducer": {
+      "goal": "Count from 1 to 6 out loud, one number per agent turn, stopping exactly at 6.",
+      "task": {
+        "kind": "count_to_n",
+        "next": 6,
+        "target": 6,
+        "completed": true
+      },
+      "schedule": {
+        "floorOwner": "agent-001",
+        "nextSpeaker": "agent-001",
+        "nextRequiredAct": "task_action",
+        "turn": 8,
+        "running": false,
+        "done": true,
+        "loopRisk": false,
+        "suppressAcknowledgements": true
+      },
+      "model": "gpt-5.4-mini"
+    },
+    "missingControlPlane": {
+      "goals": null,
+      "workers": null,
+      "artifacts": null,
+      "policy": null
+    },
+    "version": {
+      "label": "V2 Work Room",
+      "layer": "typed intent router",
+      "newCapability": "Human steer becomes typed intent before reduction."
+    }
+  },
+  "_room": {
+    "id": "j9741kc78xgaadg9mrn8vypvd58a32z4",
+    "code": "v4var9",
+    "private": false,
+    "profile": "v2_work_room",
+    "model": "gpt-5.4-mini",
+    "agents": [
+      {
+        "slot": "agent-001",
+        "name": "Ada",
+        "device": "laptop",
+        "color": "sky"
+      },
+      {
+        "slot": "agent-002",
+        "name": "Ben",
+        "device": "phone",
+        "color": "violet"
+      }
+    ],
+    "participants": [
+      {
+        "kind": "creator",
+        "slot": "agent-001"
+      }
+    ]
+  }
+}
