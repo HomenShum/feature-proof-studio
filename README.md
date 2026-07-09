@@ -1075,6 +1075,17 @@ and NodeAgent-style catalog Q&A. The clip is intentionally short and README-orie
 one frame per product state, enough dwell to read the claim, and no fake benchmark
 score claims.
 
+Storyboard first:
+
+| Beat | NodeTasks proof |
+|---|---|
+| Premise | A large benchmark/task corpus must become searchable decision support, not a JSON dump. |
+| Viewer question | Which tasks should I run first, why, and what score claim is allowed? |
+| Conflict | The corpus is large and proxy/model tasks can be mistaken for official benchmark scores. |
+| Evidence | Saved view counts, rank fields, provenance fields, NodeAgent cited task ids. |
+| Verdict | Users can start from role-specific bundles and preserve the official-score boundary. |
+| Exit decision | Open Streamlit, choose a saved view, ask NodeAgent before running expensive or official-looking work. |
+
 <img src="assets/nodetasks-streamlit-explorer.gif" alt="NodeTasks Streamlit explorer walkthrough showing ranked task search, saved views, provenance rollups, and NodeAgent catalog Q&A with cited task ids" width="760">
 
 Reproduce from the NodeTasks checkout:
@@ -1097,6 +1108,17 @@ Search -> Saved views -> Provenance -> NodeAgent
 the React graph showcase and a Streamlit graph app with a NodeAgent bridge. The clips
 prove the interaction contract that matters for graph products: draggable nodes,
 neighborhood focus, evidence filtering, chat prompts, and visible tool traces.
+
+Storyboard first:
+
+| Beat | NodeGraph proof |
+|---|---|
+| Premise | A semantic graph should be a working evidence surface, not a decorative node cloud. |
+| Viewer question | Can a user see who researched a company, what supports it, and what still needs review? |
+| Conflict | Graph UIs often hide relationship meaning and lose provenance. |
+| Evidence | Focused neighborhoods, source-backed statuses, people/project clusters, NodeAgent chat, and tool traces. |
+| Verdict | NodeGraph works as both a React package and a Streamlit graph explorer with the same evidence model. |
+| Exit decision | Use React for product embedding or Streamlit for a local graph/NodeAgent explorer. |
 
 <img src="assets/nodegraph-showcase.gif" alt="NodeGraph React showcase walkthrough showing a semantic relationship graph, focused company neighborhood, evidence filters, and graph agent panel" width="760">
 
