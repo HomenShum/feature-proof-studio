@@ -1,5 +1,5 @@
 // Real-world example: capture the LIVE deployed NodeRoom (a Convex + React live-collab
-// app) — github.com/HomenShum/noderoom. Two walkthroughs:
+// app) — github.com/HomenShum/NodeRoom. Two walkthroughs:
 //   NRsolo — memory mode (deterministic, offline, no keys): the signature human+agent
 //            no-clobber "Run collaboration" (lock -> draft -> smart-merge), single pane.
 //   NRsync — LIVE shared room: two clients, a chat message synced window->window via
