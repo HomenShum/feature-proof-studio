@@ -1091,6 +1091,26 @@ Then capture the states for the README proof:
 Search -> Saved views -> Provenance -> NodeAgent
 ```
 
+## Public repo example: NodeGraph (React graph + Streamlit)
+
+[NodeGraph](https://github.com/HomenShum/NodeGraph) uses proof clips for two surfaces:
+the React graph showcase and a Streamlit graph app with a NodeAgent bridge. The clips
+prove the interaction contract that matters for graph products: draggable nodes,
+neighborhood focus, evidence filtering, chat prompts, and visible tool traces.
+
+<img src="assets/nodegraph-showcase.gif" alt="NodeGraph React showcase walkthrough showing a semantic relationship graph, focused company neighborhood, evidence filters, and graph agent panel" width="760">
+
+<img src="assets/nodegraph-streamlit-showcase.gif" alt="NodeGraph Streamlit showcase walkthrough showing Cytoscape-style graph exploration, NodeAgent chat, and visible tool trace evidence" width="760">
+
+Reproduce from the NodeGraph checkout:
+
+```bash
+npm run typecheck
+npm test
+npm run showcase:capture
+npm run streamlit:capture
+```
+
 ## Real-world example: NodeRoom (Convex + React)
 
 The repo also ships with captured walkthroughs of [NodeRoom](https://github.com/HomenShum/noderoom) —
