@@ -1067,6 +1067,30 @@ Panes + steps live in `walkthrough.collab.specs.mjs`; the 2-up renderer is
 `src/Walkthrough2up.jsx`. See **[`STACK_GUIDELINES.md`](STACK_GUIDELINES.md)** for why
 Convex + React demos need this and Streamlit doesn't.
 
+## Public repo example: NodeTasks (Streamlit + ranked catalog)
+
+[NodeTasks](https://github.com/HomenShum/NodeTasks) uses the same proof-asset pattern
+for a Streamlit catalog explorer: ranked task search, saved views, provenance rollups,
+and NodeAgent-style catalog Q&A. The clip is intentionally short and README-oriented:
+one frame per product state, enough dwell to read the claim, and no fake benchmark
+score claims.
+
+<img src="assets/nodetasks-streamlit-explorer.gif" alt="NodeTasks Streamlit explorer walkthrough showing ranked task search, saved views, provenance rollups, and NodeAgent catalog Q&A with cited task ids" width="760">
+
+Reproduce from the NodeTasks checkout:
+
+```bash
+npm run build:catalog
+npm run validate
+npm run streamlit
+```
+
+Then capture the states for the README proof:
+
+```text
+Search -> Saved views -> Provenance -> NodeAgent
+```
+
 ## Real-world example: NodeRoom (Convex + React)
 
 The repo also ships with captured walkthroughs of [NodeRoom](https://github.com/HomenShum/noderoom) —
