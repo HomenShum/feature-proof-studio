@@ -1,5 +1,5 @@
 ---
-name: feature-proof-studio
+name: feature-clip-studio
 description: >-
   Produce storyboarded product proof assets for a web app (built/tested on
   Streamlit, works for any browser UI): MP4/GIF walkthroughs, screenshots, and
@@ -10,7 +10,7 @@ description: >-
   and exported artifacts.
 ---
 
-# Feature Proof Studio
+# FeatureClipStudio
 
 Turn a live feature into storyboarded proof assets: clean state frames + an
 overlaid cursor that glides to each click (with a ripple) + per-step captions +

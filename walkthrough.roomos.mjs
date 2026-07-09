@@ -4,7 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const LIVE_URL = process.env.ROOMOS_URL || "https://room-os-live.vercel.app";
+const LIVE_URL = process.env.NODEVOICE_URL || process.env.ROOMOS_URL || "https://nodevoice.vercel.app";
 const OUT_ID = "RoomOSV0123";
 const PUB_DIR = join(__dirname, "public", "wt-roomos", OUT_ID);
 const ASSETS_DIR = join(__dirname, "assets");

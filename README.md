@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎬 feature-proof-studio
+# 🎬 FeatureClipStudio
 
 ### Turn live product flows into polished, storyboarded **proof assets**.
 
@@ -67,8 +67,8 @@ ffmpeg (two‑pass palette)  4. GIF     stats_mode=diff + lanczos + bayer + diff
 (no‑auth / demo) state.
 
 ```bash
-git clone https://github.com/HomenShum/feature-proof-studio
-cd feature-proof-studio
+git clone https://github.com/HomenShum/FeatureClipStudio
+cd FeatureClipStudio
 npm install
 npx playwright install chromium
 
@@ -153,7 +153,7 @@ The composition scales to **N panes** — same spec model, one window per client
 
 This repo now includes a production proof for
 [Room OS](https://github.com/HomenShum/room-os). The capture script opens
-four fresh rooms on [room-os-live.vercel.app](https://room-os-live.vercel.app), selects
+four fresh rooms on [nodevoice.vercel.app](https://nodevoice.vercel.app), selects
 V0/V1/V2/V3, starts the same live model task, sends the same mid-run interrupt, opens
 the internal state layer, and exports motion, static README evidence, and raw JSON state snapshots.
 
@@ -1135,7 +1135,7 @@ npm run streamlit:capture
 
 ## Real-world example: NodeRoom (Convex + React)
 
-The repo also ships with captured walkthroughs of [NodeRoom](https://github.com/HomenShum/noderoom) —
+The repo also ships with captured walkthroughs of [NodeRoom](https://github.com/HomenShum/NodeRoom) —
 a production Convex + React live-collaborative diligence room. These prove the tool works
 against a real, deployed app (not just a demo harness).
 

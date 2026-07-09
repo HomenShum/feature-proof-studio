@@ -592,7 +592,7 @@ export const WalkthroughGrid = ({ wt }) => {
               fontWeight: 900,
             }}
           >
-            room-os-live.vercel.app
+            nodevoice.vercel.app
           </div>
         </div>
       </div>
