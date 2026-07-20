@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/HomenShum/FeatureClipStudio/blob/main/schemas/featureclip.evidence-receipt.v1.schema.json",
+  "title": "FeatureClipStudio evidence verification receipt",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "collectionId",
+    "manifest",
+    "projection",
+    "checks",
+    "artifacts",
+    "claimBoundary"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "featureclip.evidence-receipt/v1" },
+    "collectionId": { "type": "string", "minLength": 1 },
+    "manifest": {
+      "type": "object",
+      "required": ["path", "digestMode", "sha256", "schemaVersion"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "digestMode": { "const": "canonical-json-sha256" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "schemaVersion": { "const": "featureclip.evidence-manifest/v1" }
+      },
+      "additionalProperties": false
+    },
+    "projection": {
+      "type": "object",
+      "required": ["path", "digestMode", "sha256", "schemaVersion", "changeId"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "digestMode": { "const": "canonical-json-sha256" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "schemaVersion": { "const": "nodekit.evidence-index/v1" },
+        "changeId": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "object",
+      "required": [
+        "passed",
+        "pathSafety",
+        "duplicateIds",
+        "duplicatePaths",
+        "artifactsDeclared",
+        "artifactBytesVerified",
+        "metadataMatched",
+        "gitTracked",
+        "independentWorkflowReceipts",
+        "generatedIllustrations"
+      ],
+      "properties": {
+        "passed": { "const": true },
+        "pathSafety": { "const": "passed" },
+        "duplicateIds": { "const": "none" },
+        "duplicatePaths": { "const": "none" },
+        "artifactsDeclared": { "type": "integer", "minimum": 1 },
+        "artifactBytesVerified": { "type": "integer", "minimum": 1 },
+        "metadataMatched": { "type": "integer", "minimum": 1 },
+        "gitTracked": { "type": "integer", "minimum": 1 },
+        "independentWorkflowReceipts": { "type": "integer", "minimum": 0 },
+        "generatedIllustrations": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "path",
+          "sha256",
+          "bytes",
+          "mediaType",
+          "dimensions",
+          "representation",
+          "captureEnvironment",
+          "artifactVerification",
+          "workflowVerification",
+          "basis",
+          "metadataMatched"
+        ],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "bytes": { "type": "integer", "minimum": 1 },
+          "mediaType": { "enum": ["image/gif", "image/png"] },
+          "dimensions": {
+            "type": "object",
+            "required": ["width", "height"],
+            "properties": {
+              "width": { "type": "integer", "minimum": 1 },
+              "height": { "type": "integer", "minimum": 1 }
+            },
+            "additionalProperties": false
+          },
+          "representation": {
+            "enum": [
+              "captured-product-ui",
+              "rendered-from-captured-product-ui",
+              "generated-illustration"
+            ]
+          },
+          "captureEnvironment": {
+            "enum": ["deployed-application", "local-fixture", "unknown"]
+          },
+          "artifactVerification": { "const": "repository-bytes" },
+          "workflowVerification": {
+            "enum": ["unverified", "judge-receipt", "browser-receipt"]
+          },
+          "basis": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["path", "digestMode", "sha256"],
+              "properties": {
+                "path": { "type": "string", "minLength": 1 },
+                "digestMode": { "const": "normalized-text-sha256" },
+                "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "metadataMatched": { "const": true }
+        },
+        "additionalProperties": false
+      }
+    },
+    "claimBoundary": {
+      "type": "object",
+      "required": ["releaseReady", "productWorkflowProof", "statement"],
+      "properties": {
+        "releaseReady": { "const": false },
+        "productWorkflowProof": { "enum": ["not-certified", "receipt-referenced"] },
+        "statement": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

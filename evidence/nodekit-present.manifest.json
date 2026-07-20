@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "featureclip.evidence-manifest/v1",
+  "repository": "HomenShum/FeatureClipStudio",
+  "collectionId": "featureclip-nodekit-present-p1",
+  "nodekitChangeId": "nodekit-factory-p1",
+  "requireGitTracked": true,
+  "artifacts": [
+    {
+      "id": "noderoom-hero-walkthrough",
+      "title": "NodeRoom agent workflow walkthrough",
+      "artifactKind": "clip",
+      "path": "assets/feature-noderoom-hero.gif",
+      "mediaType": "image/gif",
+      "sha256": "b443e36ac89a215027104576eb29c8bc4b258660872a43775390b6ab0f6a1673",
+      "bytes": 2843694,
+      "dimensions": {
+        "width": 720,
+        "height": 405
+      },
+      "sourceTruth": {
+        "representation": "rendered-from-captured-product-ui",
+        "captureEnvironment": "deployed-application",
+        "artifactVerification": "repository-bytes",
+        "workflowVerification": "unverified",
+        "verificationReceipt": null
+      },
+      "basis": [
+        {
+          "path": "README.md",
+          "digestMode": "normalized-text-sha256",
+          "sha256": "b2b9f0f4b1389ea9578c53040bec8941cad574aa2042510d58011ec6ea25f423"
+        },
+        {
+          "path": "NODE-LOOPS.md",
+          "digestMode": "normalized-text-sha256",
+          "sha256": "e7b926d35dea7be0cdeb1592dd2f56b920b2d30ae8a170eda1e81c30375f03e9"
+        },
+        {
+          "path": "walkthrough.noderoom.specs.mjs",
+          "digestMode": "normalized-text-sha256",
+          "sha256": "23a6068b0f83dcd090ad08a4779fcf6278aa78a5182d863b05a4e7b5a56d9426"
+        }
+      ],
+      "limitations": [
+        "The repository does not commit a per-clip judge or browser receipt, so this record verifies the media bytes and declared provenance but not the depicted workflow independently."
+      ]
+    },
+    {
+      "id": "room-os-v1-state-screenshot",
+      "title": "Room OS V1 state evidence crop",
+      "artifactKind": "screenshot",
+      "path": "assets/room-os-v1-state-json.png",
+      "mediaType": "image/png",
+      "sha256": "44cef10aa164fb5491033bc596495b38d8a34ad63c2b53f466dfa18184bc48a8",
+      "bytes": 178021,
+      "dimensions": {
+        "width": 1280,
+        "height": 897
+      },
+      "sourceTruth": {
+        "representation": "rendered-from-captured-product-ui",
+        "captureEnvironment": "deployed-application",
+        "artifactVerification": "repository-bytes",
+        "workflowVerification": "unverified",
+        "verificationReceipt": null
+      },
+      "basis": [
+        {
+          "path": "README.md",
+          "digestMode": "normalized-text-sha256",
+          "sha256": "b2b9f0f4b1389ea9578c53040bec8941cad574aa2042510d58011ec6ea25f423"
+        },
+        {
+          "path": "assets/room-os-v1-state.json",
+          "digestMode": "normalized-text-sha256",
+          "sha256": "9c23f7a0bd5593fec06fa5595c567812f4929f39946eed97bd1e99223a013fdd"
+        },
+        {
+          "path": "walkthrough.roomos.mjs",
+          "digestMode": "normalized-text-sha256",
+          "sha256": "3f2b0e16daa2ce309e1e11d38e0a33ac90ee7a333a0b06c1831f8eec5663cbad"
+        }
+      ],
+      "limitations": [
+        "The crop is presentation evidence derived from captured state. It is not a fresh-browser receipt and must not be presented as one."
+      ]
+    },
+    {
+      "id": "solo-founder-baseline-frame",
+      "title": "Bundled SoloFounder captured baseline frame",
+      "artifactKind": "screenshot",
+      "path": "public/wt/SoloFounder/00.png",
+      "mediaType": "image/png",
+      "sha256": "382f000ab4fbc430138fde58b34f7905bbde99aaada1e06bfb5c7b1af2208e9f",
+      "bytes": 675621,
+      "dimensions": {
+        "width": 2560,
+        "height": 1600
+      },
+      "sourceTruth": {
+        "representation": "captured-product-ui",
+        "captureEnvironment": "local-fixture",
+        "artifactVerification": "repository-bytes",
+        "workflowVerification": "unverified",
+        "verificationReceipt": null
+      },
+      "basis": [
+        {
+          "path": "README.md",
+          "digestMode": "normalized-text-sha256",
+          "sha256": "b2b9f0f4b1389ea9578c53040bec8941cad574aa2042510d58011ec6ea25f423"
+        },
+        {
+          "path": "NODE-LOOPS.md",
+          "digestMode": "normalized-text-sha256",
+          "sha256": "e7b926d35dea7be0cdeb1592dd2f56b920b2d30ae8a170eda1e81c30375f03e9"
+        },
+        {
+          "path": "walkthrough.solo-founder.specs.mjs",
+          "digestMode": "normalized-text-sha256",
+          "sha256": "3725d99e55838e04803af7674e3365f1bd99f62ab168a55e95362f06ea1d8a85"
+        }
+      ],
+      "limitations": [
+        "This is a checked-in worked-example frame from a local fixture, not evidence of a current production deployment."
+      ]
+    }
+  ]
+}
