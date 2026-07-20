@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/HomenShum/FeatureClipStudio/blob/main/schemas/featureclip.evidence-manifest.v1.schema.json",
+  "title": "FeatureClipStudio evidence manifest",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "repository",
+    "collectionId",
+    "nodekitChangeId",
+    "requireGitTracked",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "featureclip.evidence-manifest/v1" },
+    "repository": { "const": "HomenShum/FeatureClipStudio" },
+    "collectionId": { "type": "string", "minLength": 1 },
+    "nodekitChangeId": { "type": "string", "minLength": 1 },
+    "requireGitTracked": { "const": true },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "artifactKind",
+          "path",
+          "mediaType",
+          "sha256",
+          "bytes",
+          "dimensions",
+          "sourceTruth",
+          "basis",
+          "limitations"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "title": { "type": "string", "minLength": 1 },
+          "artifactKind": { "enum": ["clip", "screenshot"] },
+          "path": { "type": "string", "minLength": 1 },
+          "mediaType": { "enum": ["image/gif", "image/png"] },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "bytes": { "type": "integer", "minimum": 1 },
+          "dimensions": {
+            "type": "object",
+            "required": ["width", "height"],
+            "properties": {
+              "width": { "type": "integer", "minimum": 1 },
+              "height": { "type": "integer", "minimum": 1 }
+            },
+            "additionalProperties": false
+          },
+          "sourceTruth": {
+            "type": "object",
+            "required": [
+              "representation",
+              "captureEnvironment",
+              "artifactVerification",
+              "workflowVerification",
+              "verificationReceipt"
+            ],
+            "properties": {
+              "representation": {
+                "enum": [
+                  "captured-product-ui",
+                  "rendered-from-captured-product-ui",
+                  "generated-illustration"
+                ]
+              },
+              "captureEnvironment": {
+                "enum": ["deployed-application", "local-fixture", "unknown"]
+              },
+              "artifactVerification": { "const": "repository-bytes" },
+              "workflowVerification": {
+                "enum": ["unverified", "judge-receipt", "browser-receipt"]
+              },
+              "verificationReceipt": {
+                "oneOf": [
+                  { "type": "null" },
+                  {
+                    "type": "object",
+                    "required": ["path", "sha256", "schemaVersion"],
+                    "properties": {
+                      "path": { "type": "string", "minLength": 1 },
+                      "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                      "schemaVersion": { "type": "string", "minLength": 1 }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "basis": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["path", "digestMode", "sha256"],
+              "properties": {
+                "path": { "type": "string", "minLength": 1 },
+                "digestMode": { "const": "normalized-text-sha256" },
+                "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "limitations": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

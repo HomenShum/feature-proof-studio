@@ -77,6 +77,23 @@ npm run render:example                 # -> out/example.mp4
 ffmpeg -y -i out/example.mp4 -vf "fps=15,scale=720:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128:stats_mode=diff[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle" -loop 0 example.gif
 ```
 
+## NodeKit Present evidence
+
+FeatureClipStudio can project selected, content-addressed clips and screenshots into a
+`nodekit.evidence-index/v1` Change Story input without pretending that a checked-in
+media file is fresh production-browser proof.
+
+```bash
+npm run evidence:check
+npm run proof
+```
+
+The verifier checks repository containment, Git tracking, media signatures,
+dimensions, byte sizes, digests, duplicate IDs/paths, and explicit captured-versus-
+generated provenance. The committed P1 assets project as `observed`, not `verified`,
+because this repository does not currently commit per-clip judge or browser receipts.
+See [`docs/NODEKIT_PRESENT_EVIDENCE.md`](docs/NODEKIT_PRESENT_EVIDENCE.md).
+
 The bundled example is a [solo-founder 3D proof-run app](https://github.com/HomenShum/solo-founder-agent-builder)
 (builder console → generate a scroll-driven 3D product story → customer-facing landing
 page → internal proof report with gates) — the captured frames +

@@ -1,0 +1,36 @@
+schemaVersion: nodekit.repo/v1
+repository: HomenShum/FeatureClipStudio
+lifecycle: preview
+support: active
+role: presentation-evidence-tool
+commandProfile: protocol
+
+canonicalFor:
+  - featureclip.evidence-manifest
+  - featureclip.evidence-receipt
+
+consumes:
+  - nodeplatform.repo-contract
+  - nodeplatform.change-story
+
+commands:
+  doctor: { script: doctor, mode: finite }
+  check: { script: check, mode: finite }
+  proof: { script: proof, mode: finite }
+
+noKey:
+  status: certified
+  command: npm run proof
+  externalAccountsRequired: 0
+  disclosure: Evidence verification and NodeKit projection are deterministic local-file operations. Capture, rendering, judging, and deployment are separate opt-in workflows.
+
+environment:
+  contractVersion: nodeplatform.env/v1
+  status: not-applicable
+
+proof:
+  command: npm run proof
+  receiptSchema: featureclip.evidence-receipt/v1
+
+contractDeclarations: []
+architectureExceptions: []

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "nodekit.evidence-index/v1",
+  "changeId": "nodekit-factory-p1",
+  "evidence": [
+    {
+      "id": "featureclip-noderoom-hero-walkthrough",
+      "kind": "presentation-clip",
+      "status": "observed",
+      "location": "repo://HomenShum/FeatureClipStudio/assets/feature-noderoom-hero.gif?sha256=b443e36ac89a215027104576eb29c8bc4b258660872a43775390b6ab0f6a1673",
+      "summary": "NodeRoom agent workflow walkthrough: repository bytes, media signature, dimensions, and Git tracking match the manifest. Source truth is rendered-from-captured-product-ui in deployed-application; no committed independent workflow receipt."
+    },
+    {
+      "id": "featureclip-room-os-v1-state-screenshot",
+      "kind": "presentation-screenshot",
+      "status": "observed",
+      "location": "repo://HomenShum/FeatureClipStudio/assets/room-os-v1-state-json.png?sha256=44cef10aa164fb5491033bc596495b38d8a34ad63c2b53f466dfa18184bc48a8",
+      "summary": "Room OS V1 state evidence crop: repository bytes, media signature, dimensions, and Git tracking match the manifest. Source truth is rendered-from-captured-product-ui in deployed-application; no committed independent workflow receipt."
+    },
+    {
+      "id": "featureclip-solo-founder-baseline-frame",
+      "kind": "presentation-screenshot",
+      "status": "observed",
+      "location": "repo://HomenShum/FeatureClipStudio/public/wt/SoloFounder/00.png?sha256=382f000ab4fbc430138fde58b34f7905bbde99aaada1e06bfb5c7b1af2208e9f",
+      "summary": "Bundled SoloFounder captured baseline frame: repository bytes, media signature, dimensions, and Git tracking match the manifest. Source truth is captured-product-ui in local-fixture; no committed independent workflow receipt."
+    }
+  ]
+}
