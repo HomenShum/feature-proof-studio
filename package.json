@@ -21,6 +21,7 @@
     "streamlit"
   ],
   "scripts": {
+    "check": "node --check walkthrough.mjs && node --check judge-video.mjs",
     "capture": "node walkthrough.mjs",
     "studio": "remotion studio src/index.js",
     "render": "remotion render src/index.js",

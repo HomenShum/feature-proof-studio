@@ -1,0 +1,29 @@
+schemaVersion: nodekit.repo/v1
+repository: HomenShum/FeatureClipStudio
+lifecycle: preview
+support: active
+role: presentation-evidence-tool
+commandProfile: protocol
+canonicalFor:
+  - featureclip.evidence-manifest
+  - featureclip.evidence-receipt
+consumes:
+  - nodeplatform.repo-contract
+  - nodeplatform.change-story
+commands:
+  doctor: { script: check, mode: finite }
+  check: { script: check, mode: finite }
+  proof: { script: judge, mode: finite }
+noKey:
+  status: partial
+  command: npm run check
+  externalAccountsRequired: 0
+  disclosure: Source validation is no-key; capture and rendered proof require an available target and media inputs.
+environment:
+  contractVersion: nodeplatform.env/v1
+  status: migration-planned
+proof:
+  command: npm run judge
+  receiptSchema: featureclip.evidence-receipt/v1
+contractDeclarations: []
+architectureExceptions: []
